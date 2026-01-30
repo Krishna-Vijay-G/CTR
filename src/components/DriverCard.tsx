@@ -9,9 +9,16 @@ export default function DriverCard({ driver }: DriverCardProps) {
   return (
     <Link href={`/driver/${driver.id}`} className="driver-card">
       <div className="driver-card-image">
-        <div className="placeholder-img">
-          {driver.firstName} {driver.lastName}
-        </div>
+        {driver.image ? (
+          <img
+            src={driver.image}
+            alt={`${driver.firstName} ${driver.lastName}`}
+          />
+        ) : (
+          <div className="placeholder-img">
+            {driver.firstName} {driver.lastName}
+          </div>
+        )}
       </div>
       <div className="driver-card-overlay">
         <span className="driver-number">{driver.number}</span>
