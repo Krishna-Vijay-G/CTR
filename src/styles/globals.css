@@ -118,7 +118,8 @@ ul, ol {
   font-size: clamp(3rem, 10vw, 8rem);
   font-weight: 900;
   text-transform: uppercase;
-  letter-spacing: 0.5em;
+  /* responsive letter spacing to avoid single-letter wrapping on small screens */
+  letter-spacing: clamp(0.12em, 2.2vw, 0.45em);
   line-height: 1;
 }
 
@@ -223,12 +224,12 @@ ul, ol {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: linear-gradient(180deg, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 50%, transparent 100%);
+  background: var(--ctr-black);
   transition: var(--transition-normal);
 }
 
 .navbar.scrolled {
-  background: rgba(0, 0, 0, 0.98);
+  background: var(--ctr-black);
   padding: 1rem 2rem;
   backdrop-filter: blur(20px);
 }
@@ -357,6 +358,17 @@ ul, ol {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+/* Keep the first word (CHENNAI) unbroken so single letters don't wrap */
+.hero-title .first-word {
+  display: block;
+  white-space: nowrap;
+}
+
+/* Ensure the second line has slightly smaller spacing on small screens */
+.hero-title span {
+  letter-spacing: clamp(0.12em, 1.8vw, 0.4em);
 }
 
 .hero-subtitle {
@@ -1483,12 +1495,13 @@ ul, ol {
 }
 
 .loading-spinner {
-  width: 40px;
-  height: 40px;
-  border: 4px solid var(--ctr-gray-medium);
-  border-top: 4px solid var(--ctr-yellow);
+  width: 50px;
+  height: 50px;
+  border: 3px solid rgba(255, 193, 7, 0.2);
+  border-top: 3px solid var(--ctr-yellow);
   border-radius: 50%;
   animation: spin 1s linear infinite;
+  box-shadow: 0 0 20px rgba(255, 193, 7, 0.5);
 }
 
 @keyframes fadeIn {
@@ -1497,6 +1510,120 @@ ul, ol {
   }
   to {
     opacity: 1;
+  }
+}
+
+/* Hero Slider Styles */
+.hero-slider {
+  position: relative;
+  width: 100%;
+  height: 80vh;
+  min-height: 520px;
+  overflow: hidden;
+}
+
+/* Offset hero below fixed navbar */
+.hero-slider {
+  margin-top: 6rem;
+}
+
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transform: scale(1.02);
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+.hero-slide.active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.hero-slide-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  text-align: center;
+  padding: 0 var(--spacing-lg) var(--spacing-2xl);
+  z-index: 2;
+  background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.3) 40%, rgba(0,0,0,0.85) 100%);
+}
+
+.hero-slide-title {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ctr-white);
+  margin-bottom: var(--spacing-md);
+  text-shadow: 0 6px 30px rgba(0,0,0,0.6);
+}
+
+.hero-slide-sub {
+  color: var(--ctr-text-light);
+  letter-spacing: 0.12em;
+  margin-bottom: var(--spacing-lg);
+}
+
+.hero-slide-cta .btn-outline {
+  padding: 0.9rem 2rem;
+}
+
+.hero-dots {
+  position: absolute;
+  left: 50%;
+  bottom: 2rem;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.75rem;
+  z-index: 5;
+}
+
+.dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.25);
+  border: 2px solid rgba(255,255,255,0.15);
+  position: relative;
+  overflow: hidden;
+}
+
+.dot.active {
+  background: rgba(255,255,255,0.1);
+}
+
+.dot.active::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, var(--ctr-yellow), #FFA500);
+  animation: dotProgress 6s linear forwards;
+}
+
+@keyframes dotProgress {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@media (max-width: 768px) {
+  .hero-slider {
+    margin-top: 4rem;
+    height: 60vh;
+    min-height: 380px;
+  }
+
+  .hero-slide-title {
+    font-size: clamp(1.6rem, 5vw, 2.4rem);
   }
 }
 

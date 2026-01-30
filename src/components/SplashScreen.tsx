@@ -26,6 +26,7 @@ export default function SplashScreen({ children }: SplashScreenProps) {
             alt="CTR Logo"
             className="loading-logo"
           />
+          <div className="loading-spinner"></div>
         </div>
       </div>
     );

@@ -20,7 +20,7 @@ export default function AboutPage() {
           <p className="section-label">Welcome to</p>
           <h1 className="spaced-title-large">
             C H E N N A I<br />
-            <span>T U R B O &nbsp; R I D E R S</span>
+            <span>T U R B O &nbsp; <br />R I D E R S</span>
           </h1>
         </div>
       </section>

@@ -4,6 +4,7 @@ import Footer from '@/components/Footer';
 import DriverCard from '@/components/DriverCard';
 import CountdownTimer from '@/components/CountdownTimer';
 import siteData from '@/data/siteData.json';
+import HeroSlider from '@/components/HeroSlider';
 
 export default function Home() {
   const { site, car, drivers, races, news, sponsors } = siteData;
@@ -20,36 +21,15 @@ export default function Home() {
     <>
       <Navbar />
       
-      {/* Hero Section - Ferrari Style */}
-      <section className="hero">
-        <div className="hero-background">
-          <div className="placeholder-img" style={{ position: 'absolute', inset: 0 }}>
-            CTR Racing
-          </div>
-        </div>
-        
-        <div className="hero-content">
+      {/* Hero Slider */}
+      <div style={{ position: 'relative', zIndex: 1 }}>
+        {/* season label remains above slider */}
+        <div style={{ position: 'absolute', left: '2rem', top: '2.5rem', zIndex: 2 }}>
           <p className="section-label">Season {races.season} • {races.seasonName}</p>
-          <h1 className="hero-title spaced-title-xl">
-            C H E N N A I<br />
-            <span>T U R B O &nbsp; R I D E R S</span>
-          </h1>
-          <p className="hero-subtitle">{site.description}</p>
-          <div className="hero-cta-group">
-            <Link href="/team" className="btn btn-primary">
-              Discover The Team
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
-              </svg>
-            </Link>
-          </div>
         </div>
-
-        <div className="scroll-indicator">
-          <span>Scroll Down</span>
-          <div className="scroll-arrow"></div>
-        </div>
-      </section>
+        {/* slider component */}
+        <HeroSlider />
+      </div>
 
       {/* Car Section - Ferrari Style */}
       <section className="car-section">
