@@ -1,3 +1,5 @@
+"use client";
+
 import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -5,10 +7,12 @@ import DriverCard from '@/components/DriverCard';
 import CountdownTimer from '@/components/CountdownTimer';
 import siteData from '@/data/siteData.json';
 import HeroSlider from '@/components/HeroSlider';
+import { HorizontalScrollCarousel } from '@/components/ui/horizontal-scroll-carousel';
 
 export default function Home() {
   const { site, car, drivers, races, news, sponsors } = siteData;
   const nextRace = races.calendar[0];
+  const driverImages = drivers.map(driver => driver.image);
 
   const formatDate = (dateStr: string) => {
     return new Date(dateStr).toLocaleDateString('en-US', { 
@@ -16,6 +20,8 @@ export default function Home() {
       month: 'short' 
     });
   };
+
+
 
   return (
     <>
@@ -57,21 +63,23 @@ export default function Home() {
       </section>
 
       {/* Drivers Section - Ferrari Style */}
-      <section className="drivers-section">
-        <div className="container">
+      <section className="drivers-section" style={{ padding: 0 }}>
+        <div className="container" style={{ marginBottom: '2rem' }}>
           <div className="drivers-header">
             <p className="section-label">Official Drivers</p>
             <h2 className="spaced-title-large">O U R &nbsp; T E A M</h2>
           </div>
-          
-          <div className="drivers-scroll">
-            <div className="drivers-grid">
-              {drivers.map(driver => (
-                <DriverCard key={driver.id} driver={driver} />
-              ))}
-            </div>
-          </div>
         </div>
+        
+        <HorizontalScrollCarousel 
+          items={drivers.map(driver => ({
+            id: driver.id,
+            image: driver.image,
+            lastName: driver.lastName,
+            number: driver.number,
+            flagEmoji: driver.flagEmoji
+          }))} 
+        />
       </section>
 
       {/* Countdown Section - Ferrari Style */}

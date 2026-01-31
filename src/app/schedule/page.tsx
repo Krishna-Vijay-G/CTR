@@ -21,16 +21,27 @@ export default function SchedulePage() {
   const nextRace = races.calendar[0];
 
   return (
-    <>
+    <div className="schedule-page">
+      <video
+        className="schedule-page-video"
+        autoPlay
+        muted
+        loop
+        playsInline
+        poster="/video/background.mp4"
+      >
+        <source src="/video/background.mp4" type="video/mp4" />
+      </video>
       <Navbar />
       
-      {/* Page Hero */}
-      <section className="page-hero">
-        <p className="section-label">{races.seasonName}</p>
-        <h1 className="spaced-title-large">
-          R A C E &nbsp; <span>C A L E N D A R</span>
-        </h1>
-      </section>
+      <div className="schedule-page-content">
+        {/* Page Hero */}
+        <section className="page-hero schedule-hero">
+          <p className="section-label">{races.seasonName}</p>
+          <h1 className="spaced-title-large">
+            RACE&nbsp;<span>CALENDAR</span>
+          </h1>
+        </section>
 
       {/* Countdown */}
       <section className="countdown-section" style={{ padding: '4rem 0' }}>
@@ -61,7 +72,15 @@ export default function SchedulePage() {
                   <span className="race-flag">{race.flagEmoji}</span>
                   <div className="race-details">
                     <h4>{race.name}</h4>
-                    <p className="race-location">{race.location}, {race.country}</p>
+                    <p
+                      className="race-location"
+                      aria-label={`${race.location}, ${race.country}`}
+                    >
+                      <span className="race-location-flag" aria-hidden="true">
+                        {race.flagEmoji}
+                      </span>
+                      <span>{race.location}</span>
+                    </p>
                     <p style={{ fontSize: '0.8rem', color: 'var(--ctr-text-gray)', marginTop: '0.25rem' }}>
                       Circuit: {race.circuitLength} • {race.laps} Laps
                     </p>
@@ -83,18 +102,13 @@ export default function SchedulePage() {
       </section>
 
       {/* Street Circuit Info */}
-      <section style={{ padding: '4rem 0', background: 'var(--ctr-dark)' }}>
+      <section className="street-section">
         <div className="container" style={{ maxWidth: '900px' }}>
           <p className="section-label" style={{ textAlign: 'center' }}>Special Event</p>
           <h2 className="spaced-title" style={{ textAlign: 'center', fontSize: '2rem', marginBottom: '2rem' }}>
-            C H E N N A I &nbsp; S T R E E T &nbsp; C I R C U I T
+            CHENNAI&nbsp;STREET&nbsp;CIRCUIT
           </h2>
-          
-          <div style={{ 
-            padding: '2rem', 
-            background: 'var(--ctr-black)', 
-            borderLeft: '4px solid var(--ctr-yellow)' 
-          }}>
+          <div className="street-panel">
             <div style={{ 
               display: 'grid', 
               gridTemplateColumns: 'repeat(3, 1fr)', 
@@ -150,6 +164,7 @@ export default function SchedulePage() {
       </section>
 
       <Footer />
-    </>
+      </div>
+    </div>
   );
 }

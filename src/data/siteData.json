@@ -13,7 +13,7 @@
   "teamPrincipal": {
     "name": "Keerthivasan S",
     "title": "Team Principal",
-    "image": "/images/team/keerthivasan.jpg"
+    "image": "/images/team/keerthivasan.png"
   },
   "socialMedia": {
     "instagram": "https://www.instagram.com/chennaiturboriders/",
@@ -39,6 +39,8 @@
       "nationality": "India",
       "countryCode": "IN",
       "flagEmoji": "🇮🇳",
+      "championship": "IRL",
+      "car": "Wolf GB08",
       "number": 7,
       "dateOfBirth": "2003-05-12",
       "height": "1.75 M",
@@ -68,6 +70,8 @@
       "nationality": "India",
       "countryCode": "IN",
       "flagEmoji": "🇮🇳",
+      "championship": "IRL",
+      "car": "Wolf GB08",
       "number": 23,
       "dateOfBirth": "2002-08-25",
       "height": "1.73 M",
@@ -97,6 +101,8 @@
       "nationality": "India",
       "countryCode": "IN",
       "flagEmoji": "🇮🇳",
+      "championship": "IRL",
+      "car": "Wolf GB08",
       "number": 11,
       "dateOfBirth": "2001-12-08",
       "height": "1.76 M",
@@ -126,6 +132,8 @@
       "nationality": "Spain",
       "countryCode": "ES",
       "flagEmoji": "🇪🇸",
+      "championship": "IRL",
+      "car": "Wolf GB08",
       "number": 19,
       "dateOfBirth": "2000-04-17",
       "height": "1.68 M",
@@ -155,6 +163,8 @@
       "nationality": "India",
       "countryCode": "IN",
       "flagEmoji": "🇮🇳",
+      "championship": "IRL",
+      "car": "Wolf GB08",
       "number": 44,
       "dateOfBirth": "2003-01-30",
       "height": "1.74 M",
@@ -176,6 +186,99 @@
         "Chennai local racing hero",
         "Youngest podium finisher for CTR"
       ]
+    },
+    {
+      "id": "shane-chandaria",
+      "firstName": "Shane",
+      "lastName": "Chandaria",
+      "nationality": "India",
+      "countryCode": "IN",
+      "flagEmoji": "🇮🇳",
+      "championship": "F4",
+      "car": "Formula 4",
+      "number": 5,
+      "dateOfBirth": "2005-03-15",
+      "height": "1.72 M",
+      "weight": "65 KG",
+      "image": "/images/drivers/SHANE_CHANDARIA.png",
+      "heroImage": "/images/drivers/SHANE_CHANDARIA.png",
+      "quote": "Formula 4 is where champions are made. I'm ready for the challenge.",
+      "biography": "Shane Chandaria is a promising young talent competing in the Indian F4 Championship with Chennai Turbo Riders. His dedication and natural speed make him a driver to watch in the junior formula category.",
+      "stats": {
+        "raceWins": 0,
+        "polePositions": 0,
+        "grandPrix": 8,
+        "podiums": 2,
+        "fastestLaps": 1,
+        "points": 42
+      },
+      "careerHighlights": [
+        "F4 Indian Championship competitor",
+        "Multiple podium finishes",
+        "Rising star in junior formula racing"
+      ]
+    },
+    {
+      "id": "veer-sheth",
+      "firstName": "Veer",
+      "lastName": "Sheth",
+      "nationality": "India",
+      "countryCode": "IN",
+      "flagEmoji": "🇮🇳",
+      "championship": "F4",
+      "car": "Formula 4",
+      "number": 8,
+      "dateOfBirth": "2006-07-22",
+      "height": "1.70 M",
+      "weight": "63 KG",
+      "image": "/images/drivers/VEER_SHETH.png",
+      "heroImage": "/images/drivers/VEER_SHETH.png",
+      "quote": "Every race is a learning experience. I'm here to grow and compete.",
+      "biography": "Veer Sheth is a young Indian driver making his mark in the F4 Championship. His smooth driving style and technical approach showcase his potential for a bright future in motorsport.",
+      "stats": {
+        "raceWins": 0,
+        "polePositions": 1,
+        "grandPrix": 8,
+        "podiums": 1,
+        "fastestLaps": 0,
+        "points": 35
+      },
+      "careerHighlights": [
+        "F4 Indian Championship rookie",
+        "First pole position achievement",
+        "Consistent points scorer"
+      ]
+    },
+    {
+      "id": "kareen-kaur",
+      "firstName": "Kareen",
+      "lastName": "Kaur",
+      "nationality": "India",
+      "countryCode": "IN",
+      "flagEmoji": "🇮🇳",
+      "championship": "F4",
+      "car": "Formula 4",
+      "number": 14,
+      "dateOfBirth": "2005-11-08",
+      "height": "1.65 M",
+      "weight": "55 KG",
+      "image": "/images/drivers/KAREEN_KAUR.png",
+      "heroImage": "/images/drivers/KAREEN_KAUR.png",
+      "quote": "Breaking barriers and racing towards my dreams with determination.",
+      "biography": "Kareen Kaur is a talented female driver competing in the Indian F4 Championship. Her presence in the championship represents a new era of diversity in Indian motorsport and inspires young racers across the country.",
+      "stats": {
+        "raceWins": 0,
+        "polePositions": 0,
+        "grandPrix": 8,
+        "podiums": 0,
+        "fastestLaps": 0,
+        "points": 18
+      },
+      "careerHighlights": [
+        "F4 Indian Championship competitor",
+        "Pioneering female driver in Indian F4",
+        "Strong race pace and improvement"
+      ]
     }
   ],
   "races": {
@@ -184,70 +287,30 @@
     "calendar": [
       {
         "round": 1,
-        "name": "Kari Motor Speedway",
-        "location": "Coimbatore",
+        "name": "Goa Street Race",
+        "location": "Goa",
         "country": "India",
         "flagEmoji": "🇮🇳",
-        "dateStart": "2025-08-16",
-        "dateEnd": "2025-08-17",
-        "circuitLength": "2.1 KM",
-        "laps": 25,
+        "dateStart": "2026-02-14",
+        "dateEnd": "2026-02-15",
+        "circuitLength": "3.4 KM",
+        "laps": 22,
         "isNightRace": false,
-        "isStreetCircuit": false
+        "isStreetCircuit": true
       },
       {
         "round": 2,
-        "name": "Madras International Circuit",
-        "location": "Chennai",
+        "name": "Mumbai Street Circuit",
+        "location": "Mumbai",
         "country": "India",
         "flagEmoji": "🇮🇳",
-        "dateStart": "2025-08-23",
-        "dateEnd": "2025-08-25",
-        "circuitLength": "3.7 KM",
-        "laps": 22,
-        "isNightRace": false,
-        "isStreetCircuit": false
-      },
-      {
-        "round": 3,
-        "name": "Kari Motor Speedway",
-        "location": "Coimbatore",
-        "country": "India",
-        "flagEmoji": "🇮🇳",
-        "dateStart": "2025-10-04",
-        "dateEnd": "2025-10-05",
-        "circuitLength": "2.1 KM",
-        "laps": 25,
-        "isNightRace": false,
-        "isStreetCircuit": false
-      },
-      {
-        "round": 4,
-        "name": "Chennai Street Circuit",
-        "location": "Chennai",
-        "country": "India",
-        "flagEmoji": "🇮🇳",
-        "dateStart": "2025-11-01",
-        "dateEnd": "2025-11-02",
-        "circuitLength": "3.5 KM",
+        "dateStart": "2026-03-21",
+        "dateEnd": "2026-03-22",
+        "circuitLength": "3.2 KM",
         "laps": 20,
-        "isNightRace": true,
+        "isNightRace": false,
         "isStreetCircuit": true,
-        "description": "India's 1st Street Circuit Night Race"
-      },
-      {
-        "round": 5,
-        "name": "Chennai Street Circuit",
-        "location": "Chennai",
-        "country": "India",
-        "flagEmoji": "🇮🇳",
-        "dateStart": "2025-11-29",
-        "dateEnd": "2025-11-30",
-        "circuitLength": "3.5 KM",
-        "laps": 20,
-        "isNightRace": true,
-        "isStreetCircuit": true,
-        "description": "Season Finale"
+        "description": "Provisional Date"
       }
     ],
     "streetCircuit": {
