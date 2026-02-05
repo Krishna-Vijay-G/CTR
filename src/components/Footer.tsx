@@ -11,7 +11,7 @@ export default function Footer() {
         <div className="footer-main">
           <div className="footer-brand">
             <Image 
-              src="/CTR_yellow.png" 
+              src="/CTR/images/logos/CTR_yellow.png" 
               alt={site.name}
               width={50}
               height={50}
