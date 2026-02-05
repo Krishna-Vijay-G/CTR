@@ -1,11 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',
-  basePath: '/CTR',
-  assetPrefix: '/CTR/',
   reactStrictMode: true,
   images: {
-    unoptimized: true,
+    unoptimized: true, // or remove this, Vercel handles it
   },
 }
 
