@@ -22,7 +22,7 @@ export default function SplashScreen({ children }: SplashScreenProps) {
       <div className="loading-screen">
         <div className="loading-content">
           <img
-            src="/CTR/images/logos/CTR_yellow.png"
+            src="/images/logos/CTR_yellow.png"
             alt="CTR Logo"
             className="loading-logo"
           />

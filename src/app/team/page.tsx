@@ -25,7 +25,7 @@ export default function TeamPage() {
       <Navbar />
       
       <div style={{ 
-        backgroundImage: 'url(/CTR/images/car/hero.jpg)', 
+        backgroundImage: 'url(/images/car/hero.jpg)', 
         backgroundSize: 'cover', 
         backgroundPosition: 'center', 
         backgroundRepeat: 'no-repeat'
@@ -132,7 +132,7 @@ export default function TeamPage() {
         style={{
           padding: '4rem 0 0 0',
           position: 'relative',
-          backgroundImage: 'url(/CTR/images/car/hero2.JPG)',
+          backgroundImage: 'url(/images/car/hero2.JPG)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
@@ -173,7 +173,7 @@ export default function TeamPage() {
         style={{
           padding: '4rem 0',
           position: 'relative',
-          backgroundImage: 'url(/CTR/images/car/hero2.JPG)',
+          backgroundImage: 'url(/images/car/hero2.JPG)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',

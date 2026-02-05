@@ -24,7 +24,7 @@ export default function Navbar({ transparent = true }: NavbarProps) {
     <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
       <Link href="/" className="nav-logo">
         <Image 
-          src="/CTR/images/logos/CTR_yellow.png" 
+          src="/images/logos/CTR_yellow.png" 
           alt="Chennai Turbo Riders" 
           width={100} 
           height={100}

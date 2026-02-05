@@ -13,7 +13,7 @@
   "teamPrincipal": {
     "name": "Keerthivasan S",
     "title": "Team Principal",
-    "image": "/CTR/images/team/keerthivasan.png"
+    "image": "/images/team/keerthivasan.png"
   },
   "socialMedia": {
     "instagram": "https://www.instagram.com/chennaiturboriders/",
@@ -29,7 +29,7 @@
   "car": {
     "name": "Wolf GB08",
     "year": 2025,
-    "image": "/CTR/images/car/hero.jpg"
+    "image": "/images/car/hero.jpg"
   },
   "drivers": [
     {
@@ -45,8 +45,8 @@
       "dateOfBirth": "2003-05-12",
       "height": "1.75 M",
       "weight": "68 KG",
-      "image": "/CTR/images/drivers/AQIL_ALIBHAI.png",
-      "heroImage": "/CTR/images/drivers/AQIL_ALIBHAI.png",
+      "image": "/images/drivers/AQIL_ALIBHAI.png",
+      "heroImage": "/images/drivers/AQIL_ALIBHAI.png",
       "quote": "Every lap is a chance to prove myself and represent Chennai on the global stage.",
       "biography": "Aqil Alibhai is a talented young Indian driver who has made a name for himself in national karting championships. With his transition to formula racing with Chennai Turbo Riders, he brings fresh energy and determination to compete at the highest level in the Indian Racing League.",
       "stats": {
@@ -76,8 +76,8 @@
       "dateOfBirth": "2002-08-25",
       "height": "1.73 M",
       "weight": "66 KG",
-      "image": "/CTR/images/drivers/SHIBIN_YOUSAF.png",
-      "heroImage": "/CTR/images/drivers/SHIBIN_YOUSAF.png",
+      "image": "/images/drivers/SHIBIN_YOUSAF.png",
+      "heroImage": "/images/drivers/SHIBIN_YOUSAF.png",
       "quote": "Precision and speed - that's what wins races. I give 100% every single time.",
       "biography": "Shibin Yousaf is a rising star in Indian motorsport with a background in single-seater racing. His technical understanding of the car and smooth driving style make him a formidable competitor on both street and permanent circuits.",
       "stats": {
@@ -107,8 +107,8 @@
       "dateOfBirth": "2001-12-08",
       "height": "1.76 M",
       "weight": "70 KG",
-      "image": "/CTR/images/drivers/TIJIL_RAO.png",
-      "heroImage": "/CTR/images/drivers/TIJIL_RAO.png",
+      "image": "/images/drivers/TIJIL_RAO.png",
+      "heroImage": "/images/drivers/TIJIL_RAO.png",
       "quote": "The track is where I belong. Every race is a step closer to championship glory.",
       "biography": "Tijil Rao brings experience and consistency to Chennai Turbo Riders. With years of competitive racing under his belt, he has developed into a reliable points scorer and a driver who excels in high-pressure situations.",
       "stats": {
@@ -138,8 +138,8 @@
       "dateOfBirth": "2000-04-17",
       "height": "1.68 M",
       "weight": "58 KG",
-      "image": "/CTR/images/drivers/LAURA_CAMPS_TORRAS.png",
-      "heroImage": "/CTR/images/drivers/LAURA_CAMPS_TORRAS.png",
+      "image": "/images/drivers/LAURA_CAMPS_TORRAS.png",
+      "heroImage": "/images/drivers/LAURA_CAMPS_TORRAS.png",
       "quote": "Breaking barriers and proving that talent has no gender. I race to inspire.",
       "biography": "Laura Camps Torras is a Spanish racing driver who brings international experience to Chennai Turbo Riders. Her aggressive yet calculated racing style and technical feedback have made her an invaluable asset to the team's development program.",
       "stats": {
@@ -169,8 +169,8 @@
       "dateOfBirth": "2003-01-30",
       "height": "1.74 M",
       "weight": "67 KG",
-      "image": "/CTR/images/drivers/VISWAS_VIJAYARAJ.png",
-      "heroImage": "/CTR/images/drivers/VISWAS_VIJAYARAJ.png",
+      "image": "/images/drivers/VISWAS_VIJAYARAJ.png",
+      "heroImage": "/images/drivers/VISWAS_VIJAYARAJ.png",
       "quote": "Racing is in my DNA. I'm here to win and make Chennai proud.",
       "biography": "Viswas Vijayaraj is a dynamic young driver who has quickly made his mark in the Indian Racing League. His fearless approach and natural racing instincts have earned him respect from competitors and fans alike.",
       "stats": {
@@ -200,8 +200,8 @@
       "dateOfBirth": "2005-03-15",
       "height": "1.72 M",
       "weight": "65 KG",
-      "image": "/CTR/images/drivers/SHANE_CHANDARIA.png",
-      "heroImage": "/CTR/images/drivers/SHANE_CHANDARIA.png",
+      "image": "/images/drivers/SHANE_CHANDARIA.png",
+      "heroImage": "/images/drivers/SHANE_CHANDARIA.png",
       "quote": "Formula 4 is where champions are made. I'm ready for the challenge.",
       "biography": "Shane Chandaria is a promising young talent competing in the Indian F4 Championship with Chennai Turbo Riders. His dedication and natural speed make him a driver to watch in the junior formula category.",
       "stats": {
@@ -231,8 +231,8 @@
       "dateOfBirth": "2006-07-22",
       "height": "1.70 M",
       "weight": "63 KG",
-      "image": "/CTR/images/drivers/VEER_SHETH.png",
-      "heroImage": "/CTR/images/drivers/VEER_SHETH.png",
+      "image": "/images/drivers/VEER_SHETH.png",
+      "heroImage": "/images/drivers/VEER_SHETH.png",
       "quote": "Every race is a learning experience. I'm here to grow and compete.",
       "biography": "Veer Sheth is a young Indian driver making his mark in the F4 Championship. His smooth driving style and technical approach showcase his potential for a bright future in motorsport.",
       "stats": {
@@ -262,8 +262,8 @@
       "dateOfBirth": "2005-11-08",
       "height": "1.65 M",
       "weight": "55 KG",
-      "image": "/CTR/images/drivers/KAREEN_KAUR.png",
-      "heroImage": "/CTR/images/drivers/KAREEN_KAUR.png",
+      "image": "/images/drivers/KAREEN_KAUR.png",
+      "heroImage": "/images/drivers/KAREEN_KAUR.png",
       "quote": "Breaking barriers and racing towards my dreams with determination.",
       "biography": "Kareen Kaur is a talented female driver competing in the Indian F4 Championship. Her presence in the championship represents a new era of diversity in Indian motorsport and inspires young racers across the country.",
       "stats": {
@@ -339,8 +339,8 @@
       {
         "id": "bharath-college",
         "name": "Bharath College",
-        "logo": "/CTR/images/sponsors/Bharath_College_logo.png",
-        "fullLogo": "/CTR/images/sponsors/Bharath_College_name.png",
+        "logo": "/images/sponsors/Bharath_College_logo.png",
+        "fullLogo": "/images/sponsors/Bharath_College_name.png",
         "website": "https://bharathuniv.ac.in/",
         "description": "Leading educational institution supporting motorsport excellence and youth development."
       }
@@ -349,8 +349,8 @@
       {
         "id": "medical-college",
         "name": "Bhaarath Medical College and Hospital",
-        "logo": "/CTR/images/partners/Medical_College_full.png",
-        "fullLogo": "/CTR/images/partners/Medical_College_full.png",
+        "logo": "/images/partners/Medical_College_full.png",
+        "fullLogo": "/images/partners/Medical_College_full.png",
         "website": "https://www.bmch.ac.in/",
         "description": "Premier medical institution partnering with CTR for healthcare and safety initiatives."
       }
@@ -359,21 +359,21 @@
       {
         "id": "fmsci",
         "name": "FMSCI",
-        "logo": "/CTR/images/sponsors/fmsci_full.png",
+        "logo": "/images/sponsors/fmsci_full.png",
         "website": "https://www.fmsci.co.in/",
         "description": "Federation of Motor Sports Clubs of India - governing body for motorsport in India."
       },
       {
         "id": "fia",
         "name": "FIA",
-        "logo": "/CTR/images/sponsors/FiA.png",
+        "logo": "/images/sponsors/FiA.png",
         "website": "https://www.fia.com/",
         "description": "Fédération Internationale de l'Automobile - international governing body for motorsport."
       },
       {
         "id": "f4",
         "name": "F4 Indian Championship",
-        "logo": "/CTR/images/sponsors/F4_logo.png",
+        "logo": "/images/sponsors/F4_logo.png",
         "website": "https://www.fiaformula4.com/",
         "description": "F4 Indian Championship - certified by FIA, providing the perfect platform for young drivers."
       }
@@ -387,7 +387,7 @@
       "slug": "season-4-lineup-announcement",
       "publishDate": "2025-07-15",
       "category": "Team News",
-      "image": "/CTR/images/logos/CTR_yellow.png",
+      "image": "/images/logos/CTR_yellow.png",
       "excerpt": "CTR reveals its powerful driver lineup for the upcoming Season 4 of the Indian Racing League.",
       "author": "CTR Team",
       "content": "Chennai Turbo Riders is excited to announce our complete driver lineup for Season 4 of the Indian Racing League. Our team of talented drivers, including Jon Lancaster, Mohamed Ryan, Sandeep Kumar, and Emily Duggan, are ready to take on the challenges of the upcoming season.\n\nWith a mix of international experience and local talent, CTR aims to compete at the highest level and bring home victories for our fans. The season kicks off with the Chennai Street Circuit race, promising thrilling action on the streets of Chennai.",
@@ -399,7 +399,7 @@
       "slug": "chennai-night-race-announcement",
       "publishDate": "2025-07-10",
       "category": "Events",
-      "image": "/CTR/images/logos/CTR_blue.png",
+      "image": "/images/logos/CTR_blue.png",
       "excerpt": "Historic night race to be held on Chennai's streets with a 3.5 KM circuit.",
       "author": "Race Director",
       "content": "For the first time in Indian motorsport history, Chennai will host a night race on its famous street circuit. The 3.5 KM track will be illuminated with state-of-the-art lighting, creating a spectacular atmosphere for both drivers and spectators.\n\nThe night race format will test the skills of our drivers in unique conditions, with cooler temperatures and different visibility challenges. Fans can expect an unforgettable experience as the cars thunder through the city streets under the night sky.",
@@ -411,7 +411,7 @@
       "slug": "bharath-college-partnership",
       "publishDate": "2025-06-20",
       "category": "Partnership",
-      "image": "/CTR/images/sponsors/Bharath_College_logo.png",
+      "image": "/images/sponsors/Bharath_College_logo.png",
       "excerpt": "Chennai Turbo Riders welcomes Bharath College as title sponsor.",
       "author": "Partnership Manager",
       "content": "Chennai Turbo Riders is proud to announce a new partnership with Bharath College as our title sponsor for Season 4. This collaboration represents our commitment to education and youth development in the motorsport community.\n\nBharath College's support will help us continue developing young talent and promoting motorsport education across India. Together, we aim to inspire the next generation of racing drivers and engineers.",
