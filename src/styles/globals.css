@@ -1300,8 +1300,8 @@ ul, ol {
 }
 
 .footer-logo {
-  height: 50px;
-  width: auto;
+  height: auto;
+  width: 200px;
 }
 
 .footer-description {

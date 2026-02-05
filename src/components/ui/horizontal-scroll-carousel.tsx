@@ -48,6 +48,8 @@ const HorizontalScrollCarousel: React.FC<HorizontalScrollCarouselProps> = ({ ite
 }
 
 const Card: React.FC<{ item: HorizontalScrollCarouselProps['items'][0] }> = ({ item }) => {
+  const fullName = [item.firstName, item.lastName].filter(Boolean).join(' ')
+
   return (
     <Link 
       href={`/driver/${item.id}`}
@@ -57,13 +59,13 @@ const Card: React.FC<{ item: HorizontalScrollCarouselProps['items'][0] }> = ({ i
         src={item.image}
         fill
         style={{ objectFit: "cover" }}
-        alt={item.lastName || "carousel image"}
+        alt={fullName || item.lastName || "carousel image"}
         className="transition-transform duration-500 group-hover:scale-110"
       />
       
       <div className="driver-card-overlay">
         {item.number && <span className="driver-number">{item.number}</span>}
-        {item.lastName && <h3 className="driver-name">{item.lastName}</h3>}
+        {(item.firstName || item.lastName) && <h3 className="driver-name">{fullName}</h3>}
         {item.flagEmoji && (
           <p className="driver-country">
             <span>{item.flagEmoji}</span>

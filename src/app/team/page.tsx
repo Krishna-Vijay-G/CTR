@@ -3,7 +3,7 @@
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import DriverCard from '@/components/DriverCard';
-import siteData from '@/data/siteData.json';
+import siteData from '@/data/siteData';
 import { HorizontalScrollCarousel } from '@/components/ui/horizontal-scroll-carousel';
 
 export default function TeamPage() {

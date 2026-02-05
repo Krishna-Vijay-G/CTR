@@ -5,7 +5,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import DriverCard from '@/components/DriverCard';
 import CountdownTimer from '@/components/CountdownTimer';
-import siteData from '@/data/siteData.json';
+import siteData from '@/data/siteData';
 import HeroSlider from '@/components/HeroSlider';
 import { HorizontalScrollCarousel } from '@/components/ui/horizontal-scroll-carousel';
 
@@ -75,6 +75,7 @@ export default function Home() {
           items={drivers.map(driver => ({
             id: driver.id,
             image: driver.image,
+            firstName: driver.firstName,
             lastName: driver.lastName,
             number: driver.number,
             flagEmoji: driver.flagEmoji

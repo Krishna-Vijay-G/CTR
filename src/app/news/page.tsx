@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import siteData from '@/data/siteData.json';
+import siteData from '@/data/siteData';
 
 export const metadata = {
   title: 'News | Chennai Turbo Riders',

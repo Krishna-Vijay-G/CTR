@@ -1,6 +1,6 @@
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import siteData from '@/data/siteData.json';
+import siteData from '@/data/siteData';
 
 export const metadata = {
   title: 'About | Chennai Turbo Riders',
@@ -146,9 +146,17 @@ export default function AboutPage() {
           </h2>
           
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '3rem' }}>
-            <div className="placeholder-img" style={{ height: '350px', borderRadius: '8px' }}>
-              Street Circuit Map
-            </div>
+            {races.streetCircuit.image ? (
+              <img
+                src={races.streetCircuit.image}
+                alt={`${races.streetCircuit.name} map`}
+                style={{ width: '100%', height: '350px', objectFit: 'cover', borderRadius: '8px' }}
+              />
+            ) : (
+              <div className="placeholder-img" style={{ height: '350px', borderRadius: '8px' }}>
+                Street Circuit Map
+              </div>
+            )}
             <div>
               <div style={{ marginBottom: '2rem' }}>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1.5rem' }}>

@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import siteData from '@/data/siteData.json';
+import siteData from '@/data/siteData';
 
 interface DriverPageProps {
   params: { id: string };

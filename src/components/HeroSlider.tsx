@@ -10,9 +10,9 @@ interface Slide {
 }
 
 const slides: Slide[] = [
-  { id: 's1', image: '/images/car/hero.jpg', title: 'THE SF-26 IS BACK ON TRACK' },
+  { id: 's1', image: '/images/car/hero.jpg', title: 'THE GEN2-F4 IS BACK ON TRACK' },
   { id: 's2', image: '/images/car/hero2.jpg', title: 'CHENNAI TURBO RIDERS' },
-  { id: 's3', image: '/images/car/hero3.jpg', title: 'NIGHT RACE IN CHENNAI' }
+  { id: 's3', image: '/images/car/hero3.jpg', title: 'STREET RACE IN GOA' }
 ];
 
 export default function HeroSlider() {

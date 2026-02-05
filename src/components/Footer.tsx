@@ -1,6 +1,6 @@
 import Link from 'next/link';
-import Image from 'next/image';
-import siteData from '@/data/siteData.json';
+import type { Driver } from '@/types';
+import siteData from '@/data/siteData';
 
 export default function Footer() {
   const { site, socialMedia, contact, drivers } = siteData;
@@ -10,8 +10,8 @@ export default function Footer() {
       <div className="container">
         <div className="footer-main">
           <div className="footer-brand">
-            <Image 
-              src="/images/logos/CTR_yellow.png" 
+            <img
+              src="/images/logos/CTR_yellow.png"
               alt={site.name}
               width={50}
               height={50}
@@ -57,7 +57,7 @@ export default function Footer() {
           <div className="footer-column">
             <h4>Drivers</h4>
             <div className="footer-links">
-              {drivers.map(driver => (
+              {drivers.map((driver: Driver) => (
                 <Link key={driver.id} href={`/driver/${driver.id}`} className="footer-link">
                   {driver.firstName} {driver.lastName}
                 </Link>

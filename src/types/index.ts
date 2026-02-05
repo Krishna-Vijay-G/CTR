@@ -82,6 +82,7 @@ export interface StreetCircuit {
   length: string;
   capacity: number;
   stands: number;
+  image?: string;
   route: string[];
   features: string[];
 }
@@ -105,16 +106,20 @@ export interface SponsorsData {
   title: Sponsor[];
   principal: Sponsor[];
   official: Sponsor[];
+  technical: Sponsor[];
 }
 
 export interface NewsArticle {
   id: string;
   title: string;
   slug: string;
-  date: string;
+  publishDate: string;
   category: string;
   image: string;
   excerpt: string;
+  author: string;
+  content: string;
+  tags: string[];
 }
 
 export interface SiteData {

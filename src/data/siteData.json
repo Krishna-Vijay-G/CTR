@@ -309,28 +309,26 @@
         "circuitLength": "3.2 KM",
         "laps": 20,
         "isNightRace": false,
-        "isStreetCircuit": true,
-        "description": "Provisional Date"
+        "isStreetCircuit": true
       }
     ],
     "streetCircuit": {
-      "name": "Chennai Street Circuit",
+      "name": "Goa Street Race",
       "length": "3.5 KM",
-      "capacity": 10000,
-      "stands": 11,
+      "capacity": 12000,
+      "stands": 12,
+      "image": "/images/calender/goa-map.png",
       "route": [
-        "Island Grounds (Start/Finish)",
-        "Flag Staff Road",
-        "Anna Salai",
-        "Sivananda Salai",
-        "Kamarajar Salai (Napier Bridge)",
-        "Island Grounds"
+        "Miramar (Start/Finish)",
+        "Mandovi Road",
+        "M.G. Road",
+        "D.B. Road",
+        "Miramar"
       ],
       "features": [
-        "India's 1st Street Circuit Night Race",
-        "Chennai's First F4 & IRL Night Street Race",
-        "Steel stands at 11 locations with safety measures",
-        "Capacity for 10,000 spectators"
+        "Scenic coastal street circuit",
+        "Temporary grandstands at 12 locations with safety measures",
+        "Capacity for 12,000 spectators"
       ]
     }
   },
@@ -390,20 +388,20 @@
       "image": "/images/logos/CTR_yellow.png",
       "excerpt": "CTR reveals its powerful driver lineup for the upcoming Season 4 of the Indian Racing League.",
       "author": "CTR Team",
-      "content": "Chennai Turbo Riders is excited to announce our complete driver lineup for Season 4 of the Indian Racing League. Our team of talented drivers, including Jon Lancaster, Mohamed Ryan, Sandeep Kumar, and Emily Duggan, are ready to take on the challenges of the upcoming season.\n\nWith a mix of international experience and local talent, CTR aims to compete at the highest level and bring home victories for our fans. The season kicks off with the Chennai Street Circuit race, promising thrilling action on the streets of Chennai.",
+      "content": "Chennai Turbo Riders is excited to announce our complete driver lineup for Season 4 of the Indian Racing League. Our team of talented drivers, including Jon Lancaster, Mohamed Ryan, Sandeep Kumar, and Emily Duggan, are ready to take on the challenges of the upcoming season.\n\nWith a mix of international experience and local talent, CTR aims to compete at the highest level and bring home victories for our fans. The season kicks off with the Goa Street Race, promising thrilling action on Goa's scenic coastal roads.",
       "tags": ["season4", "drivers", "announcement"]
     },
     {
-      "id": "chennai-night-race",
-      "title": "India's First Street Circuit Night Race Coming to Chennai",
-      "slug": "chennai-night-race-announcement",
+      "id": "goa-street-race",
+      "title": "Goa Street Race — New Special Event",
+      "slug": "goa-street-race-announcement",
       "publishDate": "2025-07-10",
       "category": "Events",
       "image": "/images/logos/CTR_blue.png",
-      "excerpt": "Historic night race to be held on Chennai's streets with a 3.5 KM circuit.",
+      "excerpt": "Historic street race to be held on Goa's scenic coastal roads with a 3.5 KM circuit.",
       "author": "Race Director",
-      "content": "For the first time in Indian motorsport history, Chennai will host a night race on its famous street circuit. The 3.5 KM track will be illuminated with state-of-the-art lighting, creating a spectacular atmosphere for both drivers and spectators.\n\nThe night race format will test the skills of our drivers in unique conditions, with cooler temperatures and different visibility challenges. Fans can expect an unforgettable experience as the cars thunder through the city streets under the night sky.",
-      "tags": ["night-race", "chennai", "street-circuit"]
+      "content": "Chennai Turbo Riders is thrilled to announce the Goa Street Race — a new special event on Goa's scenic coastal roads. The 3.5 KM temporary circuit will feature temporary lighting and spectator facilities to create an exciting atmosphere for drivers and fans alike.\n\nThe coastal layout and seaside breeze will present unique challenges and spectacular visuals as cars race along Mandovi and Miramar. Fans can expect a memorable festival of motorsport in Goa.",
+      "tags": ["goa", "street-race", "events"]
     },
     {
       "id": "new-partnership",

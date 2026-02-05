@@ -124,9 +124,18 @@ export default function SchedulePage() {
         <div className="container" style={{ maxWidth: '900px' }}>
           <p className="section-label" style={{ textAlign: 'center' }}>Special Event</p>
           <h2 className="spaced-title" style={{ textAlign: 'center', fontSize: '2rem', marginBottom: '2rem' }}>
-            CHENNAI&nbsp;STREET&nbsp;CIRCUIT
+            {races.streetCircuit.name.toUpperCase()}
           </h2>
           <div className="street-panel">
+            {races.streetCircuit.image && (
+              <div style={{ marginBottom: '2rem' }}>
+                <img
+                  src={races.streetCircuit.image}
+                  alt={`${races.streetCircuit.name} map`}
+                  style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '8px' }}
+                />
+              </div>
+            )}
             <div style={{ 
               display: 'grid', 
               gridTemplateColumns: 'repeat(3, 1fr)', 
