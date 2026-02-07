@@ -28,7 +28,7 @@ export default function AboutPage() {
       {/* About Intro */}
       <section style={{ padding: '6rem 0', background: 'var(--ctr-black)' }}>
         <div className="container" style={{ maxWidth: '900px' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem', alignItems: 'center' }}>
+          <div className="grid-2-col">
             <div>
               <p className="section-label">Our Story</p>
               <h2 className="spaced-title" style={{ fontSize: '2.5rem', marginBottom: '1.5rem' }}>
@@ -54,41 +54,36 @@ export default function AboutPage() {
       {/* Key Numbers */}
       <section style={{ padding: '4rem 0' }}>
         <div className="container">
-          <div style={{ 
-            display: 'grid', 
-            gridTemplateColumns: 'repeat(4, 1fr)', 
-            gap: '2rem',
-            textAlign: 'center'
-          }}>
+          <div className="grid-4-col">
             <div className="stat-block">
-              <p style={{ fontSize: '4rem', fontWeight: 900, color: 'var(--ctr-yellow)', lineHeight: 1 }}>
+              <p className="resp-stat-number">
                 {drivers.length}
               </p>
-              <p style={{ fontSize: '0.85rem', letterSpacing: '0.1em', color: 'var(--ctr-text-gray)', marginTop: '0.5rem' }}>
+              <p className="resp-stat-label">
                 DRIVERS
               </p>
             </div>
             <div className="stat-block">
-              <p style={{ fontSize: '4rem', fontWeight: 900, color: 'var(--ctr-yellow)', lineHeight: 1 }}>
+              <p className="resp-stat-number">
                 {site.currentSeason}
               </p>
-              <p style={{ fontSize: '0.85rem', letterSpacing: '0.1em', color: 'var(--ctr-text-gray)', marginTop: '0.5rem' }}>
+              <p className="resp-stat-label">
                 CURRENT SEASON
               </p>
             </div>
             <div className="stat-block">
-              <p style={{ fontSize: '4rem', fontWeight: 900, color: 'var(--ctr-yellow)', lineHeight: 1 }}>
+              <p className="resp-stat-number">
                 {races.calendar.length}
               </p>
-              <p style={{ fontSize: '0.85rem', letterSpacing: '0.1em', color: 'var(--ctr-text-gray)', marginTop: '0.5rem' }}>
+              <p className="resp-stat-label">
                 RACES
               </p>
             </div>
             <div className="stat-block">
-              <p style={{ fontSize: '4rem', fontWeight: 900, color: 'var(--ctr-yellow)', lineHeight: 1 }}>
+              <p className="resp-stat-number">
                 {Object.values(sponsors).flat().length}
               </p>
-              <p style={{ fontSize: '0.85rem', letterSpacing: '0.1em', color: 'var(--ctr-text-gray)', marginTop: '0.5rem' }}>
+              <p className="resp-stat-label">
                 SPONSORS
               </p>
             </div>
@@ -104,11 +99,7 @@ export default function AboutPage() {
             TEAM PRINCIPAL
           </h2>
           
-          <div style={{ 
-            display: 'grid', 
-            gridTemplateColumns: '250px 1fr', 
-            gap: '3rem', 
-            alignItems: 'center',
+          <div className="grid-sidebar-content" style={{
             padding: '2rem',
             background: 'var(--ctr-black)'
           }}>
@@ -145,7 +136,7 @@ export default function AboutPage() {
             Chennai STREET CIRCUIT
           </h2>
           
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '3rem' }}>
+          <div className="grid-2-col" style={{ gap: '3rem' }}>
             {races.streetCircuit.image ? (
               <img
                 src={races.streetCircuit.image}
@@ -159,28 +150,28 @@ export default function AboutPage() {
             )}
             <div>
               <div style={{ marginBottom: '2rem' }}>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1.5rem' }}>
+                <div className="grid-2-col" style={{ gap: '1.5rem' }}>
                   <div>
-                    <p style={{ fontSize: '2.5rem', fontWeight: 900, color: 'var(--ctr-yellow)' }}>
+                    <p className="resp-stat-number" style={{ fontSize: 'clamp(1.5rem, 4vw, 2.5rem)' }}>
                       {races.streetCircuit.length}
                     </p>
-                    <p style={{ fontSize: '0.8rem', color: 'var(--ctr-text-gray)', letterSpacing: '0.1em' }}>
+                    <p className="resp-stat-label">
                       CIRCUIT LENGTH
                     </p>
                   </div>
                   <div>
-                    <p style={{ fontSize: '2.5rem', fontWeight: 900, color: 'var(--ctr-yellow)' }}>
+                    <p className="resp-stat-number" style={{ fontSize: 'clamp(1.5rem, 4vw, 2.5rem)' }}>
                       {races.streetCircuit.capacity.toLocaleString()}
                     </p>
-                    <p style={{ fontSize: '0.8rem', color: 'var(--ctr-text-gray)', letterSpacing: '0.1em' }}>
+                    <p className="resp-stat-label">
                       SPECTATOR CAPACITY
                     </p>
                   </div>
                   <div>
-                    <p style={{ fontSize: '2.5rem', fontWeight: 900, color: 'var(--ctr-yellow)' }}>
+                    <p className="resp-stat-number" style={{ fontSize: 'clamp(1.5rem, 4vw, 2.5rem)' }}>
                       {races.streetCircuit.stands}
                     </p>
-                    <p style={{ fontSize: '0.8rem', color: 'var(--ctr-text-gray)', letterSpacing: '0.1em' }}>
+                    <p className="resp-stat-label">
                       GRANDSTANDS
                     </p>
                   </div>
@@ -216,7 +207,7 @@ export default function AboutPage() {
             featuring the Formula 4 South East Asia cars. With races across India's most iconic cities, 
             the IRL brings world-class motorsport action to the subcontinent.
           </p>
-          <div style={{ display: 'flex', justifyContent: 'center', gap: '3rem' }}>
+          <div className="flex-group-responsive" style={{ display: 'flex', justifyContent: 'center', gap: '3rem' }}>
             <div>
               <p style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--ctr-yellow)' }}>F4</p>
               <p style={{ fontSize: '0.8rem', color: 'var(--ctr-text-gray)' }}>CAR CATEGORY</p>

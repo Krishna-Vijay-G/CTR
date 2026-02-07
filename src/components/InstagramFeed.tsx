@@ -68,7 +68,7 @@ export default function InstagramFeed({ username = 'chennaiturboriders', limit =
         .insta-grid {
           display: grid;
           grid-template-columns: repeat(4, 1fr);
-          grid-auto-rows: 450px; /* Increased height for real embeds */
+          grid-auto-rows: 450px;
           gap: 20px;
         }
 
@@ -101,6 +101,7 @@ export default function InstagramFeed({ username = 'chennaiturboriders', limit =
           flex-direction: column;
           overflow: hidden;
           position: relative;
+          border-radius: 8px;
         }
 
         .insta-iframe {
@@ -108,6 +109,7 @@ export default function InstagramFeed({ username = 'chennaiturboriders', limit =
           height: 100%;
           border: none;
           background: white;
+          border-radius: 8px;
         }
 
         .insta-corner-tag {
@@ -129,10 +131,11 @@ export default function InstagramFeed({ username = 'chennaiturboriders', limit =
           pointer-events: none;
         }
 
+        /* Tablet landscape */
         @media (max-width: 1024px) {
           .insta-grid {
             grid-template-columns: repeat(2, 1fr);
-            grid-auto-rows: 400px;
+            grid-auto-rows: 420px;
           }
           .item-1, .item-2, .item-3, .item-4, .item-5, .item-6, .item-7, .item-8, .item-9 {
             grid-column: span 1;
@@ -141,12 +144,35 @@ export default function InstagramFeed({ username = 'chennaiturboriders', limit =
           .item-1 { grid-column: span 2; }
         }
 
+        /* Tablet portrait */
+        @media (max-width: 768px) {
+          .insta-grid {
+            grid-template-columns: repeat(2, 1fr);
+            grid-auto-rows: 380px;
+            gap: 12px;
+          }
+          .item-1 { grid-column: span 2; }
+        }
+
+        /* Mobile */
         @media (max-width: 600px) {
+          .insta-feed-wrapper {
+            padding: 10px 0;
+          }
           .insta-grid {
             grid-template-columns: 1fr;
             grid-auto-rows: 500px;
+            gap: 16px;
           }
           .item-1 { grid-column: span 1; }
+        }
+
+        /* Small mobile */
+        @media (max-width: 380px) {
+          .insta-grid {
+            grid-auto-rows: 440px;
+            gap: 12px;
+          }
         }
       `}</style>
     </div>

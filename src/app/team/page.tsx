@@ -68,12 +68,7 @@ export default function TeamPage() {
             zIndex: 1 
           }}></div>
           <div className="container" style={{ position: 'relative', zIndex: 2 }}>
-            <div style={{ 
-              display: 'grid', 
-              gridTemplateColumns: '350px 1fr', 
-              gap: '3rem', 
-              alignItems: 'center' 
-            }}>
+            <div className="grid-sidebar-content-xl">
               <img 
                 src={teamPrincipal.image} 
                 alt={teamPrincipal.name} 

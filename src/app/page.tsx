@@ -31,7 +31,7 @@ export default function Home() {
       {/* Hero Slider */}
       <div style={{ position: 'relative', zIndex: 1 }}>
         {/* season label remains above slider */}
-        <div style={{ position: 'absolute', left: '2rem', top: '5rem', zIndex: 2 }}>
+        <div className="hero-season-label" style={{ position: 'absolute', left: '2rem', top: '5rem', zIndex: 2 }}>
           <p className="section-label">Season {races.season} • {races.seasonName}</p>
         </div>
         {/* slider component */}
@@ -57,7 +57,7 @@ export default function Home() {
               </Link>
             </div>
             <div className="car-image">
-              <img src={car.image} alt={car.name} style={{ width: '100%', height: '400px', objectFit: 'cover', borderRadius: '8px' }} />
+              <img src={car.image} alt={car.name} />
             </div>
           </div>
         </div>
@@ -146,7 +146,7 @@ export default function Home() {
           <div className="news-header">
             <div>
               <p className="section-label">Latest Updates</p>
-              <h2 className="spaced-title" style={{ fontSize: '2.5rem' }}>N E W S</h2>
+              <h2 className="spaced-title resp-section-title">N E W S</h2>
             </div>
             <Link href="/news" className="view-all-link">
               View All Posts

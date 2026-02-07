@@ -143,26 +143,26 @@ export default function SchedulePage() {
               marginBottom: '2rem' 
             }}>
               <div style={{ textAlign: 'center' }}>
-                <p style={{ fontSize: '2.5rem', fontWeight: 900, color: 'var(--ctr-yellow)' }}>
+                <p className="resp-stat-number" style={{ fontSize: 'clamp(1.5rem, 4vw, 2.5rem)' }}>
                   {races.streetCircuit.length}
                 </p>
-                <p style={{ fontSize: '0.75rem', color: 'var(--ctr-text-gray)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+                <p className="resp-stat-label">
                   Circuit Length
                 </p>
               </div>
               <div style={{ textAlign: 'center' }}>
-                <p style={{ fontSize: '2.5rem', fontWeight: 900, color: 'var(--ctr-yellow)' }}>
+                <p className="resp-stat-number" style={{ fontSize: 'clamp(1.5rem, 4vw, 2.5rem)' }}>
                   {races.streetCircuit.capacity.toLocaleString()}
                 </p>
-                <p style={{ fontSize: '0.75rem', color: 'var(--ctr-text-gray)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+                <p className="resp-stat-label">
                   Capacity
                 </p>
               </div>
               <div style={{ textAlign: 'center' }}>
-                <p style={{ fontSize: '2.5rem', fontWeight: 900, color: 'var(--ctr-yellow)' }}>
+                <p className="resp-stat-number" style={{ fontSize: 'clamp(1.5rem, 4vw, 2.5rem)' }}>
                   {races.streetCircuit.stands}
                 </p>
-                <p style={{ fontSize: '0.75rem', color: 'var(--ctr-text-gray)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+                <p className="resp-stat-label">
                   Grandstands
                 </p>
               </div>

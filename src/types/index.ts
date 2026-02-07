@@ -7,6 +7,7 @@ export interface SiteConfig {
   headquarters: string;
   currentSeason: number;
   championship: string;
+  officialWebsite: string;
 }
 
 export interface TeamPrincipal {
@@ -60,6 +61,7 @@ export interface Driver {
   biography: string;
   stats: DriverStats;
   careerHighlights: string[];
+  championship?: string;
 }
 
 export interface Race {
@@ -100,6 +102,7 @@ export interface Sponsor {
   logo: string;
   fullLogo?: string;
   website: string;
+  description?: string;
 }
 
 export interface SponsorsData {

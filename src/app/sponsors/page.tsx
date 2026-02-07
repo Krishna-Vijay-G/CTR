@@ -46,11 +46,7 @@ export default function SponsorsPage() {
             <p className="section-label" style={{ textAlign: 'center' }}>Title Sponsor</p>
             
             {groupedSponsors.title.map(sponsor => (
-              <div key={sponsor.id} className="title-sponsor-card" style={{
-                display: 'grid',
-                gridTemplateColumns: '300px 1fr',
-                gap: '3rem',
-                alignItems: 'center',
+              <div key={sponsor.id} className="title-sponsor-card grid-sidebar-content-lg" style={{
                 padding: '3rem',
                 background: 'var(--ctr-black)',
                 marginTop: '2rem'
@@ -84,7 +80,7 @@ export default function SponsorsPage() {
             
             <div className="sponsors-grid principal" style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(min(350px, 100%), 1fr))',
               gap: '2rem'
             }}>
               {groupedSponsors.principal.map(sponsor => (
@@ -125,7 +121,7 @@ export default function SponsorsPage() {
             
             <div className="sponsors-grid" style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(min(250px, 100%), 1fr))',
               gap: '1.5rem'
             }}>
               {groupedSponsors.official.map(sponsor => (
@@ -159,7 +155,7 @@ export default function SponsorsPage() {
             
             <div className="sponsors-grid" style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(min(200px, 100%), 1fr))',
               gap: '1rem'
             }}>
               {groupedSponsors.technical.map((sponsor: any) => (
