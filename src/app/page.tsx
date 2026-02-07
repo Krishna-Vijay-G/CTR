@@ -5,6 +5,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import DriverCard from '@/components/DriverCard';
 import CountdownTimer from '@/components/CountdownTimer';
+import InstagramFeed from '@/components/InstagramFeed';
 import siteData from '@/data/siteData';
 import HeroSlider from '@/components/HeroSlider';
 import { HorizontalScrollCarousel } from '@/components/ui/horizontal-scroll-carousel';
@@ -67,7 +68,7 @@ export default function Home() {
         <div className="container" style={{ marginBottom: '2rem' }}>
           <div className="drivers-header">
             <p className="section-label">Official Drivers</p>
-            <h2 className="spaced-title-large">O U R &nbsp; T E A M</h2>
+            <h2 className="spaced-title-large">OUR TEAM</h2>
           </div>
         </div>
         
@@ -139,7 +140,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* News Section - Ferrari Style */}
+      {/* News Section - Instagram Feed */}
       <section className="news-section">
         <div className="container">
           <div className="news-header">
@@ -148,34 +149,14 @@ export default function Home() {
               <h2 className="spaced-title" style={{ fontSize: '2.5rem' }}>N E W S</h2>
             </div>
             <Link href="/news" className="view-all-link">
-              View All
+              View All Posts
               <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
               </svg>
             </Link>
           </div>
           
-          <div className="news-grid">
-            {news.slice(0, 3).map(article => (
-              <Link key={article.id} href={`/news/${article.slug}`} className="news-card">
-                <div className="news-card-image">
-                  <div className="placeholder-img">{article.category}</div>
-                </div>
-                <div className="news-card-content">
-                  <span className="news-category">{article.category}</span>
-                  <h3 className="news-title">{article.title}</h3>
-                  <p className="news-excerpt">{article.excerpt}</p>
-                  <span className="news-date">
-                    {new Date(article.publishDate).toLocaleDateString('en-US', { 
-                      day: '2-digit', 
-                      month: 'long', 
-                      year: 'numeric' 
-                    })}
-                  </span>
-                </div>
-              </Link>
-            ))}
-          </div>
+          <InstagramFeed username="chennaiturboriders" limit={3} />
         </div>
       </section>
 
@@ -184,7 +165,7 @@ export default function Home() {
         <div className="container">
           <div className="sponsors-header">
             <p className="section-label">Our Partners</p>
-            <h2 className="spaced-title-large">S P O N S O R S</h2>
+            <h2 className="spaced-title-large">SPONSORS</h2>
           </div>
           
           {sponsors.title.length > 0 && (

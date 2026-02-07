@@ -19,8 +19,8 @@ export default function AboutPage() {
         <div>
           <p className="section-label">Welcome to</p>
           <h1 className="spaced-title-large">
-            C H E N N A I<br />
-            <span>T U R B O &nbsp; <br />R I D E R S</span>
+            CHENNAI<br />
+            <span>TURBO<br />RIDERS</span>
           </h1>
         </div>
       </section>
@@ -32,7 +32,7 @@ export default function AboutPage() {
             <div>
               <p className="section-label">Our Story</p>
               <h2 className="spaced-title" style={{ fontSize: '2.5rem', marginBottom: '1.5rem' }}>
-                T H E &nbsp; T E A M
+                THE TEAM
               </h2>
               <p style={{ color: 'var(--ctr-text-light)', fontSize: '1.1rem', lineHeight: 1.9, marginBottom: '1.5rem' }}>
                 Chennai Turbo Riders represents the spirit of motorsport excellence in India. 
@@ -101,7 +101,7 @@ export default function AboutPage() {
         <div className="container" style={{ maxWidth: '900px' }}>
           <p className="section-label" style={{ textAlign: 'center' }}>Leadership</p>
           <h2 className="spaced-title" style={{ textAlign: 'center', marginBottom: '3rem' }}>
-            T E A M &nbsp; P R I N C I P A L
+            TEAM PRINCIPAL
           </h2>
           
           <div style={{ 
@@ -142,7 +142,7 @@ export default function AboutPage() {
         <div className="container" style={{ maxWidth: '1000px' }}>
           <p className="section-label" style={{ textAlign: 'center' }}>Home Race</p>
           <h2 className="spaced-title-large" style={{ textAlign: 'center', marginBottom: '3rem' }}>
-            C H E N N A I &nbsp; <span>S T R E E T &nbsp; C I R C U I T</span>
+            Chennai STREET CIRCUIT
           </h2>
           
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '3rem' }}>
@@ -150,7 +150,7 @@ export default function AboutPage() {
               <img
                 src={races.streetCircuit.image}
                 alt={`${races.streetCircuit.name} map`}
-                style={{ width: '100%', height: '350px', objectFit: 'cover', borderRadius: '8px' }}
+                style={{ width: '100%', height: 'auto', objectFit: 'cover', borderRadius: '8px' }}
               />
             ) : (
               <div className="placeholder-img" style={{ height: '350px', borderRadius: '8px' }}>
@@ -209,7 +209,7 @@ export default function AboutPage() {
         <div className="container" style={{ maxWidth: '800px', textAlign: 'center' }}>
           <p className="section-label">The Championship</p>
           <h2 className="spaced-title" style={{ marginBottom: '2rem' }}>
-            I N D I A N &nbsp; R A C I N G &nbsp; L E A G U E
+            INDIAN RACING LEAGUE
           </h2>
           <p style={{ color: 'var(--ctr-text-light)', fontSize: '1.1rem', lineHeight: 1.9, marginBottom: '2rem' }}>
             The Indian Racing League (IRL) is India's premier single-seater racing championship, 
@@ -238,7 +238,7 @@ export default function AboutPage() {
         <div className="container" style={{ maxWidth: '600px', textAlign: 'center' }}>
           <p className="section-label">Get in Touch</p>
           <h2 className="spaced-title" style={{ marginBottom: '2rem' }}>
-            C O N T A C T
+            CONTACT
           </h2>
           <div style={{ marginBottom: '2rem' }}>
             <p style={{ color: 'var(--ctr-text-light)', marginBottom: '0.5rem' }}>
