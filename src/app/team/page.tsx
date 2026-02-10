@@ -95,7 +95,7 @@ export default function TeamPage() {
         style={{
           padding: 'clamp(2rem, 5vw, 4rem) 0 0 0',
           position: 'relative',
-          backgroundImage: 'url(/images/car/hero2.JPG)',
+          backgroundImage: 'url(/images/car/hero2.jpg)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundAttachment: 'scroll',
@@ -124,7 +124,7 @@ export default function TeamPage() {
         style={{
           padding: 'clamp(2rem, 5vw, 4rem) 0',
           position: 'relative',
-          backgroundImage: 'url(/images/car/hero2.JPG)',
+          backgroundImage: 'url(/images/car/hero2.jpg)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundAttachment: 'scroll',
