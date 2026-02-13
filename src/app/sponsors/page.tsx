@@ -44,8 +44,8 @@ export default function SponsorsPage() {
             <p className="section-label" style={{ textAlign: 'center' }}>Title Sponsor</p>
             {grouped.title.map((s) => (
               <div key={s.id} className="title-sponsor-card grid-sidebar-content-lg" style={{ padding: 'clamp(1.5rem, 3vw, 3rem)', background: 'var(--ctr-gray-dark)', marginTop: '1.5rem', borderRadius: '12px' }}>
-                <div className="placeholder-img sponsor-logo-large" style={{ height: 'clamp(120px, 18vw, 200px)' }}>
-                  {s.name}
+                <div className="sponsor-logo-large" style={{ height: 'clamp(120px, 18vw, 200px)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <img src={s.fullLogo || s.logo} alt={s.name} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
                 </div>
                 <div>
                   <h3 style={{ fontSize: 'clamp(1.4rem, 2.5vw, 2rem)', fontWeight: 700, marginBottom: '0.75rem' }}>{s.name}</h3>
@@ -73,8 +73,8 @@ export default function SponsorsPage() {
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(300px, 100%), 1fr))', gap: 'clamp(1rem, 2vw, 1.5rem)' }}>
               {grouped.principal.map((s) => (
                 <div key={s.id} className="sponsor-card">
-                  <div className="placeholder-img" style={{ height: 'clamp(80px, 12vw, 120px)', marginBottom: '1rem' }}>
-                    {s.name}
+                  <div style={{ height: 'clamp(80px, 12vw, 120px)', marginBottom: '1rem', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1rem' }}>
+                    <img src={s.logo} alt={s.name} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
                   </div>
                   <h4 style={{ fontSize: 'clamp(1rem, 1.4vw, 1.2rem)', fontWeight: 700, marginBottom: '0.5rem' }}>{s.name}</h4>
                   <p style={{ fontSize: '0.88rem', color: 'var(--ctr-text-light)', marginBottom: '0.75rem', lineHeight: 1.7 }}>
@@ -101,8 +101,8 @@ export default function SponsorsPage() {
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(220px, 100%), 1fr))', gap: 'clamp(0.75rem, 1.5vw, 1.25rem)' }}>
               {grouped.official.map((s) => (
                 <a key={s.id} href={s.website} target="_blank" rel="noopener noreferrer" className="sponsor-card" style={{ textDecoration: 'none' }}>
-                  <div className="placeholder-img" style={{ height: 'clamp(50px, 8vw, 80px)', marginBottom: '0.75rem' }}>
-                    {s.name}
+                  <div style={{ height: 'clamp(50px, 8vw, 80px)', marginBottom: '0.75rem', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0.5rem' }}>
+                    <img src={s.logo} alt={s.name} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
                   </div>
                   <h4 style={{ color: 'var(--ctr-white)', fontSize: 'clamp(0.85rem, 1.1vw, 1rem)', fontWeight: 600 }}>{s.name}</h4>
                 </a>
@@ -123,8 +123,8 @@ export default function SponsorsPage() {
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(180px, 100%), 1fr))', gap: 'clamp(0.5rem, 1vw, 1rem)' }}>
               {grouped.technical.map((s: any) => (
                 <div key={s.id} className="sponsor-card">
-                  <div className="placeholder-img" style={{ height: 'clamp(40px, 6vw, 60px)', marginBottom: '0.5rem', fontSize: '0.75rem' }}>
-                    {s.name}
+                  <div style={{ height: 'clamp(40px, 6vw, 60px)', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0.5rem' }}>
+                    <img src={s.logo} alt={s.name} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
                   </div>
                   <p style={{ fontSize: '0.82rem', fontWeight: 500 }}>{s.name}</p>
                 </div>
