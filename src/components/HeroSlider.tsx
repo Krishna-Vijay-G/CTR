@@ -11,7 +11,7 @@ interface Slide {
 
 const slides: Slide[] = [
   { id: 's1', image: '/images/car/hero.jpg', title: 'THE GEN2-F4 IS BACK ON TRACK' },
-  { id: 's2', image: '/images/team/team.jpg', title: 'CHENNAI TURBO RIDERS' },
+  { id: 's2', image: '/images/team/Team.jpg', title: 'CHENNAI TURBO RIDERS' },
   { id: 's3', image: '/images/calender/goa.jpg', title: 'STREET RACE IN GOA' },
 ];
 
