@@ -1,24 +1,21 @@
-import { notFound } from 'next/navigation';
-import Link from 'next/link';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
-import siteData from '@/data/siteData';
+import { notFound } from "next/navigation";
+import Link from "next/link";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import siteData from "@/data/siteData";
 
 interface DriverPageProps {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
 export async function generateStaticParams() {
-  return siteData.drivers.map((driver) => ({
-    id: driver.id,
-  }));
+  return siteData.drivers.map((driver) => ({ id: driver.id }));
 }
 
 export async function generateMetadata({ params }: DriverPageProps) {
   const { id } = await params;
-  const driver = siteData.drivers.find(d => d.id === id);
-  if (!driver) return { title: 'Driver Not Found' };
-  
+  const driver = siteData.drivers.find((d) => d.id === id);
+  if (!driver) return { title: "Driver Not Found" };
   return {
     title: `${driver.firstName} ${driver.lastName} | Chennai Turbo Riders`,
     description: driver.biography,
@@ -27,268 +24,247 @@ export async function generateMetadata({ params }: DriverPageProps) {
 
 export default async function DriverPage({ params }: DriverPageProps) {
   const { id } = await params;
-  const driver = siteData.drivers.find(d => d.id === id);
-  
-  if (!driver) {
-    notFound();
-  }
+  const driver = siteData.drivers.find((d) => d.id === id);
+  if (!driver) notFound();
 
-  const formatDate = (dateStr: string) => {
-    return new Date(dateStr).toLocaleDateString('en-US', {
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric'
+  const formatDate = (dateStr: string) =>
+    new Date(dateStr).toLocaleDateString("en-US", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
     });
-  };
 
-  const spacedName = `${driver.firstName} ${driver.lastName}`;
+  const fullName = `${driver.firstName} ${driver.lastName}`;
 
-  // Calculate percentages for progress bars
-  const maxStats = { wins: 10, poles: 10, podiums: 15, fastestLaps: 10 };
-  const winsPercent = Math.min((driver.stats.raceWins / maxStats.wins) * 100, 100);
-  const polesPercent = Math.min((driver.stats.polePositions / maxStats.poles) * 100, 100);
-  const podiumsPercent = Math.min((driver.stats.podiums / maxStats.podiums) * 100, 100);
-  const lapsPercent = Math.min((driver.stats.fastestLaps / maxStats.fastestLaps) * 100, 100);
+  const statItems = [
+    { label: "Race Wins", value: driver.stats.raceWins, max: 10 },
+    { label: "Pole Positions", value: driver.stats.polePositions, max: 10 },
+    { label: "Podiums", value: driver.stats.podiums, max: 15 },
+    { label: "Fastest Laps", value: driver.stats.fastestLaps, max: 10 },
+  ];
 
   return (
-    <div className="schedule-page">
-      <video
-        className="schedule-page-video"
-        autoPlay
-        muted
-        loop
-        playsInline
-        poster="/video/background.mp4"
-      >
-        <source src="/video/background.mp4" type="video/mp4" />
-      </video>
+    <>
       <Navbar />
-      
-      <div className="schedule-page-content">
+
       {/* Immersive Hero */}
-      <section className="driver-hero-immersive">
-        <div className="driver-hero-immersive-bg">
-          <img 
-            src={driver.heroImage} 
-            alt={`${driver.firstName} ${driver.lastName}`}
-          />
+      <section className="relative min-h-[70vh] md:min-h-[80vh] flex items-end overflow-hidden">
+        {/* Background Video */}
+        <div className="absolute inset-0">
+          <video
+            className="w-full h-full object-cover"
+            autoPlay
+            muted
+            loop
+            playsInline
+            poster={driver.heroImage}
+          >
+            <source src="/video/background.mp4" type="video/mp4" />
+          </video>
+          <div className="absolute inset-0 bg-gradient-to-t from-carbon-950 via-carbon-950/60 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-carbon-950/80 to-transparent" />
         </div>
-        <div className="driver-hero-immersive-overlay" />
-        
-        <div className="driver-hero-immersive-content">
-          <div className="driver-hero-number-massive">{driver.number}</div>
-          <div className="driver-hero-immersive-inner">
-            <p className="driver-hero-immersive-label">Official CTR Driver</p>
-            <h1 className="driver-hero-immersive-name">{spacedName}</h1>
-            
-            <div className="driver-hero-immersive-stats">
-              <div className="driver-hero-stat-pill">
-                <span className="driver-hero-stat-pill-value">{driver.stats.raceWins}</span>
-                <span className="driver-hero-stat-pill-label">Wins</span>
+
+        {/* Number Watermark */}
+        <div className="absolute right-0 top-1/2 -translate-y-1/2 select-none pointer-events-none">
+          <span className="text-[20rem] md:text-[30rem] font-heading font-black text-white/[0.03] leading-none">
+            {driver.number}
+          </span>
+        </div>
+
+        {/* Hero Content */}
+        <div className="relative z-10 section-container pb-16 pt-32">
+          <span className="label-text text-racing-red mb-2 block">
+            Official CTR Driver
+          </span>
+          <h1 className="font-heading font-black text-4xl sm:text-5xl md:text-7xl text-white uppercase tracking-tight leading-none mb-8">
+            {driver.firstName}
+            <br />
+            <span className="text-racing-red">{driver.lastName}</span>
+          </h1>
+
+          {/* Quick Stats Pills */}
+          <div className="flex flex-wrap gap-3">
+            {[
+              { label: "Wins", value: driver.stats.raceWins },
+              { label: "Poles", value: driver.stats.polePositions },
+              { label: "Podiums", value: driver.stats.podiums },
+              { label: "Grand Prix", value: driver.stats.grandPrix },
+            ].map((s) => (
+              <div
+                key={s.label}
+                className="flex items-center gap-2 px-4 py-2 bg-carbon-900/60 backdrop-blur-sm border border-carbon-700/30"
+              >
+                <span className="font-heading font-bold text-xl text-racing-red">
+                  {s.value}
+                </span>
+                <span className="text-xs uppercase tracking-wider text-carbon-400 font-heading">
+                  {s.label}
+                </span>
               </div>
-              <div className="driver-hero-stat-pill">
-                <span className="driver-hero-stat-pill-value">{driver.stats.polePositions}</span>
-                <span className="driver-hero-stat-pill-label">Poles</span>
-              </div>
-              <div className="driver-hero-stat-pill">
-                <span className="driver-hero-stat-pill-value">{driver.stats.podiums}</span>
-                <span className="driver-hero-stat-pill-label">Podiums</span>
-              </div>
-              <div className="driver-hero-stat-pill">
-                <span className="driver-hero-stat-pill-value">{driver.stats.grandPrix}</span>
-                <span className="driver-hero-stat-pill-label">Grand Prix</span>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Driver Info & Content */}
-      <section className="driver-details-section">
-        <div className="container">
-          
-          {/* Info Ribbon */}
-          <div className="driver-info-ribbon" style={{ marginBottom: 'clamp(3rem, 6vw, 5rem)' }}>
-            <div className="driver-info-ribbon-item">
-              <div className="driver-info-ribbon-icon">
-                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                  <path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.66 0-3 1.34-3 3v11c0 1.66 1.34 3 3 3h14c1.66 0 3-1.34 3-3V7c0-1.66-1.34-3-3-3Zm1 14c0 .55-.45 1-1 1H5c-.55 0-1-.45-1-1V10h16v8Zm0-10H4V7c0-.55.45-1 1-1h1v1h2V6h8v1h2V6h1c.55 0 1 .45 1 1v1Z" />
-                </svg>
+      {/* Driver Info Ribbon */}
+      <section className="bg-carbon-900 border-y border-carbon-800">
+        <div className="section-container py-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {[
+              { label: "Date of Birth", value: formatDate(driver.dateOfBirth) },
+              { label: "Nationality", value: driver.nationality },
+              { label: "Height", value: driver.height },
+              { label: "Weight", value: driver.weight },
+            ].map((info) => (
+              <div key={info.label} className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-racing-red/10 flex items-center justify-center shrink-0">
+                  <div className="w-2 h-2 bg-racing-red" />
+                </div>
+                <div>
+                  <p className="font-heading font-semibold text-white text-sm">
+                    {info.value}
+                  </p>
+                  <p className="text-[10px] uppercase tracking-wider text-carbon-500">
+                    {info.label}
+                  </p>
+                </div>
               </div>
-              <div>
-                <p className="driver-info-ribbon-value">{formatDate(driver.dateOfBirth)}</p>
-                <p className="driver-info-ribbon-label">Date of Birth</p>
-              </div>
-            </div>
-            
-            <div className="driver-info-ribbon-item">
-              <div className="driver-info-ribbon-icon">
-                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2Zm0 2c.92 0 1.8.2 2.59.55-.23.21-.45.45-.63.71-.45.65-.63 1.47-.36 2.32.19.6.58 1.18 1.09 1.61.47.39.72.97.62 1.57-.17 1.05-1.15 1.66-2.09 1.35-.63-.21-1.08-.75-1.22-1.39l-.12-.54c-.14-.62-.76-1.02-1.38-.88-.62.14-1.02.76-.88 1.38l.12.54c.07.33.2.65.37.94-1.04.27-1.85 1.1-2.08 2.21-.06.31-.07.63-.04.94A7.97 7.97 0 0 1 4 12c0-4.41 3.59-8 8-8Zm0 16c-1.32 0-2.55-.32-3.64-.9.27-.46.45-.97.55-1.51.11-.54.55-.98 1.1-1.08 1.02-.19 2.01.47 2.2 1.49.12.62.62 1.1 1.25 1.2.96.15 1.85-.45 2.01-1.4.14-.87.54-1.66 1.14-2.28.24-.25.47-.52.68-.8.46.93.71 1.97.71 3.08 0 2.11-1.02 3.98-2.59 5.17-.83.27-1.71.43-2.63.43Z" />
-                </svg>
-              </div>
-              <div>
-                <p className="driver-info-ribbon-value">{driver.nationality}</p>
-                <p className="driver-info-ribbon-label">Nationality</p>
-              </div>
-            </div>
-            
-            <div className="driver-info-ribbon-item">
-              <div className="driver-info-ribbon-icon">
-                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                  <path d="M4 5c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h16v-2H4V5Zm6 0v3h2V5h-2Zm0 5v3h2v-3h-2Zm0 5v2h2v-2h-2Zm4-5v3h2v-3h-2Zm0 5v2h2v-2h-2Zm0-10v3h2V5h-2Z" />
-                </svg>
-              </div>
-              <div>
-                <p className="driver-info-ribbon-value">{driver.height}</p>
-                <p className="driver-info-ribbon-label">Height</p>
-              </div>
-            </div>
-            
-            <div className="driver-info-ribbon-item">
-              <div className="driver-info-ribbon-icon">
-                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                  <path d="M12 2c-1.1 0-2 .9-2 2v1H6l-2 5v.5C4 12.88 5.12 14 6.5 14S9 12.88 9 11.5V11L7.5 7H10v11H6v2h12v-2h-4V7h2.5L15 11v.5c0 1.38 1.12 2.5 2.5 2.5s2.5-1.12 2.5-2.5V9l-2-5h-4V4c0-1.1-.9-2-2-2Zm-6 7.32L7.19 11H4.81L6 9.32ZM16.81 11 18 9.32 19.19 11h-2.38Z" />
-                </svg>
-              </div>
-              <div>
-                <p className="driver-info-ribbon-value">{driver.weight}</p>
-                <p className="driver-info-ribbon-label">Weight</p>
-              </div>
-            </div>
+            ))}
           </div>
+        </div>
+      </section>
 
-          <div className="section-divider-diagonal" style={{ marginBottom: 'clamp(3rem, 6vw, 5rem)' }} />
+      {/* Performance Stats */}
+      <section className="py-16 md:py-24 bg-carbon-950">
+        <div className="section-container max-w-4xl">
+          <span className="label-text text-racing-red mb-2 block">
+            Performance
+          </span>
+          <h2 className="heading-lg mb-12">Career Statistics</h2>
 
-          {/* Performance Stats Showcase */}
-          <div style={{ marginBottom: 'clamp(3rem, 6vw, 5rem)' }}>
-            <h2 className="section-title">
-              <span className="section-label">Performance</span>
-              Career Statistics
-            </h2>
-            
-            <div className="driver-stat-showcase">
-              <div className="driver-stat-showcase-item">
-                <p className="driver-stat-showcase-label">Race Wins</p>
-                <p className="driver-stat-showcase-value">{driver.stats.raceWins}</p>
-                <div className="driver-stat-showcase-bar">
-                  <div 
-                    className="driver-stat-showcase-bar-fill" 
-                    style={{ width: `${winsPercent}%` }}
-                  />
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            {statItems.map((stat) => {
+              const pct = Math.min((stat.value / stat.max) * 100, 100);
+              return (
+                <div
+                  key={stat.label}
+                  className="carbon-card p-6 hover:border-racing-red/30 transition-colors"
+                >
+                  <div className="flex justify-between items-center mb-3">
+                    <p className="text-xs uppercase tracking-wider text-carbon-400 font-heading">
+                      {stat.label}
+                    </p>
+                    <p className="font-heading font-bold text-3xl text-white">
+                      {stat.value}
+                    </p>
+                  </div>
+                  <div className="h-1 bg-carbon-800 w-full overflow-hidden">
+                    <div
+                      className="h-full bg-racing-red transition-all duration-1000"
+                      style={{ width: `${pct}%` }}
+                    />
+                  </div>
                 </div>
-              </div>
-              
-              <div className="driver-stat-showcase-item">
-                <p className="driver-stat-showcase-label">Pole Positions</p>
-                <p className="driver-stat-showcase-value">{driver.stats.polePositions}</p>
-                <div className="driver-stat-showcase-bar">
-                  <div 
-                    className="driver-stat-showcase-bar-fill" 
-                    style={{ width: `${polesPercent}%` }}
-                  />
-                </div>
-              </div>
-              
-              <div className="driver-stat-showcase-item">
-                <p className="driver-stat-showcase-label">Podiums</p>
-                <p className="driver-stat-showcase-value">{driver.stats.podiums}</p>
-                <div className="driver-stat-showcase-bar">
-                  <div 
-                    className="driver-stat-showcase-bar-fill" 
-                    style={{ width: `${podiumsPercent}%` }}
-                  />
-                </div>
-              </div>
-              
-              <div className="driver-stat-showcase-item">
-                <p className="driver-stat-showcase-label">Fastest Laps</p>
-                <p className="driver-stat-showcase-value">{driver.stats.fastestLaps}</p>
-                <div className="driver-stat-showcase-bar">
-                  <div 
-                    className="driver-stat-showcase-bar-fill" 
-                    style={{ width: `${lapsPercent}%` }}
-                  />
-                </div>
-              </div>
-            </div>
+              );
+            })}
           </div>
+        </div>
+      </section>
 
-          <div className="section-divider-diagonal--reverse" style={{ marginBottom: 'clamp(3rem, 6vw, 5rem)' }} />
+      {/* Biography & Image */}
+      <section className="py-16 md:py-24 bg-carbon-900">
+        <div className="section-container">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+            {/* Bio Card */}
+            <div>
+              <span className="label-text text-racing-red mb-2 block">
+                About
+              </span>
+              <h2 className="heading-lg mb-6">Biography</h2>
 
-          {/* Biography & Image Split */}
-          <div style={{ 
-            display: 'grid', 
-            gridTemplateColumns: 'repeat(auto-fit, minmax(min(380px, 100%), 1fr))', 
-            gap: 'clamp(2rem, 4vw, 3rem)',
-            marginBottom: 'clamp(3rem, 6vw, 5rem)'
-          }}>
-            <div className="driver-bio-card">
-              <div className="driver-bio-card-header">
-                <h3 className="driver-bio-card-title">Biography</h3>
-                <p className="driver-bio-card-subtitle">About {driver.firstName}</p>
-              </div>
-              <div className="driver-bio-card-content">
-                <p className="driver-bio-card-text">{driver.biography}</p>
-                <blockquote className="driver-bio-card-quote">
-                  "{driver.quote}"
+              <div className="carbon-card p-8">
+                <p className="body-text leading-relaxed mb-6">
+                  {driver.biography}
+                </p>
+                <blockquote className="border-l-2 border-racing-red pl-6 italic text-carbon-300 text-lg">
+                  &ldquo;{driver.quote}&rdquo;
                 </blockquote>
               </div>
             </div>
-            
-            <div style={{
-              borderRadius: '12px',
-              overflow: 'hidden',
-              boxShadow: '0 16px 50px rgba(0, 0, 0, 0.4)'
-            }}>
-              <img 
-                src={driver.image} 
-                alt={`${driver.firstName} ${driver.lastName}`}
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'cover',
-                  display: 'block',
-                  minHeight: '400px'
-                }}
-              />
-            </div>
-          </div>
 
-          {/* Career Highlights */}
-          <div>
-            <h3 className="section-title">
-              <span className="section-label">Achievements</span>
-              Career Highlights
-            </h3>
-            <div className="achievement-cards">
-              {driver.careerHighlights.map((highlight, index) => (
-                <div key={index} className="achievement-card">
-                  <div className="achievement-card-icon">
-                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                      <path d="M17 3V2H7v1H2v3c0 2.76 2.24 5 5 5 .22 0 .43-.02.64-.05A5.97 5.97 0 0 0 11 15v3H9v2h6v-2h-2v-3a5.97 5.97 0 0 0 3.36-4.05c.21.03.42.05.64.05 2.76 0 5-2.24 5-5V3h-5Zm-8 6c-1.66 0-3-1.34-3-3V5h3v4Zm9-3c0 1.66-1.34 3-3 3V5h3v1Z" />
-                    </svg>
-                  </div>
-                  <p className="achievement-card-text">{highlight}</p>
-                </div>
-              ))}
+            {/* Driver Image */}
+            <div className="relative overflow-hidden group">
+              <div className="absolute -inset-1 bg-racing-red/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <img
+                src={driver.image}
+                alt={fullName}
+                className="relative w-full h-auto min-h-[400px] object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+              />
+              <div className="absolute bottom-0 left-0 right-0 h-1 bg-racing-red" />
             </div>
           </div>
         </div>
       </section>
 
-      {/* Back to Team */}
-      <section style={{ padding: '4rem 0', textAlign: 'center', background: 'transparent' }}>
-        <Link href="/team" className="btn">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style={{ transform: 'rotate(180deg)' }}>
-            <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
-          </svg>
-          Back to Team
-        </Link>
+      {/* Career Highlights */}
+      <section className="py-16 md:py-24 bg-carbon-950">
+        <div className="section-container max-w-4xl">
+          <span className="label-text text-racing-red mb-2 block">
+            Achievements
+          </span>
+          <h2 className="heading-lg mb-12">Career Highlights</h2>
+
+          <div className="space-y-4">
+            {driver.careerHighlights.map((highlight, index) => (
+              <div
+                key={index}
+                className="flex items-start gap-4 p-5 carbon-card hover:border-racing-red/30 transition-colors group"
+              >
+                <div className="w-8 h-8 bg-racing-red/10 flex items-center justify-center shrink-0 group-hover:bg-racing-red/20 transition-colors">
+                  <svg
+                    className="w-4 h-4 text-racing-red"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                  >
+                    <path d="M17 3V2H7v1H2v3c0 2.76 2.24 5 5 5 .22 0 .43-.02.64-.05A5.97 5.97 0 0 0 11 15v3H9v2h6v-2h-2v-3a5.97 5.97 0 0 0 3.36-4.05c.21.03.42.05.64.05 2.76 0 5-2.24 5-5V3h-5Zm-8 6c-1.66 0-3-1.34-3-3V5h3v4Zm9-3c0 1.66-1.34 3-3 3V5h3v1Z" />
+                  </svg>
+                </div>
+                <p className="font-heading text-sm text-carbon-300 group-hover:text-white transition-colors leading-relaxed">
+                  {highlight}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Back to Team CTA */}
+      <section className="py-12 bg-carbon-900 border-t border-carbon-800">
+        <div className="section-container text-center">
+          <Link
+            href="/team"
+            className="inline-flex items-center gap-3 btn-outline"
+          >
+            <svg
+              className="w-4 h-4 rotate-180"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M17 8l4 4m0 0l-4 4m4-4H3"
+              />
+            </svg>
+            Back to Team
+          </Link>
+        </div>
       </section>
 
       <Footer />
-      </div>
-    </div>
+    </>
   );
 }

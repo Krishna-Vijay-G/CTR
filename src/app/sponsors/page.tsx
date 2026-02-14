@@ -1,151 +1,128 @@
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
-import siteData from '@/data/siteData';
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import siteData from "@/data/siteData";
 
 export const metadata = {
-  title: 'Sponsors | Chennai Turbo Riders',
-  description: 'Our valued partners and sponsors who make CTR racing possible',
+  title: "Sponsors | Chennai Turbo Riders",
+  description: "Our valued partners and sponsors who make CTR racing possible.",
 };
 
 export default function SponsorsPage() {
   const { sponsors } = siteData;
 
-  const grouped = {
-    title: sponsors.title,
-    principal: sponsors.principal,
-    official: sponsors.official,
-    technical: sponsors.technical || [],
-  };
+  const tiers = [
+    { key: "title" as const, label: "Title Sponsor", items: sponsors.title },
+    { key: "principal" as const, label: "Principal Partners", items: sponsors.principal },
+    { key: "official" as const, label: "Official Partners", items: sponsors.official },
+    { key: "technical" as const, label: "Technical Partners", items: sponsors.technical },
+  ].filter((t) => t.items.length > 0);
 
   return (
     <>
       <Navbar />
 
       {/* Hero */}
-      <section className="page-hero">
-        <p className="section-label">Our Partners</p>
-        <h1 className="spaced-title-large">SPONSORS</h1>
+      <section className="relative min-h-[45vh] flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-carbon-900 to-carbon-950" />
+        <div className="absolute inset-0 bg-carbon-fiber opacity-30" />
+        <div className="relative z-10 text-center">
+          <span className="label-text">Our Partners</span>
+          <h1 className="heading-xl mt-3">
+            <span className="text-white">SPON</span>
+            <span className="text-racing-red">SORS</span>
+          </h1>
+        </div>
       </section>
 
-      {/* Partnership Message */}
-      <section style={{ padding: 'clamp(2rem, 5vw, 4rem) 0', background: 'var(--ctr-black)', textAlign: 'center' }}>
-        <div className="container" style={{ maxWidth: '800px' }}>
-          <p style={{ fontSize: 'clamp(1rem, 1.5vw, 1.25rem)', lineHeight: 1.85, color: 'var(--ctr-text-light)' }}>
+      {/* Intro */}
+      <section className="py-16 bg-carbon-950">
+        <div className="section-container max-w-3xl text-center">
+          <p className="body-text">
             Chennai Turbo Riders is proud to partner with leading organizations that share our passion
             for motorsport excellence. Together, we&apos;re driving the future of racing in India.
           </p>
         </div>
       </section>
 
-      {/* Title Sponsor */}
-      {grouped.title.length > 0 && (
-        <section style={{ padding: 'clamp(2rem, 5vw, 4rem) 0' }}>
-          <div className="container">
-            <p className="section-label" style={{ textAlign: 'center' }}>Title Sponsor</p>
-            {grouped.title.map((s) => (
-              <div key={s.id} className="title-sponsor-card grid-sidebar-content-lg" style={{ padding: 'clamp(1.5rem, 3vw, 3rem)', background: 'var(--ctr-gray-dark)', marginTop: '1.5rem', borderRadius: '12px' }}>
-                <div className="sponsor-logo-large" style={{ height: 'clamp(120px, 18vw, 200px)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <img src={s.fullLogo || s.logo} alt={s.name} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+      {/* Sponsor Tiers */}
+      {tiers.map((tier) => (
+        <section
+          key={tier.key}
+          className={`section-padding ${tier.key === "title" ? "bg-carbon-900" : "bg-carbon-950"}`}
+        >
+          <div className="section-container">
+            <div className="text-center mb-12">
+              <span className="label-text">{tier.label}</span>
+              <div className="w-12 h-[1px] bg-racing-red/30 mx-auto mt-3" />
+            </div>
+
+            {tier.key === "title" ? (
+              /* Title sponsor - large feature card */
+              tier.items.map((s) => (
+                <div key={s.id} className="carbon-card p-8 md:p-12 max-w-4xl mx-auto grid md:grid-cols-[1fr_2fr] gap-8 items-center">
+                  <div className="flex items-center justify-center p-6">
+                    <img
+                      src={s.fullLogo || s.logo}
+                      alt={s.name}
+                      className="max-w-full max-h-[180px] object-contain"
+                      loading="lazy"
+                    />
+                  </div>
+                  <div>
+                    <h3 className="font-heading font-bold text-2xl text-white mb-3">{s.name}</h3>
+                    <p className="body-text mb-6">{s.description}</p>
+                    <a
+                      href={s.website}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn-primary"
+                    >
+                      Visit Website
+                    </a>
+                  </div>
                 </div>
-                <div>
-                  <h3 style={{ fontSize: 'clamp(1.4rem, 2.5vw, 2rem)', fontWeight: 700, marginBottom: '0.75rem' }}>{s.name}</h3>
-                  <p style={{ color: 'var(--ctr-text-light)', marginBottom: '1.25rem', lineHeight: 1.8, fontSize: 'clamp(0.88rem, 1.1vw, 1rem)' }}>
-                    {s.description}
-                  </p>
-                  <a href={s.website} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
-                    Visit Website
+              ))
+            ) : (
+              /* Other tiers - grid */
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl mx-auto">
+                {tier.items.map((s) => (
+                  <a
+                    key={s.id}
+                    href={s.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group carbon-card p-6 flex flex-col items-center text-center hover:border-racing-red/30 transition-all duration-300"
+                  >
+                    <div className="h-24 flex items-center justify-center mb-4">
+                      <img
+                        src={s.logo}
+                        alt={s.name}
+                        className="max-w-full max-h-full object-contain opacity-60 group-hover:opacity-100 grayscale group-hover:grayscale-0 transition-all duration-300"
+                        loading="lazy"
+                      />
+                    </div>
+                    <h4 className="font-heading font-semibold text-sm text-white">{s.name}</h4>
+                    {s.description && (
+                      <p className="text-xs text-carbon-400 mt-2 line-clamp-2">{s.description}</p>
+                    )}
                   </a>
-                </div>
+                ))}
               </div>
-            ))}
+            )}
           </div>
         </section>
-      )}
-
-      {/* Principal Partners */}
-      {grouped.principal.length > 0 && (
-        <section style={{ padding: 'clamp(2rem, 5vw, 4rem) 0', background: 'var(--ctr-dark)' }}>
-          <div className="container">
-            <p className="section-label" style={{ textAlign: 'center' }}>Principal Partners</p>
-            <h3 className="spaced-title" style={{ textAlign: 'center', fontSize: 'clamp(1.2rem, 2vw, 1.6rem)', marginBottom: '2rem' }}>
-              PRINCIPAL PARTNERS
-            </h3>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(300px, 100%), 1fr))', gap: 'clamp(1rem, 2vw, 1.5rem)' }}>
-              {grouped.principal.map((s) => (
-                <div key={s.id} className="sponsor-card">
-                  <div style={{ height: 'clamp(80px, 12vw, 120px)', marginBottom: '1rem', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1rem' }}>
-                    <img src={s.logo} alt={s.name} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
-                  </div>
-                  <h4 style={{ fontSize: 'clamp(1rem, 1.4vw, 1.2rem)', fontWeight: 700, marginBottom: '0.5rem' }}>{s.name}</h4>
-                  <p style={{ fontSize: '0.88rem', color: 'var(--ctr-text-light)', marginBottom: '0.75rem', lineHeight: 1.7 }}>
-                    {s.description}
-                  </p>
-                  <a href={s.website} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--ctr-yellow)', fontSize: '0.82rem', letterSpacing: '0.05em' }}>
-                    Visit &rarr;
-                  </a>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Official Partners */}
-      {grouped.official.length > 0 && (
-        <section style={{ padding: 'clamp(2rem, 5vw, 4rem) 0' }}>
-          <div className="container">
-            <p className="section-label" style={{ textAlign: 'center' }}>Official Partners</p>
-            <h3 className="spaced-title" style={{ textAlign: 'center', fontSize: 'clamp(1.2rem, 2vw, 1.6rem)', marginBottom: '2rem' }}>
-              OFFICIAL PARTNERS
-            </h3>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(220px, 100%), 1fr))', gap: 'clamp(0.75rem, 1.5vw, 1.25rem)' }}>
-              {grouped.official.map((s) => (
-                <a key={s.id} href={s.website} target="_blank" rel="noopener noreferrer" className="sponsor-card" style={{ textDecoration: 'none' }}>
-                  <div style={{ height: 'clamp(50px, 8vw, 80px)', marginBottom: '0.75rem', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0.5rem' }}>
-                    <img src={s.logo} alt={s.name} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
-                  </div>
-                  <h4 style={{ color: 'var(--ctr-white)', fontSize: 'clamp(0.85rem, 1.1vw, 1rem)', fontWeight: 600 }}>{s.name}</h4>
-                </a>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Technical Partners */}
-      {grouped.technical.length > 0 && (
-        <section style={{ padding: 'clamp(2rem, 5vw, 4rem) 0', background: 'var(--ctr-dark)' }}>
-          <div className="container">
-            <p className="section-label" style={{ textAlign: 'center' }}>Technical Partners</p>
-            <h3 className="spaced-title" style={{ textAlign: 'center', fontSize: 'clamp(1.2rem, 2vw, 1.6rem)', marginBottom: '2rem' }}>
-              TECHNICAL PARTNERS
-            </h3>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(180px, 100%), 1fr))', gap: 'clamp(0.5rem, 1vw, 1rem)' }}>
-              {grouped.technical.map((s: any) => (
-                <div key={s.id} className="sponsor-card">
-                  <div style={{ height: 'clamp(40px, 6vw, 60px)', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0.5rem' }}>
-                    <img src={s.logo} alt={s.name} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
-                  </div>
-                  <p style={{ fontSize: '0.82rem', fontWeight: 500 }}>{s.name}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
+      ))}
 
       {/* Partnership Inquiry */}
-      <section style={{ padding: 'clamp(3rem, 8vw, 6rem) 0', textAlign: 'center', background: 'var(--ctr-black)' }}>
-        <div className="container" style={{ maxWidth: '600px' }}>
-          <p className="section-label">Become a Partner</p>
-          <h2 className="spaced-title" style={{ fontSize: 'clamp(1.4rem, 2.5vw, 2rem)', marginBottom: '1.25rem' }}>
-            JOIN US
-          </h2>
-          <p style={{ color: 'var(--ctr-text-light)', marginBottom: '1.5rem', lineHeight: 1.8, fontSize: 'clamp(0.9rem, 1.1vw, 1rem)' }}>
+      <section className="section-padding bg-carbon-900 text-center">
+        <div className="section-container max-w-xl">
+          <span className="label-text">Become a Partner</span>
+          <h2 className="heading-md mt-3 mb-6 text-white">JOIN US</h2>
+          <p className="body-text mb-8">
             Interested in partnering with Chennai Turbo Riders? Connect with us to explore
             sponsorship opportunities and be part of India&apos;s premier racing team.
           </p>
-          <a href="mailto:sponsors@chennaiturboriders.in" className="btn btn-primary">
+          <a href={`mailto:${siteData.contact.email}`} className="btn-primary">
             Contact Us
           </a>
         </div>

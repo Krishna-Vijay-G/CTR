@@ -1,224 +1,172 @@
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
-import CountdownTimer from '@/components/CountdownTimer';
-import siteData from '@/data/siteData.json';
+"use client";
 
-export const metadata = {
-  title: 'Race Calendar | Chennai Turbo Riders',
-  description: 'View the complete race calendar for Chennai Turbo Riders in the Indian Racing League',
-};
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import CountdownTimer from "@/components/CountdownTimer";
+import siteData from "@/data/siteData";
+import AnimatedSection from "@/components/AnimatedSection";
 
 export default function SchedulePage() {
   const { races } = siteData;
 
-  const formatDate = (dateStr: string) => {
-    return new Date(dateStr).toLocaleDateString('en-US', {
-      day: '2-digit',
-      month: 'short',
-    });
-  };
+  const formatDate = (dateStr: string) =>
+    new Date(dateStr).toLocaleDateString("en-US", { day: "2-digit", month: "short" });
 
   const nextRace = races.calendar[0];
 
   return (
-    <div className="schedule-page">
-      <video
-        className="schedule-page-video"
-        autoPlay
-        muted
-        loop
-        playsInline
-        poster="/video/background.mp4"
-      >
-        <source src="/video/background.mp4" type="video/mp4" />
-      </video>
+    <>
       <Navbar />
 
-      <div className="schedule-page-content">
-        {/* Page Hero */}
-        <section
-          className="page-hero"
-          style={{
-            position: 'relative',
-            background: 'none',
-            backgroundColor: 'transparent',
-          }}
+      {/* Hero with video background */}
+      <section className="relative min-h-[55vh] flex items-center justify-center overflow-hidden">
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover"
         >
-          <div style={{ position: 'relative', zIndex: 2 }}>
-            <p className="section-label">{races.seasonName}</p>
-            <h1 className="spaced-title-large">
-              RACE&nbsp;<span>CALENDAR</span>
-            </h1>
-          </div>
-        </section>
+          <source src="/video/background.mp4" type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-carbon-950/70" />
+        <div className="relative z-10 text-center">
+          <span className="label-text">{races.seasonName}</span>
+          <h1 className="heading-xl mt-3">
+            <span className="text-white">RACE </span>
+            <span className="text-racing-red">CALENDAR</span>
+          </h1>
+        </div>
+      </section>
 
-        {/* Countdown */}
-        <section className="countdown-section" style={{ padding: 'clamp(2rem, 5vw, 4rem) 0' }}>
-          <div className="container">
-            <p className="countdown-label">Next Race Starts In</p>
+      {/* Countdown */}
+      <section className="py-16 bg-carbon-900 relative">
+        <div className="absolute inset-0 bg-carbon-fiber opacity-20" />
+        <div className="relative z-10 section-container text-center">
+          <AnimatedSection>
+            <span className="label-text block mb-8">Next Race Starts In</span>
             <CountdownTimer targetDate={nextRace.dateStart} />
-
-            <div className="next-race-info">
-              <span className="next-race-flag">{nextRace.flagEmoji}</span>
-              <div className="next-race-details">
-                <p className="next-race-date">
-                  {formatDate(nextRace.dateStart)} -{' '}
-                  {formatDate(nextRace.dateEnd)}{' '}
-                  {new Date(nextRace.dateEnd).getFullYear()}
+            <div className="mt-8 inline-flex items-center gap-4 p-5 carbon-card">
+              <span className="text-3xl">{nextRace.flagEmoji}</span>
+              <div className="text-left">
+                <p className="font-heading font-bold text-xl text-white">
+                  {nextRace.name}
                 </p>
-                <p className="next-race-name">
-                  {nextRace.name}, {nextRace.location}
+                <p className="text-sm text-carbon-400">
+                  {formatDate(nextRace.dateStart)} – {formatDate(nextRace.dateEnd)}{" "}
+                  {new Date(nextRace.dateEnd).getFullYear()} · {nextRace.location}
                 </p>
               </div>
             </div>
-          </div>
-        </section>
+          </AnimatedSection>
+        </div>
+      </section>
 
-        {/* Full Calendar — Card Grid */}
-        <section className="calendar-section" style={{ paddingTop: 'clamp(1rem, 3vw, 2rem)' }}>
-          <div className="container">
-            <div className="race-card-grid">
-              {races.calendar.map((race, index) => (
+      {/* Full Calendar */}
+      <section className="section-padding bg-carbon-950">
+        <div className="section-container max-w-4xl">
+          <div className="space-y-[1px] bg-carbon-700/20">
+            {races.calendar.map((race, i) => (
+              <AnimatedSection key={race.round} delay={i * 0.1}>
                 <div
-                  key={race.round}
-                  className={`race-card ${index === 0 ? 'next-race' : ''}`}
+                  className={`bg-carbon-900 p-6 flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-8
+                  ${i === 0 ? "border-l-2 border-racing-red" : ""}`}
                 >
-                  <div className="race-card-round-number">
-                    {String(race.round).padStart(2, '0')}
+                  <span className="font-heading font-bold text-4xl text-white/10 w-14 flex-shrink-0">
+                    {String(race.round).padStart(2, "0")}
+                  </span>
+                  <div className="flex-1">
+                    <p className="font-heading font-bold text-xl text-white mb-1">{race.name}</p>
+                    <p className="text-sm text-carbon-400">
+                      {race.flagEmoji} {race.location}, {race.country}
+                    </p>
+                    <p className="text-xs text-carbon-500 mt-1">
+                      {race.circuitLength} · {race.laps} Laps
+                    </p>
                   </div>
-                  <div className="race-card-body">
-                    <p className="race-card-name">{race.name}</p>
-                    <p className="race-card-location">
-                      <span>{race.flagEmoji}</span> {race.location}, {race.country}
-                    </p>
-                    <p className="race-card-circuit">
-                      {race.circuitLength} &bull; {race.laps} Laps
-                    </p>
-                    <div className="race-card-meta">
-                      <span className="race-card-date">
-                        {formatDate(race.dateStart)} –{' '}
-                        {formatDate(race.dateEnd)}{' '}
-                        {new Date(race.dateEnd).getFullYear()}
-                      </span>
-                      {race.isNightRace && (
-                        <span className="race-card-tag">Night Race</span>
-                      )}
+                  <div className="flex items-center gap-3 flex-shrink-0">
+                    <span className="text-sm text-carbon-300 font-heading">
+                      {formatDate(race.dateStart)} – {formatDate(race.dateEnd)}{" "}
+                      {new Date(race.dateEnd).getFullYear()}
+                    </span>
+                    <div className="flex gap-2">
                       {race.isStreetCircuit && (
-                        <span className="race-card-tag">Street Circuit</span>
+                        <span className="px-2 py-1 text-[9px] uppercase tracking-wider font-heading bg-racing-red/20 text-racing-red border border-racing-red/30">
+                          Street
+                        </span>
+                      )}
+                      {race.isNightRace && (
+                        <span className="px-2 py-1 text-[9px] uppercase tracking-wider font-heading bg-racing-red/20 text-racing-red border border-racing-red/30">
+                          Night
+                        </span>
                       )}
                     </div>
                   </div>
                 </div>
-              ))}
-            </div>
+              </AnimatedSection>
+            ))}
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Street Circuit Info — Side-by-side layout */}
-        <section className="street-section">
-          <div className="container" style={{ maxWidth: '1100px' }}>
-            <p className="section-label" style={{ textAlign: 'center' }}>
-              Special Event
-            </p>
-            <h2
-              className="spaced-title"
-              style={{
-                textAlign: 'center',
-                fontSize: 'clamp(1.4rem, 2.5vw, 2rem)',
-                marginBottom: 'clamp(1.5rem, 3vw, 2.5rem)',
-              }}
-            >
-              {races.streetCircuit.name.toUpperCase()}
-            </h2>
+      {/* Street Circuit Info */}
+      {races.streetCircuit && (
+        <section className="section-padding bg-carbon-900">
+          <div className="section-container max-w-5xl">
+            <AnimatedSection className="text-center mb-12">
+              <span className="label-text">Special Event</span>
+              <h2 className="heading-md mt-3 text-white">{races.streetCircuit.name.toUpperCase()}</h2>
+            </AnimatedSection>
 
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(min(380px, 100%), 1fr))',
-              gap: 'clamp(1rem, 2vw, 2rem)',
-              alignItems: 'start',
-            }}>
-              {/* Left — Circuit Image */}
+            <div className="grid md:grid-cols-2 gap-8">
               {races.streetCircuit.image && (
-                <div className="street-panel" style={{ padding: 0, overflow: 'hidden' }}>
+                <AnimatedSection direction="left">
                   <img
                     src={races.streetCircuit.image}
-                    alt={`${races.streetCircuit.name} map`}
+                    alt={races.streetCircuit.name}
+                    className="w-full h-[350px] object-cover"
                     loading="lazy"
-                    style={{
-                      width: '100%',
-                      height: 'clamp(250px, 30vw, 400px)',
-                      objectFit: 'cover',
-                      display: 'block',
-                    }}
                   />
-                </div>
+                </AnimatedSection>
               )}
 
-              {/* Right — Stats & Route */}
-              <div className="street-panel">
-                <div style={{
-                  display: 'grid',
-                  gridTemplateColumns: 'repeat(3, 1fr)',
-                  gap: 'clamp(0.75rem, 1.5vw, 1.5rem)',
-                  marginBottom: 'clamp(1.25rem, 2vw, 2rem)',
-                }}>
-                  {[
-                    { value: races.streetCircuit.length, label: 'Length' },
-                    { value: races.streetCircuit.capacity.toLocaleString(), label: 'Capacity' },
-                    { value: races.streetCircuit.stands, label: 'Stands' },
-                  ].map((stat) => (
-                    <div key={stat.label} style={{ textAlign: 'center' }}>
-                      <p
-                        className="resp-stat-number"
-                        style={{ fontSize: 'clamp(1.2rem, 2.5vw, 2rem)' }}
-                      >
-                        {stat.value}
-                      </p>
-                      <p className="resp-stat-label">{stat.label}</p>
-                    </div>
-                  ))}
-                </div>
+              <AnimatedSection direction="right" delay={0.1}>
+                <div className="carbon-card p-6">
+                  <div className="grid grid-cols-3 gap-4 mb-8">
+                    {[
+                      { val: races.streetCircuit.length, label: "Length" },
+                      { val: races.streetCircuit.capacity.toLocaleString(), label: "Capacity" },
+                      { val: races.streetCircuit.stands, label: "Stands" },
+                    ].map((stat) => (
+                      <div key={stat.label} className="text-center">
+                        <span className="block font-heading font-bold text-2xl text-white">{stat.val}</span>
+                        <span className="block mt-1 text-[10px] uppercase tracking-wider text-carbon-400 font-heading">{stat.label}</span>
+                      </div>
+                    ))}
+                  </div>
 
-                <h4
-                  style={{
-                    marginBottom: '0.75rem',
-                    fontSize: 'clamp(0.72rem, 0.9vw, 0.82rem)',
-                    letterSpacing: '0.12em',
-                    textTransform: 'uppercase',
-                    color: 'var(--ctr-yellow)',
-                  }}
-                >
-                  Circuit Route
-                </h4>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
-                  {races.streetCircuit.route.map((point, index) => (
-                    <span
-                      key={index}
-                      style={{
-                        padding: '0.35rem 0.65rem',
-                        background: 'rgba(255, 255, 255, 0.05)',
-                        borderRadius: '4px',
-                        fontSize: 'clamp(0.7rem, 0.85vw, 0.8rem)',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '0.35rem',
-                        color: 'var(--ctr-white)',
-                      }}
-                    >
-                      {point}
-                      {index < races.streetCircuit.route.length - 1 && (
-                        <span style={{ color: 'var(--ctr-yellow)' }}>&rarr;</span>
-                      )}
-                    </span>
-                  ))}
+                  <h4 className="label-text mb-3">Circuit Route</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {races.streetCircuit.route.map((point, i) => (
+                      <span
+                        key={i}
+                        className="px-3 py-1.5 bg-carbon-700/30 text-sm text-carbon-300 font-heading"
+                      >
+                        {point}
+                        {i < races.streetCircuit.route.length - 1 && (
+                          <span className="text-racing-red ml-2">→</span>
+                        )}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              </AnimatedSection>
             </div>
           </div>
         </section>
-      </div>
+      )}
 
       <Footer />
-    </div>
+    </>
   );
 }

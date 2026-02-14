@@ -2,13 +2,38 @@
   "site": {
     "name": "Chennai Turbo Riders",
     "abbreviation": "CTR",
-    "tagline": "India's Premier Racing Team",
-    "description": "Professional Racing Team with Chennai Based & International Drivers",
+    "tagline": "Born to Race. Built to Win.",
+    "description": "India's Premier Formula 4 Racing Team competing at the highest level of Indian motorsport.",
     "founded": 2022,
     "headquarters": "Chennai, Tamil Nadu, India",
     "currentSeason": 4,
     "championship": "Indian Racing League (IRL)",
     "officialWebsite": "https://www.chennaiturboriders.in"
+  },
+  "hero": {
+    "title": "CHENNAI TURBO RIDERS",
+    "subtitle": "BORN TO RACE. BUILT TO WIN.",
+    "description": "India's Premier Formula 4 Racing Team",
+    "videoSrc": "/video/background.mp4",
+    "stats": [
+      { "value": "8", "label": "DRIVERS" },
+      { "value": "S4", "label": "SEASON" },
+      { "value": "2", "label": "RACES" },
+      { "value": "11", "label": "PODIUMS" }
+    ]
+  },
+  "about": {
+    "title": "ABOUT THE TEAM",
+    "subtitle": "RACING EXCELLENCE SINCE 2022",
+    "description": "Chennai Turbo Riders is India's premier Formula 4 racing team, founded in 2022 with a singular mission — to put Indian motorsport on the global map. Based in Chennai, Tamil Nadu, CTR competes in the Indian Racing League with a diverse roster of talented drivers from India and around the world.",
+    "description2": "Our team combines cutting-edge engineering with raw racing talent, creating a powerhouse that consistently challenges at the front of the grid. From the streets of Goa to the circuits of Mumbai, CTR delivers heart-pounding performance every race weekend.",
+    "image": "/images/team/Team.jpg",
+    "stats": [
+      { "value": "4", "label": "Seasons" },
+      { "value": "8", "label": "Drivers" },
+      { "value": "11+", "label": "Race Wins" },
+      { "value": "30+", "label": "Podiums" }
+    ]
   },
   "teamPrincipal": {
     "name": "Keerthivasan S",
@@ -24,12 +49,27 @@
   "contact": {
     "email": "info@chennaiturboriders.in",
     "phone": "+91 XXXXX XXXXX",
-    "address": "Chennai, Tamil Nadu, India"
+    "address": "Chennai, Tamil Nadu, India",
+    "mapEmbed": ""
   },
-  "car": {
-    "name": "Wolf GB08",
+  "carSpecs": {
+    "name": "GEN-2 F4",
+    "tagline": "ENGINEERED FOR SPEED. BUILT FOR VICTORY.",
     "year": 2025,
-    "image": "/images/car/hero.jpg"
+    "image": "/images/car/hero.jpg",
+    "image2": "/images/car/hero2.jpg",
+    "image3": "/images/car/hero3.jpg",
+    "description": "The Gen-2 F4 is a purpose-built formula racing machine that delivers exceptional performance on both permanent circuits and street tracks. Its lightweight carbon fiber construction and aerodynamic design make it one of the most competitive cars in the Indian Racing League.",
+    "specs": [
+      { "label": "Engine", "value": "Turbo 1.4L" },
+      { "label": "Power", "value": "160 HP" },
+      { "label": "Weight", "value": "570 kg" },
+      { "label": "Top Speed", "value": "230 km/h" },
+      { "label": "0-100 km/h", "value": "3.8s" },
+      { "label": "Chassis", "value": "Carbon Fiber" },
+      { "label": "Gearbox", "value": "6-Speed Sequential" },
+      { "label": "Brakes", "value": "Brembo Carbon" }
+    ]
   },
   "drivers": [
     {
@@ -281,6 +321,20 @@
       ]
     }
   ],
+  "achievements": [
+    { "year": "2025", "title": "Season 3 Championship Contenders", "description": "Multi-podium finish season with consistent top-5 results." },
+    { "year": "2024", "title": "IRL Podium Breakthroughs", "description": "Multiple podium finishes across the Indian Racing League calendar." },
+    { "year": "2023", "title": "First Race Victory", "description": "Historic first race win for Chennai Turbo Riders in the IRL." },
+    { "year": "2022", "title": "Team Founded", "description": "Chennai Turbo Riders established as India's newest Formula racing team." }
+  ],
+  "gallery": [
+    { "src": "/images/car/hero.jpg", "alt": "CTR Wolf GB08 on track", "category": "car" },
+    { "src": "/images/car/hero2.jpg", "alt": "CTR car in action", "category": "car" },
+    { "src": "/images/car/hero3.jpg", "alt": "CTR race car detail", "category": "car" },
+    { "src": "/images/team/Team.jpg", "alt": "CTR team photo", "category": "team" },
+    { "src": "/images/calender/goa.jpg", "alt": "Goa Street Circuit", "category": "circuit" },
+    { "src": "/images/updates/GSC-update.png", "alt": "Goa Street Circuit update", "category": "updates" }
+  ],
   "races": {
     "season": 4,
     "seasonName": "Season 4 IRL",
@@ -380,15 +434,29 @@
   },
   "news": [
     {
+      "id": "aqil-p2-goa",
+      "title": "P2 for Aqil Alibhai — CTR Strikes Again ⚡",
+      "slug": "aqil-p2-goa-street-circuit",
+      "publishDate": "2026-02-14",
+      "category": "Race Result",
+      "image": "/images/updates/GSC-update.png",
+      "image1": "/images/updates/P2.png",
+      "excerpt": "Aqil Alibhai secures second place at Goa Street Circuit in Season 4 action.",
+      "author": "CTR Team",
+      "content": "Chennai Turbo Riders achieved another strong performance with Aqil Alibhai securing a podium finish at the Goa Street Circuit. The driver demonstrated exceptional pace and racecraft throughout the Indian Racing League event, bringing home a P2 finish for the team in Season 4. #RaceofIndia",
+      "tags": ["aqil-alibhai", "goa", "podium", "season4", "raceofindia"]
+    },
+    {
       "id": "season-4-announcement",
       "title": "Chennai Turbo Riders Announces Season 4 Lineup",
       "slug": "season-4-lineup-announcement",
       "publishDate": "2025-07-15",
       "category": "Team News",
-      "image": "/images/logos/CTR_yellow.png",
+      "image": "/images/team/Team.jpg",
+      "image1": "/images/team/Team.jpg",
       "excerpt": "CTR reveals its powerful driver lineup for the upcoming Season 4 of the Indian Racing League.",
       "author": "CTR Team",
-      "content": "Chennai Turbo Riders is excited to announce our complete driver lineup for Season 4 of the Indian Racing League. Our team of talented drivers, including Jon Lancaster, Mohamed Ryan, Sandeep Kumar, and Emily Duggan, are ready to take on the challenges of the upcoming season.\n\nWith a mix of international experience and local talent, CTR aims to compete at the highest level and bring home victories for our fans. The season kicks off with the Goa Street Race, promising thrilling action on Goa's scenic coastal roads.",
+      "content": "Chennai Turbo Riders is excited to announce our complete driver lineup for Season 4 of the Indian Racing League.",
       "tags": ["season4", "drivers", "announcement"]
     },
     {
@@ -397,10 +465,11 @@
       "slug": "goa-street-race-announcement",
       "publishDate": "2025-07-10",
       "category": "Events",
-      "image": "/images/logos/CTR_blue.png",
+      "image": "/images/calender/goa.jpg",
+      "image1": "/images/calender/goa.jpg",
       "excerpt": "Historic street race to be held on Goa's scenic coastal roads with a 3.5 KM circuit.",
       "author": "Race Director",
-      "content": "Chennai Turbo Riders is thrilled to announce the Goa Street Race — a new special event on Goa's scenic coastal roads. The 3.5 KM temporary circuit will feature temporary lighting and spectator facilities to create an exciting atmosphere for drivers and fans alike.\n\nThe coastal layout and seaside breeze will present unique challenges and spectacular visuals as cars race along Mandovi and Miramar. Fans can expect a memorable festival of motorsport in Goa.",
+      "content": "Chennai Turbo Riders is thrilled to announce the Goa Street Race — a new special event on Goa's scenic coastal roads.",
       "tags": ["goa", "street-race", "events"]
     },
     {
@@ -409,10 +478,11 @@
       "slug": "bharath-college-partnership",
       "publishDate": "2025-06-20",
       "category": "Partnership",
-      "image": "/images/sponsors/Bharath_College_logo.png",
+      "image": "/images/sponsors/Bharath_College_name.png",
+      "image1": "/images/sponsors/Bharath_College_logo.png",
       "excerpt": "Chennai Turbo Riders welcomes Bharath College as title sponsor.",
       "author": "Partnership Manager",
-      "content": "Chennai Turbo Riders is proud to announce a new partnership with Bharath College as our title sponsor for Season 4. This collaboration represents our commitment to education and youth development in the motorsport community.\n\nBharath College's support will help us continue developing young talent and promoting motorsport education across India. Together, we aim to inspire the next generation of racing drivers and engineers.",
+      "content": "Chennai Turbo Riders is proud to announce a new partnership with Bharath College as our title sponsor for Season 4.",
       "tags": ["partnership", "bharath-college", "sponsorship"]
     }
   ]
