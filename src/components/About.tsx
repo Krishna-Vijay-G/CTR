@@ -31,11 +31,11 @@ export default function About() {
             </AnimatedSection>
 
             <AnimatedSection delay={0.2}>
-              <p className="body-text mb-6">{about.description}</p>
+              <p className="body-text mb-6 text-justify">{about.description}</p>
             </AnimatedSection>
 
             <AnimatedSection delay={0.3}>
-              <p className="body-text mb-10">{about.description2}</p>
+              <p className="body-text mb-10 text-justify">{about.description2}</p>
             </AnimatedSection>
 
             {/* Team Principal */}
@@ -69,7 +69,7 @@ export default function About() {
                 <img
                   src={about.image}
                   alt="Chennai Turbo Riders Team"
-                  className="w-full h-[400px] lg:h-[400px] object-contain grayscale hover:grayscale-0 transition-all duration-700"
+                  className="w-full object-contain grayscale hover:grayscale-0 transition-all duration-700"
                   loading="lazy"
                 />
                 {/* Overlay gradient */}

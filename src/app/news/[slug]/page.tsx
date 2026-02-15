@@ -95,7 +95,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                 {article.excerpt}
               </p>
 
-              <div className="space-y-6 body-text">
+              <div className="space-y-6 body-text text-justify">
                 {article.content.split("\n\n").map((paragraph, i) => (
                   <p key={i}>{paragraph}</p>
                 ))}

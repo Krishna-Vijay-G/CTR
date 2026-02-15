@@ -55,7 +55,7 @@ export default function CarSpecs() {
             </AnimatedSection>
 
             <AnimatedSection delay={0.2}>
-              <p className="body-text mb-10">{carSpecs.description}</p>
+              <p className="body-text mb-10 text-justify">{carSpecs.description}</p>
             </AnimatedSection>
 
             {/* Specs Grid */}

@@ -41,15 +41,15 @@ export default function AboutPage() {
                 <span className="label-text">Our Story</span>
               </div>
               <h2 className="heading-md mb-6 text-white">THE TEAM</h2>
-              <p className="body-text mb-4">{about.description}</p>
-              <p className="body-text">{about.description2}</p>
+              <p className="body-text mb-4 text-justify">{about.description}</p>
+              <p className="body-text text-justify">{about.description2}</p>
             </div>
             <div className="relative inline-block">
               <div className="absolute -top-3 -right-3 w-full h-full border-2 border-racing-red/20" />
               <img
                 src={about.image}
                 alt="CTR Team"
-                className="relative z-10 w-full h-[270px] object-contain grayscale hover:grayscale-0 transition-all duration-700 block"
+                className="relative z-10 w-full object-contain grayscale hover:grayscale-0 transition-all duration-700 block"
                 loading="lazy"
               />
             </div>
