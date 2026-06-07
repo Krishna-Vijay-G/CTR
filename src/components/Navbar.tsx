@@ -46,9 +46,9 @@ export default function Navbar() {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 group">
             <img
-              src="/images/logos/CTR_yellow.png"
+              src="/images/logos/CTR_New_yellow.svg"
               alt={siteData.site.abbreviation}
-              className="h-10 w-auto transition-transform duration-300 group-hover:scale-110"
+              className="h-20 w-auto transition-transform duration-300 group-hover:scale-110"
             />
             <div className="hidden sm:block">
               <span className="font-heading font-bold text-lg tracking-wider text-white">
