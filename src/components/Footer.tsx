@@ -17,7 +17,7 @@ export default function Footer() {
           <div className="lg:col-span-1">
             <Link href="/" className="inline-flex items-center gap-3 mb-5">
               <img
-                src="/images/logos/CTR_New_yellow.svg"
+                src="/images/logos/CTR_New_yellow.png"
                 alt={site.abbreviation}
                 className="h-20 w-auto"
               />

@@ -60,7 +60,7 @@ export default function SplashScreen({ children }: { children: React.ReactNode }
 
                   {/* Logo */}
                   <motion.img
-                    src="/images/logos/CTR_New_yellow.svg"
+                    src="/images/logos/CTR_New_yellow.png"
                     alt="Chennai Turbo Riders"
                     initial={{ scale: 0.8, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}

@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     "Motorsport India",
     "F4 Racing",
   ],
-  icons: { icon: "/images/logos/CTR_New_yellow.svg" },
+  icons: { icon: "/images/logos/CTR_New_yellow.png" },
   openGraph: {
     title: "Chennai Turbo Riders | India's Premier F4 Racing Team",
     description:
