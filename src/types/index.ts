@@ -167,6 +167,7 @@ export interface NewsArticle {
   author: string;
   content: string;
   tags: string[];
+  instagramUrl?: string;
 }
 
 export interface SiteData {

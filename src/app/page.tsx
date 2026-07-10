@@ -1,6 +1,7 @@
 "use client";
 
 import Navbar from "@/components/Navbar";
+import Marquee from "@/components/Marquee";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
 import CarSpecs from "@/components/CarSpecs";
@@ -16,8 +17,12 @@ import Footer from "@/components/Footer";
 export default function Home() {
   return (
     <>
-      <Navbar />
-      <main>
+      <Marquee
+        text="A New Era of Indian Motorsport — CTR & JK Tyre to Lead the FMSCI Indian National Car Racing Championship 2026. Read More"
+        href="/news/ctr-jktyre-fmsci-championship-2026"
+      />
+      <Navbar withMarquee />
+      <main className="pt-9">
         <Hero />
 
         {/* Diagonal separator */}

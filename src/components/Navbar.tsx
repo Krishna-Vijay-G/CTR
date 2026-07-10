@@ -15,7 +15,7 @@ const navLinks = [
   { label: "About", href: "/about" },
 ];
 
-export default function Navbar() {
+export default function Navbar({ withMarquee = false }: { withMarquee?: boolean }) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -36,7 +36,9 @@ export default function Navbar() {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        className={`fixed left-0 right-0 z-50 transition-all duration-500 ${
+          withMarquee ? "top-9" : "top-0"
+        } ${
           scrolled
             ? "bg-carbon-950/95 backdrop-blur-md border-b border-carbon-700/40 py-3"
             : "bg-transparent py-5"
