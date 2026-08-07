@@ -337,11 +337,11 @@
   ],
   "races": {
     "season": 6,
-    "seasonName": "Season 6 IRF",
+    "seasonName": "Season 6 IRL",
     "calendar": [
       {
         "round": 1,
-        "name": "IRF - Round 1",
+        "name": "IRL - Round 1",
         "location": "Venue to be Announced",
         "country": "TBA",
         "flagEmoji": "🇮🇳",
@@ -354,7 +354,7 @@
       },
       {
         "round": 2,
-        "name": "IRF - Round 2",
+        "name": "IRL - Round 2",
         "location": "Venue to be Announced",
         "country": "TBA",
         "flagEmoji": "🇮🇳",
@@ -367,7 +367,7 @@
       },
       {
         "round": 3,
-        "name": "IRF - Round 3",
+        "name": "IRL - Round 3",
         "location": "Venue to be Announced",
         "country": "TBA",
         "flagEmoji": "🇮🇳",
@@ -380,7 +380,7 @@
       },
       {
         "round": 4,
-        "name": "IRF - Round 4",
+        "name": "IRL - Round 4",
         "location": "Venue to be Announced",
         "country": "TBA",
         "flagEmoji": "🇮🇳",
@@ -393,7 +393,7 @@
       },
       {
         "round": 5,
-        "name": "IRF - Round 5",
+        "name": "IRL - Round 5",
         "location": "Venue to be Announced",
         "country": "TBA",
         "flagEmoji": "🇮🇳",
@@ -406,7 +406,7 @@
       },
       {
         "round": 6,
-        "name": "IRF - Round 6",
+        "name": "IRL - Round 6",
         "location": "Venue to be Announced",
         "country": "TBA",
         "flagEmoji": "🇮🇳",
