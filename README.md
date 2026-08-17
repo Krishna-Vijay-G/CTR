@@ -1,118 +1,159 @@
-# CTR — Formula 4 site + hidden admin control room
+# Chennai Turbo Riders
 
-Next.js 15 (App Router) · Neon Postgres + Drizzle · Better Auth · Uploadthing · Tailwind v4.
-
-The admin portal is **not linked** anywhere public. It lives at:
-
-- `/admin/login` — credentials sign-in (unlisted)
-- `/admin/dashboard` — Articles, Drivers, Race & Machine, Media
-
-## 1. Install
+The public site at **chennaiturboriders.in** and the console that edits it, in one
+Next.js application. Which of the two a request gets is decided by its `Host`
+header — see [The two front doors](#the-two-front-doors).
 
 ```bash
 npm install
+npm run db:migrate                              # the schema
+npm run db:seed                                 # starting content
+npm run create-admin -- <username> <password>   # an owner, or nothing opens
+npm run dev                                     # site :3000, console :4000
 ```
 
-## 2. Environment
-
-```bash
-cp .env.example .env
-```
-
-Fill in:
-
-| Var | Where from |
-| --- | --- |
-| `DATABASE_URL` | Neon dashboard → pooled connection string |
-| `BETTER_AUTH_SECRET` | `openssl rand -base64 32` |
-| `BETTER_AUTH_URL` / `NEXT_PUBLIC_APP_URL` | `http://localhost:3000` in dev, your domain in prod |
-| `UPLOADTHING_TOKEN` | uploadthing.com → API Keys |
-| `ADMIN_EMAIL` / `ADMIN_PASSWORD` | the first admin login (min 10 chars) |
-
-## 3. Create the database tables
-
-```bash
-npm run db:generate   # emits SQL migration from db/schema.ts
-npm run db:migrate    # applies it to Neon
-# or, for quick local iteration:  npm run db:push
-```
-
-This creates the Better Auth tables (`user`, `session`, `account`, `verification`)
-and the domain tables (`articles`, `drivers`, `machine_specs`, `race_events`, `media`).
-
-## 4. Seed the admin account
-
-Public sign-up is disabled, so the first admin is created server-side:
-
-```bash
-npm run seed:admin
-```
-
-Re-running promotes an existing user to `admin` instead of duplicating.
-
-## 5. Run
-
-```bash
-npm run dev
-```
-
-Visit `http://localhost:3000/admin/login` and sign in.
+Full first-run instructions, including the bucket and the CDN, are in
+[docs/new-deployment.md](docs/new-deployment.md).
 
 ---
 
-## How the security works (defense in depth)
+## What this is
 
-1. **`middleware.ts`** — optimistic edge check. Redirects `/admin/dashboard/*`
-   to `/admin/login` when no session cookie is present. Fast, but not the
-   authority (a cookie ≠ an admin).
-2. **`getAdminSession()` in the dashboard layout** — real check on every page
-   load: verifies the session *and* `role === "admin"`, else redirects.
-3. **`requireAdmin()` in every Server Action + the Uploadthing middleware** —
-   the true guard. Even a crafted request that skips the UI cannot mutate data
-   or upload files without a valid admin session. **Never rely on the
-   middleware alone** — it's optimistic by design (Next.js docs).
+The site was a set of hand-built pages reading a checked-in `site-data.json`.
+Changing a headline meant a commit and a deploy, and only somebody with the
+repository could do it. The content now lives in Postgres and is edited in a
+console, while the pages themselves keep the design they had.
 
-The admin `role` column is `input: false` in Better Auth, so it can never be
-set from the client — only via the seed script / direct DB access.
+The console — every screen, the media library, the rich-text editor, the role
+model, the S3 pipeline — is ported from the CTR Unified platform
+(`../CTR_Sports_New`) rather than rewritten, so it arrives already working. What
+is new here is the branding, the single-site shape, and the wiring from those
+tables into this site's own pages.
 
-## File uploads
+### The two front doors
 
-`app/api/uploadthing/core.ts` defines two routes, both admin-gated:
+One build, one process, one database connection. `src/middleware.ts` reads the
+`Host` header:
 
-| Route | Accepts | Max |
-| --- | --- | --- |
-| `imageUploader` | images (driver headshots, article covers) | 4 MB |
-| `modelUploader` | `.glb` / `.gltf` 3D car assets | 32 MB |
+| Host | What it serves |
+|---|---|
+| `ADMIN_HOSTS` (e.g. `admin.chennaiturboriders.in`) | the console, at its own root — `/`, `/media`, `/login` |
+| anything else | the public site, and nothing else |
 
-Every completed upload is recorded in the `media` table, which powers the
-Media Gallery (copy URL / delete-from-storage).
+The console lives at `src/app/console` on disk, which is a router detail and
+never a URL: that path 404s on every host, including the admin one, and the
+rewrite that maps one to the other is internal. The public domain therefore
+carries no admin surface at all, and the session cookie — host-only, no `domain`
+attribute — is never sent to the public site.
 
-> Note on `.glb`: Uploadthing has no native "model" file type, so `modelUploader`
-> uses the generic `blob` route and enforces the `.glb`/`.gltf` extension in its
-> middleware.
+`ADMIN_HOSTS` unset means **no** host is the admin host. The console becomes
+unreachable and the site is unaffected, which is the safe way round to fail.
 
-## Project map
+---
+
+## Layout
 
 ```
-app/
-  admin/login/                 # unlisted login page
-  admin/dashboard/             # protected shell + 4 sections
-    articles/  drivers/  stats/  media/
-  api/auth/[...all]/route.ts   # Better Auth handler
-  api/uploadthing/             # core.ts (router) + route.ts (handler)
-actions/                       # auth-guarded Server Actions (CRUD)
-components/admin/              # feature components (forms, tables, drawer)
-components/ui/                 # shadcn-style primitives (dependency-light)
-db/schema.ts                   # Drizzle schema (auth + domain)
-lib/auth.ts, auth-guard.ts     # Better Auth server config + guards
-middleware.ts                  # optimistic /admin/dashboard/* gate
-scripts/seed-admin.ts          # one-time admin bootstrap
+src/
+  app/(site)/        the public pages — the F4 design, kept
+  app/(site)/_shell/ the shared render layer, drawn by pages AND by console previews
+  app/console/       every console screen
+  app/api/admin/     what those screens post to
+  admin/             the console's own components and UI kit
+  lib/               shared model + rules  (browser-safe)
+  lib/server/        one repo per table    (server-only)
+  components/site/   this site's own components
+  styles/globals.css
+migrations/          NNNN_name.sql, applied in order, checksummed
+scripts/             migrate, seed, create-admin, media tooling
 ```
 
-## Production notes
+`lib/` and `lib/server/` are split by what may reach the browser: anything under
+`server/` imports `server-only`, so an accidental import from a client component
+is a build error rather than a leaked connection string.
 
-- Set `BETTER_AUTH_URL` / `NEXT_PUBLIC_APP_URL` to `https://chennaiturboriders.in`.
-- Keep `/admin/*` out of `sitemap.xml`; the pages already send `noindex`.
-- Consider adding rate-limiting on `/api/auth/*` and, for extra hardening,
-  IP allow-listing or a Better Auth 2FA plugin on the admin role.
+### Two palettes that never mix
+
+`tailwind.config.ts` carries three sets of colours, and mixing them produces
+something that looks like none of them:
+
+| Set | Used by | Names |
+|---|---|---|
+| Site (brand) | `components/site/*`, the F4 pages | `racing-yellow`, `carbon-*`, `metal` |
+| Site (shared) | `_shell/*`, ported sections | `accent`, `page`, `surface`, `panel`, `line`, `fg-*` |
+| Console | `admin/*` | `background`, `card`, `muted`, `primary`, `border`, `ring` |
+
+The console also has a typeface of its own (`font-ui`, IBM Plex Sans) so the tool
+never reads as part of the thing it edits.
+
+---
+
+## What the console drives, and what it does not
+
+Wired to the database:
+
+| Screen | Public page |
+|---|---|
+| Articles | `/news`, `/news/[slug]`, and the home page's latest-news band |
+| Season · rounds | `/schedule` — the calendar, the next-race panel and its countdown |
+| Circuits | the circuit block on `/schedule` |
+| Decks, Registration forms, Media, Enquiries, Accounts | console-side, plus the shared routes |
+
+**Still reading `src/data/site-data.json`:** the drivers, the sponsors, the about
+band, the car specification and the hero copy. Those have no equivalent table in
+the ported schema — a driver is not an article — so they were left working as
+they were rather than half-migrated. Giving them tables is the next piece of
+work, and it is a migration plus a repo plus a screen each, following `articles`
+as the model.
+
+### Two columns this deployment added
+
+`0023_article_byline.sql` adds `category`, `author` and `tags` to `ctr.articles`.
+The pages that draw an article show all three; the upstream schema has none of
+them, and dropping them would have meant redesigning two working pages around a
+limitation of the editor. This is the one place the schema diverges from
+CTR Unified.
+
+`0022_chennai_turbo_riders.sql` is the other local migration: it renames the root
+site, switches on all five modules and deletes the `incrc` sport, because this
+deployment serves one site and that site is the team.
+
+---
+
+## Everyday commands
+
+```bash
+npm run dev            # site :3000, console :4000 — one Next process, proxied
+npm run dev:app        # just the Next server on :3000
+
+npm run db:migrate     # apply pending migrations
+npm run db:status      # what is applied, what is pending
+npm run db:seed        # starting rows; each kind only fires on its own empty table
+npm run create-admin -- <username> <password>
+
+npx tsc --noEmit
+npm run check:source && npm run check:forms && npm run check:decks && npm run check:articles
+npm run build          # reads the database, so DATABASE_URL must be reachable
 ```
+
+`NEXT_DIST_DIR=.next-verify npm run build` builds somewhere else, so checking a
+change does not leave a running dev server serving half a build.
+
+---
+
+## Environment
+
+`.env.example` is the canonical list and says what each variable is for. The
+short version:
+
+| | |
+|---|---|
+| `SITE_URL` | the public origin. Every canonical URL, the sitemap and the OG tags are built from it. Read at **build** time. |
+| `ADMIN_HOSTS` | which hostnames serve the console. Needed at **build** time too — middleware runs in the Edge runtime. |
+| `DATABASE_URL` | Neon Postgres. Every table is in the `ctr` schema. |
+| `S3_*` | the media bucket. Unset, image fields still take pasted URLs. |
+| `NEXT_PUBLIC_MEDIA_BASE_URL` | the CDN in front of the bucket. Inlined at **build** time, so changing it needs a redeploy. |
+| `REGISTER_SECRET` | signs entry forms. Optional; unset turns one timing check off and says so. |
+
+No domain is written down in the source. `SITE_URL` and `ADMIN_HOSTS` are the
+only place this deployment learns its own name.
