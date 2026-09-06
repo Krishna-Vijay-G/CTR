@@ -263,6 +263,100 @@
     color: transparent;
   }
 
+  /* ───────────────────── The broadcast layer ─────────────────────
+     The redesign's own patterns. Each is worn by several components, so
+     each is a class rather than a utility repeated at every call site. */
+
+  /* Film grain, laid over a photograph or the whole page. An SVG turbulence
+     tile at low opacity; `mix-blend-overlay` so it lifts the darks rather
+     than greying the lights. */
+  .grain {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+    background-size: 160px 160px;
+    mix-blend-mode: overlay;
+  }
+
+  /* The engineer's grid: a faint 1px lattice every 4rem, for the surfaces
+     the HUD readouts sit on. */
+  .hud-grid {
+    background-image:
+      linear-gradient(to right, rgb(255 255 255 / 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(255 255 255 / 0.05) 1px, transparent 1px);
+    background-size: 4rem 4rem;
+    mask-image: radial-gradient(ellipse at center, black 40%, transparent 75%);
+  }
+
+  /* Horizontal scanlines over video — a broadcast feed, not a photograph. */
+  .scanlines {
+    background-image: repeating-linear-gradient(
+      to bottom,
+      transparent 0 3px,
+      rgb(0 0 0 / 0.18) 3px 4px
+    );
+  }
+
+  /* The navigation pill and anything else that floats over the page. */
+  .glass {
+    @apply border border-white/10 bg-carbon-950/60 backdrop-blur-xl;
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.06);
+  }
+
+  /* Readout: the mono label of the broadcast graphics. */
+  .readout {
+    @apply font-mono text-[11px] uppercase tracking-[0.18em] text-carbon-300;
+  }
+
+  /* Outlined display type in white — the second voice of a headline. */
+  .text-stroke-white {
+    -webkit-text-stroke: 1.5px rgb(255 255 255 / 0.85);
+    color: transparent;
+  }
+
+  /* The lean the headlines take: forward, like a car under braking. */
+  .lean {
+    transform: skewX(-8deg);
+  }
+
+  /* Buttons. Sharp corners, a hard lean on the label, a fill that arrives
+     from the left on hover. */
+  .btn {
+    @apply relative inline-flex items-center justify-center gap-2 overflow-hidden
+      px-6 py-3.5 font-mono text-[11px] font-semibold uppercase tracking-[0.22em]
+      transition-colors duration-300;
+  }
+  .btn-primary {
+    @apply btn bg-racing-yellow text-carbon-950;
+  }
+  .btn-primary::before {
+    content: "";
+    @apply absolute inset-0 -translate-x-full bg-white transition-transform duration-300 ease-out;
+  }
+  .btn-primary:hover::before {
+    @apply translate-x-0;
+  }
+  .btn-primary > * {
+    @apply relative;
+  }
+  .btn-ghost {
+    @apply btn border border-white/20 text-white hover:border-racing-yellow hover:text-racing-yellow;
+  }
+
+  /* Corner brackets, the viewfinder of a broadcast camera. */
+  .hud-corners {
+    @apply relative;
+  }
+  .hud-corners::before,
+  .hud-corners::after {
+    content: "";
+    @apply pointer-events-none absolute size-4 border-racing-yellow;
+  }
+  .hud-corners::before {
+    @apply left-0 top-0 border-l border-t;
+  }
+  .hud-corners::after {
+    @apply bottom-0 right-0 border-b border-r;
+  }
+
   /*
    * The admin has no shared classes here at all: every one of its surfaces and
    * controls is a component under src/admin/ui/. Adding one to this file would
@@ -321,6 +415,10 @@
   }
   .animate-float,
   .animate-marquee,
+  .animate-marquee-slow,
+  .animate-marquee-reverse,
+  .animate-scan,
+  .animate-spin-slow,
   .banner-pan {
     animation: none !important;
   }

@@ -1,5 +1,5 @@
 import { Hero } from "@/components/site/Hero";
-import { Ticker } from "@/components/site/Ticker";
+import { TextMarquee } from "@/components/site/TextMarquee";
 import { AboutSection } from "@/components/site/sections/AboutSection";
 import { DriversSection } from "@/components/site/sections/DriversSection";
 import { CarSpecsSection } from "@/components/site/sections/CarSpecsSection";
@@ -8,19 +8,15 @@ import { NewsSection } from "@/components/site/sections/NewsSection";
 import { SponsorsSection } from "@/components/site/sections/SponsorsSection";
 import { site } from "@/data/site-data";
 
-const ticker = [
-  site.tagline,
-  `Season ${site.currentSeason} · ${site.championship}`,
-  `Est. ${site.founded} · Chennai`,
-  "Formula 4 · FIA certified",
-  "#TurboRiders",
-];
-
 export default function HomePage() {
   return (
     <>
       <Hero />
-      <Ticker items={ticker} />
+      <TextMarquee
+        primary={site.tagline.replace(/\.$/, "")}
+        secondary={`Season ${site.currentSeason} · ${site.championship.split(" (")[0]}`}
+        className="border-b border-white/10"
+      />
       <AboutSection />
       <DriversSection />
       <CarSpecsSection />

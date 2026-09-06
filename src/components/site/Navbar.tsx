@@ -3,9 +3,9 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion, useScroll, useSpring } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
-import { socialMedia } from "@/data/site-data";
+import { site, socialMedia } from "@/data/site-data";
 import { cn } from "@/lib/utils";
 
 const links = [
@@ -29,13 +29,15 @@ function isActive(pathname: string, href: string) {
 }
 
 /**
- * The site's header.
+ * The navigation: a glass pill floating over the page.
  *
- * Transparent over whatever it starts on, a blurred carbon bar once the page
- * has moved. The active link carries a shared yellow underline that slides
- * between items rather than blinking from one to the next. On a phone the
- * menu is the whole screen: six numbered lines set in the display face, with
- * the socials underneath — a menu, not a dropdown.
+ * It never touches the edges. It hangs a little below the top, shrinks once
+ * the page has moved, and carries a hairline of yellow along the very top of
+ * the window that fills as the page is read — a progress bar, but drawn like a
+ * lap timer. The active link is a shared yellow dot that slides between items.
+ *
+ * On a phone the menu takes the whole screen: the six links as enormous
+ * leaning lines, numbered, with the socials beneath.
  */
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -43,15 +45,16 @@ export function Navbar() {
   const pathname = usePathname();
   const reduced = useReducedMotion();
 
+  const { scrollYProgress } = useScroll();
+  const progress = useSpring(scrollYProgress, { stiffness: 140, damping: 30, mass: 0.4 });
+
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    const onScroll = () => setScrolled(window.scrollY > 32);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Close on navigation, and never leave the page locked behind a menu that
-  // is no longer there.
   useEffect(() => setOpen(false), [pathname]);
 
   useEffect(() => {
@@ -68,96 +71,105 @@ export function Navbar() {
   }, [open]);
 
   return (
-    <header
-      className={cn(
-        "fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,backdrop-filter] duration-300",
-        scrolled || open
-          ? "border-b border-white/10 bg-carbon-950/85 backdrop-blur-xl"
-          : "border-b border-transparent bg-transparent",
-      )}
-    >
-      <nav className="section-container flex h-16 items-center justify-between md:h-20" aria-label="Primary">
-        <Link href="/" className="flex items-center gap-3" aria-label="Chennai Turbo Riders — home">
-          <img
-            src="/images/logos/CTR_New_yellow.png"
-            alt=""
-            width={44}
-            height={44}
-            className="h-9 w-auto md:h-10"
-            decoding="async"
-          />
-          <span className="heading-font hidden flex-col leading-none sm:flex">
-            <span className="text-[15px] font-bold uppercase tracking-[0.18em] text-white">
-              Chennai Turbo
-            </span>
-            <span className="text-[11px] font-semibold uppercase tracking-[0.3em] text-racing-yellow">
-              Riders
-            </span>
-          </span>
-        </Link>
+    <>
+      {/* Lap-timer progress bar */}
+      <motion.div
+        aria-hidden
+        style={{ scaleX: progress }}
+        className="fixed inset-x-0 top-0 z-[60] h-[2px] origin-left bg-racing-yellow"
+      />
 
-        {/* Desktop */}
-        <ul className="hidden items-center gap-1 md:flex">
-          {links.map((l) => {
-            const active = isActive(pathname, l.href);
-            return (
-              <li key={l.href} className="relative">
-                <Link
-                  href={l.href}
-                  aria-current={active ? "page" : undefined}
-                  className={cn(
-                    "relative block px-3.5 py-2 text-[12px] font-semibold uppercase tracking-[0.2em] transition-colors",
-                    active ? "text-white" : "text-carbon-300 hover:text-white",
-                  )}
-                >
-                  {l.label}
-                </Link>
-                {active ? (
-                  <motion.span
-                    layoutId="nav-underline"
-                    transition={reduced ? { duration: 0 } : { type: "spring", stiffness: 420, damping: 36 }}
-                    className="absolute inset-x-3.5 -bottom-0.5 h-[2px] bg-racing-yellow"
-                  />
-                ) : null}
-              </li>
-            );
-          })}
-        </ul>
-
-        <div className="flex items-center gap-3">
+      <header className="pointer-events-none fixed inset-x-0 top-3 z-50 flex justify-center px-3 sm:top-4 sm:px-4">
+        <nav
+          aria-label="Primary"
+          className={cn(
+            "glass pointer-events-auto flex w-full max-w-6xl items-center justify-between gap-3 rounded-full pl-2 pr-2 transition-[padding,background-color] duration-300",
+            scrolled ? "py-1.5" : "py-2.5",
+          )}
+        >
           <Link
-            href="/schedule"
-            className="group hidden items-center gap-2 bg-racing-yellow px-4 py-2.5 text-[11px] font-bold uppercase tracking-[0.2em] text-carbon-950 transition-colors hover:bg-white md:inline-flex"
+            href="/"
+            className="flex items-center gap-2.5 rounded-full py-1 pl-1.5 pr-3"
+            aria-label={`${site.name} — home`}
           >
-            Race calendar
-            <ArrowUpRight className="size-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+            <img
+              src="/images/logos/CTR_New_yellow.png"
+              alt=""
+              width={36}
+              height={36}
+              className="h-8 w-auto"
+              decoding="async"
+            />
+            <span className="heading-font hidden text-sm font-bold uppercase tracking-[0.22em] text-white sm:block">
+              CTR
+            </span>
+            <span className="readout hidden items-center gap-1.5 md:flex">
+              <span className="size-1.5 rounded-full bg-racing-yellow animate-blink" />
+              S{String(site.currentSeason).padStart(2, "0")}
+            </span>
           </Link>
 
-          <button
-            type="button"
-            onClick={() => setOpen((v) => !v)}
-            aria-expanded={open}
-            aria-controls="mobile-menu"
-            aria-label={open ? "Close menu" : "Open menu"}
-            className="relative flex size-10 items-center justify-center text-white md:hidden"
-          >
-            <span
-              className={cn(
-                "absolute h-[2px] w-6 bg-current transition-transform duration-300",
-                open ? "rotate-45" : "-translate-y-[5px]",
-              )}
-            />
-            <span
-              className={cn(
-                "absolute h-[2px] w-6 bg-current transition-transform duration-300",
-                open ? "-rotate-45" : "translate-y-[5px]",
-              )}
-            />
-          </button>
-        </div>
-      </nav>
+          <ul className="hidden items-center gap-0.5 md:flex">
+            {links.map((l) => {
+              const active = isActive(pathname, l.href);
+              return (
+                <li key={l.href} className="relative">
+                  <Link
+                    href={l.href}
+                    aria-current={active ? "page" : undefined}
+                    className={cn(
+                      "relative block rounded-full px-3.5 py-2 font-mono text-[11px] font-semibold uppercase tracking-[0.2em] transition-colors",
+                      active ? "text-white" : "text-carbon-300 hover:text-white",
+                    )}
+                  >
+                    {l.label}
+                  </Link>
+                  {active ? (
+                    <motion.span
+                      layoutId="nav-dot"
+                      transition={reduced ? { duration: 0 } : { type: "spring", stiffness: 500, damping: 38 }}
+                      className="absolute -bottom-0.5 left-1/2 size-1 -translate-x-1/2 rounded-full bg-racing-yellow"
+                    />
+                  ) : null}
+                </li>
+              );
+            })}
+          </ul>
 
-      {/* Mobile */}
+          <div className="flex items-center gap-1.5">
+            <Link
+              href="/schedule"
+              className="group hidden items-center gap-2 rounded-full bg-racing-yellow py-2 pl-4 pr-3 font-mono text-[11px] font-semibold uppercase tracking-[0.2em] text-carbon-950 transition-colors hover:bg-white md:inline-flex"
+            >
+              Next race
+              <ArrowUpRight className="size-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+            </Link>
+
+            <button
+              type="button"
+              onClick={() => setOpen((v) => !v)}
+              aria-expanded={open}
+              aria-controls="mobile-menu"
+              aria-label={open ? "Close menu" : "Open menu"}
+              className="relative flex size-10 items-center justify-center rounded-full text-white md:hidden"
+            >
+              <span
+                className={cn(
+                  "absolute h-[2px] w-5 bg-current transition-transform duration-300",
+                  open ? "rotate-45" : "-translate-y-[4px]",
+                )}
+              />
+              <span
+                className={cn(
+                  "absolute h-[2px] w-5 bg-current transition-transform duration-300",
+                  open ? "-rotate-45" : "translate-y-[4px]",
+                )}
+              />
+            </button>
+          </div>
+        </nav>
+      </header>
+
       <AnimatePresence>
         {open ? (
           <motion.div
@@ -166,30 +178,30 @@ export function Navbar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-x-0 bottom-0 top-16 z-40 flex flex-col overflow-y-auto bg-carbon-950 md:hidden"
+            className="fixed inset-0 z-40 flex flex-col overflow-y-auto bg-carbon-950 md:hidden"
           >
-            <div className="pointer-events-none absolute inset-0 bg-carbon-weave opacity-60" />
-            <ul className="section-container relative flex flex-1 flex-col justify-center gap-1 py-10">
+            <div className="hud-grid pointer-events-none absolute inset-0" />
+            <div className="grain pointer-events-none absolute inset-0 opacity-40" />
+
+            <ul className="section-container relative flex flex-1 flex-col justify-center gap-1 pb-10 pt-28">
               {links.map((l, i) => {
                 const active = isActive(pathname, l.href);
                 return (
                   <motion.li
                     key={l.href}
-                    initial={reduced ? false : { opacity: 0, x: -16 }}
+                    initial={reduced ? false : { opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.05 + i * 0.05, duration: 0.35 }}
+                    transition={{ delay: 0.08 + i * 0.05, duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
                   >
                     <Link
                       href={l.href}
                       aria-current={active ? "page" : undefined}
-                      className="flex items-baseline gap-4 border-b border-white/10 py-4"
+                      className="flex items-baseline gap-4 border-b border-white/10 py-3"
                     >
-                      <span className="heading-font w-8 text-sm font-bold tabular-nums text-racing-yellow">
-                        {String(i + 1).padStart(2, "0")}
-                      </span>
+                      <span className="readout w-8 text-racing-yellow">{String(i + 1).padStart(2, "0")}</span>
                       <span
                         className={cn(
-                          "heading-font text-4xl font-bold uppercase leading-none",
+                          "heading-font lean text-5xl font-bold uppercase leading-none",
                           active ? "text-racing-yellow" : "text-white",
                         )}
                       >
@@ -209,22 +221,20 @@ export function Navbar() {
                     href={s.href}
                     target="_blank"
                     rel="noreferrer"
-                    className="text-[11px] font-semibold uppercase tracking-[0.25em] text-carbon-300 hover:text-white"
+                    className="readout hover:text-white"
                   >
                     {s.label}
                   </a>
                 ))}
               </div>
-              <Link
-                href="/schedule"
-                className="inline-flex items-center gap-2 bg-racing-yellow px-4 py-2.5 text-[11px] font-bold uppercase tracking-[0.2em] text-carbon-950"
-              >
-                Race calendar <ArrowUpRight className="size-3.5" />
+              <Link href="/schedule" className="btn-primary">
+                <span>Next race</span>
+                <ArrowUpRight className="size-3.5" />
               </Link>
             </div>
           </motion.div>
         ) : null}
       </AnimatePresence>
-    </header>
+    </>
   );
 }

@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { IBM_Plex_Sans, Inter, Rajdhani } from "next/font/google";
+import { IBM_Plex_Sans, Inter, JetBrains_Mono, Rajdhani } from "next/font/google";
 import { MEDIA_BASE_URL } from "@/config/media";
 import { SEO, SITE } from "@/config/site";
 import "@/styles/globals.css";
@@ -19,6 +19,18 @@ const rajdhani = Rajdhani({
   weight: ["500", "600", "700"],
   display: "swap",
   variable: "--font-display",
+});
+
+/*
+ * The site's data face: the readouts, timestamps and labels that dress the
+ * pages like a broadcast graphic. Two weights, because a readout is either
+ * a label or a value.
+ */
+const mono = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: ["400", "600"],
+  display: "swap",
+  variable: "--font-mono",
 });
 
 /*
@@ -73,7 +85,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`dark ${inter.variable} ${rajdhani.variable} ${plex.variable}`}>
+    <html lang="en" className={`dark ${inter.variable} ${rajdhani.variable} ${mono.variable} ${plex.variable}`}>
       <body className="antialiased">
         {/*
           The first banner photo is the LCP element and lives on another host.

@@ -65,29 +65,25 @@ const config: Config = {
         input: "rgb(255 255 255 / 0.16)",
         ring: "#8E8E8E",
         /* ──────────────────────── Chennai Turbo Riders ────────────────────
-           The F4 site's own palette, carried over from the previous build so
-           its pages keep the look they were designed with: racing yellow on
-           carbon black. It overlaps `accent` by value and not by name on
-           purpose — the site components name the brand, the shared components
-           name the role, and renaming either would mean editing the other. */
+           The F4 site's own palette: racing yellow on carbon black. It
+           overlaps `accent` by value and not by name on purpose — the site
+           components name the brand, the shared components name the role, and
+           renaming either would mean editing the other. */
         "racing-yellow": {
           DEFAULT: "#F7D619",
           dark: "#D4BB0A",
         },
         carbon: {
-          // 100-200 are type on dark, not surfaces. `text-carbon-200` was in
-          // use against a scale that started at 300, so it resolved to nothing
-          // and fell back to inherit; the scale starts at 100 now.
           100: "#F5F5F5",
           200: "#E5E5E5",
-          300: "#777777",
-          400: "#555555",
+          300: "#8A8F99",
+          400: "#5C616B",
           500: "#404040",
           600: "#2D2D2D",
           700: "#222222",
-          800: "#1A1A1A",
-          900: "#111111",
-          950: "#0A0A0A",
+          800: "#161616",
+          900: "#0E0E0E",
+          950: "#070707",
         },
         metal: {
           DEFAULT: "#8A8A8A",
@@ -99,6 +95,9 @@ const config: Config = {
         // `display` is Rajdhani — the site's headline face.
         display: ["var(--font-display)", "Oswald", "system-ui", "sans-serif"],
         body: ["var(--font-body)", "system-ui", "sans-serif"],
+        // The site's data face: readouts, labels, timestamps — the broadcast
+        // graphics of a race weekend.
+        mono: ["var(--font-mono)", "ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
         // The admin's only face. A different family from the site's on purpose:
         // the tool should never read as part of the thing it edits.
         ui: ["var(--font-ui)", "system-ui", "sans-serif"],
@@ -112,6 +111,11 @@ const config: Config = {
         // The strip renders its items twice, so travelling exactly half the
         // track puts the copy back where the original started — seamless.
         marquee: "marquee 34s linear infinite",
+        "marquee-slow": "marquee 60s linear infinite",
+        "marquee-reverse": "marquee-reverse 60s linear infinite",
+        blink: "blink 1.6s steps(2, start) infinite",
+        scan: "scan 9s linear infinite",
+        "spin-slow": "spin 14s linear infinite",
       },
       keyframes: {
         float: {
@@ -121,6 +125,17 @@ const config: Config = {
         marquee: {
           from: { transform: "translateX(0)" },
           to: { transform: "translateX(-50%)" },
+        },
+        "marquee-reverse": {
+          from: { transform: "translateX(-50%)" },
+          to: { transform: "translateX(0)" },
+        },
+        blink: {
+          to: { visibility: "hidden" },
+        },
+        scan: {
+          from: { transform: "translateY(-100%)" },
+          to: { transform: "translateY(100vh)" },
         },
       },
     },

@@ -18,8 +18,8 @@ export default async function NewsPage() {
   return (
     <>
       <PageHeader
-        label="Paddock"
-        title="News & Updates"
+        crumb="News"
+        title="Paddock Feed"
         description="Race results, team announcements and everything from the CTR garage."
         aside={articles.length > 0 ? `${articles.length} stories` : undefined}
       />
@@ -28,7 +28,7 @@ export default async function NewsPage() {
         {articles.length === 0 ? (
           /* An empty index says so: on a fresh install, and any time every
              piece is a draft, this is a state the page can reach. */
-          <p className="border-y border-white/10 py-16 text-center text-carbon-300">
+          <p className="hud-corners p-16 text-center text-carbon-300">
             Nothing published yet — check back shortly.
           </p>
         ) : (
@@ -37,7 +37,7 @@ export default async function NewsPage() {
               <FeaturedNews article={newsCardFrom(lead)} />
             </Reveal>
             {rest.length > 0 ? (
-              <div className="mt-10 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+              <div className="mt-4 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                 {rest.map((article, i) => (
                   <Reveal key={article.id} delay={(i % 3) * 0.08} className="flex">
                     <NewsCard article={newsCardFrom(article)} />

@@ -11,8 +11,11 @@ export const metadata: Metadata = {
 export const dynamic = "force-dynamic";
 
 export default async function LoginPage() {
+  // Already signed in: the console's root. On the admin host that is "/",
+  // which the middleware maps to the mount point — never "/admin", which is
+  // not a route on any host.
   if (await getSession()) {
-    redirect("/admin");
+    redirect("/");
   }
 
   return <LoginForm />;

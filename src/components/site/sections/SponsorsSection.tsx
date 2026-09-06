@@ -12,9 +12,10 @@ const tiers: { label: string; items: Sponsor[] }[] = [
 
 export function SponsorsSection() {
   const all = tiers.flatMap((tier) => tier.items);
+  const items = all.map((s) => ({ id: s.id, label: s.name, href: s.website, logo: s.logo }));
 
   return (
-    <section id="sponsors" className="relative border-t border-white/10 bg-carbon-900/40 py-20 md:py-28">
+    <section id="sponsors" className="relative border-t border-white/10 py-24 md:py-32">
       <div className="section-container">
         <SectionHeading
           index="06"
@@ -24,18 +25,18 @@ export function SponsorsSection() {
         />
       </div>
 
-      <Reveal className="mt-12">
-        <LogoMarquee
-          label="Partners"
-          items={all.map((s) => ({ id: s.id, label: s.name, href: s.website, logo: s.logo }))}
-        />
+      <Reveal className="mt-14 border-y border-white/10">
+        <LogoMarquee label="Partners" items={items} speed={36} />
+        <LogoMarquee label="Partners, reversed" items={[...items].reverse()} direction="right" speed={28} className="border-t border-white/10" />
       </Reveal>
 
-      <div className="section-container mt-12">
+      <div className="section-container mt-4">
         <Reveal delay={0.1} className="grid gap-px border border-white/10 bg-white/10 md:grid-cols-3">
-          {tiers.map((tier) => (
+          {tiers.map((tier, i) => (
             <div key={tier.label} className="bg-carbon-950 p-6">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-racing-yellow">
+              <p className="readout">
+                <span className="text-racing-yellow">{String(i + 1).padStart(2, "0")}</span>
+                <span className="mx-2 text-carbon-400">/</span>
                 {tier.label}
               </p>
               <ul className="mt-4 space-y-2">
@@ -45,7 +46,7 @@ export function SponsorsSection() {
                       href={s.website}
                       target="_blank"
                       rel="noreferrer"
-                      className="heading-font text-lg font-bold uppercase leading-tight text-white transition-colors hover:text-racing-yellow"
+                      className="heading-font text-xl font-bold uppercase leading-tight text-white transition-colors hover:text-racing-yellow"
                     >
                       {s.name}
                     </a>

@@ -6,7 +6,7 @@ import { getRootSite } from "@/lib/server/sitesRepo";
 
 export async function NewsSection() {
   const site = await getRootSite();
-  const latest = (await listPublishedArticles(site.id)).slice(0, 3);
+  const latest = (await listPublishedArticles(site.id)).slice(0, 4);
 
   // Nothing published yet: the band goes entirely rather than leaving a
   // heading over an empty grid.
@@ -15,7 +15,7 @@ export async function NewsSection() {
   const [lead, ...rest] = latest;
 
   return (
-    <section id="news" className="relative border-t border-white/10 py-20 md:py-28">
+    <section id="news" className="relative py-24 md:py-32">
       <div className="section-container">
         <SectionHeading
           index="05"
@@ -24,12 +24,12 @@ export async function NewsSection() {
           action={{ href: "/news", label: "All stories" }}
         />
 
-        <Reveal className="mt-12">
+        <Reveal className="mt-14">
           <FeaturedNews article={newsCardFrom(lead)} />
         </Reveal>
 
         {rest.length > 0 ? (
-          <div className="mt-8 grid gap-8 md:grid-cols-2">
+          <div className="mt-4 grid gap-4 md:grid-cols-3">
             {rest.map((article, i) => (
               <Reveal key={article.id} delay={i * 0.08} className="flex">
                 <NewsCard article={newsCardFrom(article)} />

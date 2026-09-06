@@ -74,7 +74,14 @@ function isAdminHost(request: NextRequest): boolean {
 
   // A forwarded header may carry a list; the first entry is the original client.
   const first = host.split(",")[0].trim();
-  return ADMIN_HOSTS.includes(first) || ADMIN_HOSTS.includes(first.split(":")[0]);
+  const bare = first.split(":")[0];
+  if (ADMIN_HOSTS.includes(first) || ADMIN_HOSTS.includes(bare)) return true;
+
+  // The convention, so a deployment that forgot the variable — or set it after
+  // the build, where the Edge runtime cannot see it — still gets its console at
+  // admin.<site>: any host whose first label is `admin` is the admin host.
+  // `admin.localhost` is the same rule at a developer's machine.
+  return bare.startsWith("admin.");
 }
 
 /** Anything with an extension is a real file, served the same on every host. */

@@ -1,22 +1,31 @@
 "use client";
 
 import Link from "next/link";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { ArrowDown, ArrowUpRight } from "lucide-react";
+import { Counter } from "@/components/site/Counter";
 import { carSpecs, hero, site } from "@/data/site-data";
 
 const ease = [0.22, 1, 0.36, 1] as const;
+const words = ["Chennai", "Turbo", "Riders"];
 
 /**
- * The opening of the home page.
+ * The opening: the onboard feed.
  *
- * One photograph of the car, full bleed, under a wash dark enough to set type
- * on. The team's name runs down the left edge at the largest size the screen
- * allows, the last word outlined in yellow rather than filled, and the season's
- * numbers sit on a hairline along the bottom. Nothing is in a card.
+ * The video runs at full strength under scanlines and grain, framed by the
+ * readouts a broadcast puts in the corners — season, live marker, the
+ * coordinates of the city, the founding year. The team's name arrives one
+ * word at a time, wiped in from below, leaning forward; the middle word is
+ * outlined so the three read as one mark rather than a list. The season's
+ * numbers count up along the baseline. Everything drifts up and fades as the
+ * page is scrolled, so the next band arrives over it.
  */
 export function Hero() {
   const reduced = useReducedMotion();
+  const { scrollY } = useScroll();
+  const y = useTransform(scrollY, [0, 600], [0, reduced ? 0 : 140]);
+  const opacity = useTransform(scrollY, [0, 500], [1, reduced ? 1 : 0.15]);
+
   const up = (delay: number) =>
     reduced
       ? {}
@@ -27,8 +36,8 @@ export function Hero() {
         };
 
   return (
-    <section className="relative flex min-h-[100svh] flex-col overflow-hidden bg-carbon-950">
-      {/* Backdrop */}
+    <section className="relative flex min-h-[100svh] flex-col overflow-hidden bg-carbon-950 text-white">
+      {/* The feed */}
       <div className="absolute inset-0">
         <img
           src={carSpecs.image}
@@ -45,81 +54,97 @@ export function Hero() {
           playsInline
           preload="metadata"
           aria-hidden
-          className="absolute inset-0 h-full w-full object-cover opacity-25 mix-blend-screen"
+          poster={carSpecs.image}
+          className="absolute inset-0 h-full w-full object-cover"
         >
           <source src={hero.videoSrc} type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-gradient-to-r from-carbon-950 via-carbon-950/70 to-carbon-950/20" />
-        <div className="absolute inset-0 bg-gradient-to-t from-carbon-950 via-transparent to-carbon-950/60" />
-        <div className="absolute inset-0 bg-carbon-weave opacity-40" />
+        <div className="scanlines absolute inset-0 opacity-60" />
+        <div className="grain absolute inset-0 opacity-50" />
+        <div className="absolute inset-0 bg-gradient-to-r from-carbon-950/90 via-carbon-950/40 to-carbon-950/20" />
+        <div className="absolute inset-0 bg-gradient-to-t from-carbon-950 via-carbon-950/10 to-carbon-950/70" />
+        {/* The sweep of a camera's refresh */}
+        {reduced ? null : (
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-24 animate-scan bg-gradient-to-b from-transparent via-racing-yellow/[0.06] to-transparent" />
+        )}
+      </div>
+
+      {/* Corner readouts */}
+      <div className="section-container pointer-events-none absolute inset-x-0 top-24 z-10 flex justify-between md:top-28">
+        <motion.p {...up(0.9)} className="readout whitespace-nowrap text-[10px] md:text-[11px]">
+          <span className="text-racing-yellow">{site.abbreviation}</span> // S
+          {String(site.currentSeason).padStart(2, "0")}
+        </motion.p>
+        <motion.p {...up(1.0)} className="readout flex items-center gap-2 whitespace-nowrap text-[10px] md:text-[11px]">
+          <span className="size-1.5 rounded-full bg-red-500 animate-blink" />
+          Live<span className="hidden sm:inline"> · {site.championship.split(" (")[0]}</span>
+        </motion.p>
       </div>
 
       {/* Copy */}
-      <div className="section-container relative z-10 flex flex-1 flex-col justify-end pb-10 pt-32 md:pb-14 md:pt-40">
-        <motion.div {...up(0.1)} className="mb-6 flex items-center gap-3">
+      <motion.div
+        style={{ y, opacity }}
+        className="section-container relative z-10 flex flex-1 flex-col justify-end pb-6 pt-36 md:pb-8"
+      >
+        <motion.p {...up(0.1)} className="readout mb-6 flex items-center gap-3 text-racing-yellow">
           <span className="h-px w-10 bg-racing-yellow" />
-          <span className="text-[11px] font-semibold uppercase tracking-[0.3em] text-racing-yellow">
-            {hero.description}
-          </span>
-        </motion.div>
+          {hero.description}
+        </motion.p>
 
-        <motion.h1
-          {...up(0.2)}
-          className="heading-font text-[clamp(3.5rem,13vw,11rem)] font-bold uppercase leading-[0.82] tracking-tight text-white"
-        >
-          Chennai
-          <br />
-          Turbo
-          <br />
-          <span className="text-stroke-yellow">Riders</span>
-        </motion.h1>
+        <h1 className="heading-font lean text-[clamp(3.5rem,12vw,10rem)] font-bold uppercase leading-[0.82] tracking-tight">
+          {words.map((word, i) => (
+            <span key={word} className="block overflow-hidden pb-[0.06em]">
+              <motion.span
+                initial={reduced ? false : { y: "110%" }}
+                animate={{ y: 0 }}
+                transition={{ delay: 0.25 + i * 0.12, duration: 0.9, ease }}
+                className={`block ${i === 1 ? "text-stroke-white" : i === 2 ? "text-racing-yellow" : ""}`}
+              >
+                {word}
+              </motion.span>
+            </span>
+          ))}
+        </h1>
 
-        <div className="mt-10 grid gap-8 md:grid-cols-[1fr_auto] md:items-end">
-          <motion.div {...up(0.35)}>
+        <div className="mt-8 grid gap-8 md:grid-cols-[1fr_auto] md:items-end">
+          <motion.div {...up(0.7)}>
             <p className="heading-font max-w-md text-lg font-semibold uppercase tracking-[0.2em] text-carbon-200 md:text-xl">
               {hero.subtitle}
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
-              <Link
-                href="/drivers"
-                className="group inline-flex items-center gap-2 bg-racing-yellow px-6 py-3.5 text-xs font-bold uppercase tracking-[0.2em] text-carbon-950 transition-colors hover:bg-white"
-              >
-                Meet the drivers
-                <ArrowUpRight className="size-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+              <Link href="/drivers" className="btn-primary">
+                <span>Meet the grid</span>
+                <ArrowUpRight className="size-4" />
               </Link>
-              <Link
-                href="/schedule"
-                className="inline-flex items-center gap-2 border border-white/25 px-6 py-3.5 text-xs font-bold uppercase tracking-[0.2em] text-white transition-colors hover:border-racing-yellow hover:text-racing-yellow"
-              >
+              <Link href="/schedule" className="btn-ghost">
                 Season {site.currentSeason} calendar
               </Link>
             </div>
           </motion.div>
 
-          <motion.div
-            {...up(0.5)}
-            className="hidden items-center gap-3 text-[11px] uppercase tracking-[0.3em] text-carbon-300 md:flex"
-          >
+          <motion.div {...up(0.9)} className="readout hidden items-center gap-3 md:flex">
             Scroll
             <ArrowDown className="size-4 animate-bounce text-racing-yellow" />
           </motion.div>
         </div>
-      </div>
+      </motion.div>
 
-      {/* Stats on the baseline */}
-      <motion.div {...up(0.6)} className="section-container relative z-10 pb-6">
-        <dl className="grid grid-cols-2 divide-x divide-white/10 border-t border-white/15 sm:grid-cols-4">
-          {hero.stats.map((s, i) => (
-            <div key={s.label} className={`py-5 ${i % 2 === 0 ? "pr-4" : "pl-4"} sm:px-5 sm:first:pl-0`}>
-              <dt className="text-[10px] font-semibold uppercase tracking-[0.3em] text-carbon-400">
-                {s.label}
-              </dt>
+      {/* Baseline: numbers and coordinates */}
+      <motion.div {...up(1.0)} className="section-container relative z-10 pb-6">
+        <dl className="grid grid-cols-2 gap-px border border-white/10 bg-white/10 sm:grid-cols-4">
+          {hero.stats.map((s) => (
+            <div key={s.label} className="bg-carbon-950/70 px-4 py-4 backdrop-blur-sm sm:px-5">
+              <dt className="readout text-[10px]">{s.label}</dt>
               <dd className="heading-font mt-1 text-4xl font-bold leading-none text-white md:text-5xl">
-                {s.value}
+                <Counter value={s.value} />
               </dd>
             </div>
           ))}
         </dl>
+        <div className="readout mt-4 flex flex-wrap justify-between gap-3 text-[10px]">
+          <span>13.0827° N · 80.2707° E · Chennai, IN</span>
+          <span>Est. {site.founded}</span>
+        </div>
       </motion.div>
     </section>
   );

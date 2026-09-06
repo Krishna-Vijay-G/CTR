@@ -27,8 +27,9 @@ export async function ScheduleSection() {
   const startsAt = upcoming ? eventStart(upcoming) : null;
 
   return (
-    <section id="schedule" className="relative border-t border-white/10 bg-carbon-900/40 py-20 md:py-28">
-      <div className="section-container">
+    <section id="schedule" className="relative overflow-hidden border-y border-white/10 bg-carbon-900/50 py-24 md:py-32">
+      <div className="hud-grid pointer-events-none absolute inset-0" />
+      <div className="section-container relative">
         <SectionHeading
           index="04"
           label={current.season.name}
@@ -36,10 +37,9 @@ export async function ScheduleSection() {
           action={{ href: "/schedule", label: "Full calendar" }}
         />
 
-        <div className="mt-12 grid gap-10 lg:grid-cols-[1fr_1.2fr] lg:gap-16">
-          {/* Next round */}
+        <div className="mt-14 grid gap-10 lg:grid-cols-[1fr_1.2fr] lg:gap-16">
           {upcoming ? (
-            <Reveal className="relative overflow-hidden bg-carbon-950">
+            <Reveal className="hud-corners relative overflow-hidden bg-carbon-950">
               {track?.photo_url ? (
                 <img
                   src={track.photo_url}
@@ -49,13 +49,15 @@ export async function ScheduleSection() {
                   className="absolute inset-0 h-full w-full object-cover opacity-30 grayscale"
                 />
               ) : null}
+              <div className="grain absolute inset-0 opacity-30" />
               <div className="absolute inset-0 bg-gradient-to-t from-carbon-950 via-carbon-950/80 to-carbon-950/40" />
               <div className="relative flex h-full flex-col justify-between gap-10 p-6 md:p-8">
                 <div>
-                  <span className="inline-block bg-racing-yellow px-2 py-1 text-[10px] font-bold uppercase tracking-[0.25em] text-carbon-950">
+                  <p className="readout flex items-center gap-2">
+                    <span className="size-1.5 rounded-full bg-racing-yellow animate-blink" />
                     Next race{upcoming.round ? ` · Round ${upcoming.round}` : ""}
-                  </span>
-                  <h3 className="heading-font mt-5 text-4xl font-bold uppercase leading-[0.92] text-white md:text-5xl">
+                  </p>
+                  <h3 className="heading-font lean mt-5 text-4xl font-bold uppercase leading-[0.9] text-white md:text-5xl">
                     {upcoming.title || track?.name || upcoming.venue}
                   </h3>
                   <p className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-carbon-200">
@@ -65,7 +67,7 @@ export async function ScheduleSection() {
                         {upcoming.city || upcoming.venue}
                       </span>
                     ) : null}
-                    <span>{eventDateLabel(upcoming)}</span>
+                    <span className="font-mono text-xs">{eventDateLabel(upcoming)}</span>
                   </p>
                 </div>
                 {startsAt ? <CountdownTimer targetIso={startsAt.toISOString()} /> : null}
@@ -73,9 +75,8 @@ export async function ScheduleSection() {
             </Reveal>
           ) : null}
 
-          {/* Rounds */}
-          <Reveal delay={0.1} as="div">
-            <ol className="divide-y divide-white/10 border-y border-white/10">
+          <Reveal delay={0.1}>
+            <ol className="border-t border-white/10">
               {events.map((event, i) => {
                 const isNext = event.id === upcoming?.id;
                 const past = eventIsPast(event, now);
@@ -83,12 +84,12 @@ export async function ScheduleSection() {
                 return (
                   <li
                     key={event.id}
-                    className={`grid grid-cols-[3rem_1fr_auto] items-center gap-4 py-4 md:grid-cols-[4rem_1fr_auto] ${
-                      past ? "opacity-50" : ""
+                    className={`grid grid-cols-[3rem_1fr_auto] items-center gap-4 border-b border-white/10 py-4 md:grid-cols-[4rem_1fr_auto] ${
+                      past ? "opacity-40" : ""
                     }`}
                   >
                     <span
-                      className={`heading-font text-3xl font-bold tabular-nums leading-none ${
+                      className={`heading-font lean text-3xl font-bold tabular-nums leading-none ${
                         isNext ? "text-racing-yellow" : "text-carbon-400"
                       }`}
                     >
@@ -98,9 +99,10 @@ export async function ScheduleSection() {
                       <p className="heading-font truncate text-lg font-bold uppercase leading-tight text-white md:text-xl">
                         {event.title || event.venue}
                       </p>
-                      <p className="truncate text-xs text-carbon-400">
+                      <p className="readout mt-1 truncate text-[10px]">
                         {event.subtitle || event.city}
                         {event.badge ? <span className="ml-2 text-racing-yellow">· {event.badge}</span> : null}
+                        {isNext ? <span className="ml-2 text-racing-yellow">· Next</span> : null}
                       </p>
                     </div>
                     <div className="text-right">
@@ -109,12 +111,10 @@ export async function ScheduleSection() {
                           <p className="heading-font text-lg font-bold tabular-nums leading-none text-white">
                             {parts.days}
                           </p>
-                          <p className="mt-1 text-[10px] uppercase tracking-[0.25em] text-carbon-400">
-                            {parts.month}
-                          </p>
+                          <p className="readout mt-1 text-[10px]">{parts.month}</p>
                         </>
                       ) : (
-                        <p className="text-[10px] uppercase tracking-[0.25em] text-carbon-400">TBC</p>
+                        <p className="readout text-[10px]">TBC</p>
                       )}
                     </div>
                   </li>

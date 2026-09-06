@@ -3,7 +3,7 @@ import { ArrowUpRight } from "lucide-react";
 import { LogoMarquee } from "@/components/site/LogoMarquee";
 import { PageHeader } from "@/components/site/PageHeader";
 import { Reveal } from "@/components/site/Reveal";
-import { contact, sponsors } from "@/data/site-data";
+import { contact, site, sponsors } from "@/data/site-data";
 import type { Sponsor } from "@/types/site";
 
 export const metadata: Metadata = {
@@ -19,33 +19,36 @@ const tiers: { label: string; items: Sponsor[] }[] = [
 
 export default function SponsorsPage() {
   const all = tiers.flatMap((tier) => tier.items);
+  const items = all.map((s) => ({ id: s.id, label: s.name, href: s.website, logo: s.logo }));
 
   return (
     <>
       <PageHeader
-        label="Backed By The Best"
+        crumb="Partners"
         title="Our Partners"
         description="Chennai Turbo Riders is proudly powered by organisations that share our drive for excellence."
         aside={`${all.length} partners`}
       />
 
-      <Reveal className="mt-4">
-        <LogoMarquee
-          label="Partners"
-          items={all.map((s) => ({ id: s.id, label: s.name, href: s.website, logo: s.logo }))}
-        />
+      <Reveal className="border-y border-white/10">
+        <LogoMarquee label="Partners" items={items} speed={36} />
       </Reveal>
 
-      <div className="section-container space-y-20 py-16 md:py-24">
+      <div className="section-container space-y-24 py-16 md:py-24">
         {tiers.map(
           (tier, ti) =>
             tier.items.length > 0 && (
               <section key={tier.label} aria-labelledby={`tier-${ti}`}>
-                <Reveal className="mb-8 flex items-center gap-4 border-b border-white/10 pb-4">
-                  <span className="heading-font text-sm font-bold text-racing-yellow">
-                    {String(ti + 1).padStart(2, "0")}
-                  </span>
-                  <h2 id={`tier-${ti}`} className="heading-font text-3xl font-bold uppercase leading-none text-white md:text-4xl">
+                <Reveal className="mb-8 border-b border-white/10 pb-4">
+                  <p className="readout">
+                    <span className="text-racing-yellow">{String(ti + 1).padStart(2, "0")}</span>
+                    <span className="mx-2 text-carbon-400">/</span>
+                    Tier
+                  </p>
+                  <h2
+                    id={`tier-${ti}`}
+                    className="heading-font lean mt-2 text-4xl font-bold uppercase leading-none text-white md:text-5xl"
+                  >
                     {tier.label}
                   </h2>
                 </Reveal>
@@ -66,9 +69,7 @@ export default function SponsorsPage() {
                         />
                       </div>
                       <div>
-                        <h3 className="heading-font text-2xl font-bold uppercase leading-tight text-white">
-                          {s.name}
-                        </h3>
+                        <h3 className="heading-font text-2xl font-bold uppercase leading-tight text-white">{s.name}</h3>
                         {s.description ? (
                           <p className="mt-2 text-sm leading-relaxed text-carbon-300">{s.description}</p>
                         ) : null}
@@ -76,7 +77,7 @@ export default function SponsorsPage() {
                           href={s.website}
                           target="_blank"
                           rel="noreferrer"
-                          className="mt-4 inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.2em] text-racing-yellow"
+                          className="mt-4 inline-flex items-center gap-2 font-mono text-[11px] font-semibold uppercase tracking-[0.22em] text-racing-yellow"
                         >
                           Visit website
                           <ArrowUpRight className="size-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
@@ -89,21 +90,16 @@ export default function SponsorsPage() {
             ),
         )}
 
-        <Reveal className="grid gap-6 border-y border-white/10 py-12 md:grid-cols-[1fr_auto] md:items-center">
+        <Reveal className="hud-corners grid gap-6 p-8 md:grid-cols-[1fr_auto] md:items-center md:p-12">
           <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-racing-yellow">
-              Become a partner
-            </p>
-            <h2 className="heading-font mt-3 text-4xl font-bold uppercase leading-[0.92] text-white md:text-5xl">
-              Race with us in Season 6.
+            <p className="readout text-racing-yellow">Become a partner</p>
+            <h2 className="heading-font lean mt-3 text-4xl font-bold uppercase leading-[0.9] text-white md:text-6xl">
+              Race with us in Season {site.currentSeason}.
             </h2>
           </div>
-          <a
-            href={`mailto:${contact.email}`}
-            className="group inline-flex items-center gap-3 self-start bg-racing-yellow px-6 py-4 text-xs font-bold uppercase tracking-[0.2em] text-carbon-950 transition-colors hover:bg-white"
-          >
-            {contact.email}
-            <ArrowUpRight className="size-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+          <a href={`mailto:${contact.email}`} className="btn-primary self-start">
+            <span>{contact.email}</span>
+            <ArrowUpRight className="size-4" />
           </a>
         </Reveal>
       </div>

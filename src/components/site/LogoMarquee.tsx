@@ -203,7 +203,7 @@ const FACE =
   "inline-flex h-16 shrink-0 items-center justify-center whitespace-nowrap px-2 outline-none focus-visible:ring-2 focus-visible:ring-racing-yellow";
 
 const MARK =
-  "max-h-12 w-auto max-w-[160px] object-contain opacity-70 grayscale transition-[opacity,filter] duration-300 group-hover:opacity-100 group-hover:grayscale-0 group-focus-visible:opacity-100 group-focus-visible:grayscale-0";
+  "max-h-12 w-auto max-w-[160px] object-contain opacity-60 grayscale invert-0 transition-[opacity,filter] duration-300 group-hover:opacity-100 group-hover:grayscale-0 group-focus-visible:opacity-100 group-focus-visible:grayscale-0";
 
 export function LogoMarquee({
   items,
@@ -232,7 +232,7 @@ export function LogoMarquee({
   return (
     <section
       aria-label={label}
-      className={`relative isolate w-full min-w-0 max-w-full overflow-hidden border-y border-white/10 bg-carbon-950 ${className}`}
+      className={`relative isolate w-full min-w-0 max-w-full overflow-hidden bg-carbon-950 ${className}`}
       {...bind}
     >
       <div

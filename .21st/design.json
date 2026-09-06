@@ -38,7 +38,8 @@
     "typography": {
       "display": "Rajdhani (--font-display) via .heading-font, uppercase, tight leading",
       "body": "Inter (--font-body)",
-      "labels": "11px uppercase tracking 0.25-0.3em"
+      "labels": "11px uppercase tracking 0.25-0.3em",
+      "mono": "JetBrains Mono (--font-mono) via .readout: 11px uppercase tracking 0.18em"
     },
     "spacing": {},
     "radius": {
@@ -47,33 +48,40 @@
     "shadows": {},
     "motion": {
       "reveal": "framer-motion whileInView fade-up, honours prefers-reduced-motion",
-      "marquee": "CSS marquee keyframe + rAF LogoMarquee"
+      "hero": "word-by-word wipe-in, parallax drift on scroll, animated counters",
+      "reel": "pinned horizontal scroll (DriverReel) on >=1024px, snap-scroll row otherwise",
+      "marquee": "CSS marquee keyframes (TextMarquee) + rAF LogoMarquee",
+      "cards": "pointer tilt (TiltCard), grayscale-to-colour photography",
+      "ambient": "pointer spotlight (fine pointers only), scanline sweep, grain"
     },
     "density": "airy"
   },
   "components": {
     "installed": [
       "Navbar",
+      "Spotlight",
       "Footer",
       "Hero",
-      "Ticker",
+      "TextMarquee",
       "PageHeader",
       "SectionHeading",
       "Reveal",
+      "Counter",
       "CountdownTimer",
-      "DriverCard",
-      "DriverShowcase",
+      "TiltCard",
+      "DriverPoster",
+      "DriverReel",
       "NewsCard",
       "FeaturedNews",
       "LogoMarquee"
     ],
     "preferredPrimitives": [],
     "patterns": [
-      "hairline dl/dt/dd stat rows instead of stat cards",
-      "gap-px grid on bg-white/10 for bento/spec tables",
-      "grayscale-to-colour photography on hover",
-      "numbered section headings (01..06)",
-      "outlined display word via .text-stroke-yellow"
+      "hud-corners bracket frames",
+      "readout mono labels",
+      "gap-px grids on bg-white/10",
+      "leaning (skewX -8deg) display headlines with one outlined word",
+      "grain + scanlines over video/photography"
     ]
   },
   "constraints": {
@@ -93,6 +101,11 @@
       "date": "2026-09-06",
       "title": "Pit-wall editorial redesign",
       "summary": "Full-bleed photography, oversized Rajdhani headlines, square hairline layouts, racing-yellow as the only colour. Grounded in 21st.dev: Logo Marquee (ddoemonn, #23537) and Team Showcase (makviesainte, #10098) adapted into project tokens as LogoMarquee and DriverShowcase."
+    },
+    {
+      "date": "2026-09-06",
+      "title": "Broadcast / onboard-feed redesign (supersedes pit-wall editorial)",
+      "summary": "Full-strength hero video under scanlines and grain, HUD corner readouts in JetBrains Mono, glass pill navigation with lap-timer progress bar, pinned horizontal driver reel, tilting news cards, split-flap countdown, pointer spotlight. Yellow on carbon remains the only palette."
     }
   ],
   "evidence": [
