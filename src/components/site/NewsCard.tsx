@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 import type { ArticleSummary } from "@/lib/articles";
 import { formatDate } from "@/lib/format";
@@ -8,9 +7,8 @@ import { formatDate } from "@/lib/format";
  * What a card needs, and nothing else.
  *
  * Narrower than `NewsArticle` on purpose: the same card is drawn from the static
- * JSON the home page still reads and from an `ArticleSummary` off the database,
- * and neither should have to grow the other's fields to be drawn. `NewsArticle`
- * satisfies this structurally, so nothing that already passes one had to change.
+ * JSON and from an `ArticleSummary` off the database, and neither should have to
+ * grow the other's fields to be drawn.
  */
 export type NewsCardArticle = {
   slug: string;
@@ -22,13 +20,7 @@ export type NewsCardArticle = {
   excerpt: string;
 };
 
-/**
- * A summary off the database, in the shape the card draws.
- *
- * `subtext` and `excerpt` are the same sentence under two names — the console
- * calls it the line under the title, this design calls it the excerpt — so the
- * rename happens once, here, rather than at every call site.
- */
+/** A summary off the database, in the shape the card draws. */
 export function newsCardFrom(article: ArticleSummary): NewsCardArticle {
   return {
     slug: article.slug,
@@ -40,39 +32,81 @@ export function newsCardFrom(article: ArticleSummary): NewsCardArticle {
   };
 }
 
+function Meta({ article }: { article: NewsCardArticle }) {
+  return (
+    <p className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[10px] font-semibold uppercase tracking-[0.25em] text-carbon-400">
+      {article.category ? <span className="text-racing-yellow">{article.category}</span> : null}
+      {article.category && article.publishDate ? <span className="size-1 rotate-45 bg-carbon-400" /> : null}
+      {article.publishDate ? <span>{formatDate(article.publishDate)}</span> : null}
+    </p>
+  );
+}
+
+/**
+ * A story in a list: cover on top, then the meta line, the title and a line
+ * of standfirst. The cover is grayscale until the card is hovered, like the
+ * drivers, so a page of stories reads as one surface.
+ */
 export function NewsCard({ article }: { article: NewsCardArticle }) {
+  return (
+    <Link href={`/news/${article.slug}`} className="group flex w-full flex-col">
+      <div className="relative aspect-[16/10] overflow-hidden bg-carbon-900">
+        {article.image ? (
+          <img
+            src={article.image}
+            alt=""
+            loading="lazy"
+            decoding="async"
+            className="h-full w-full object-cover grayscale-[0.4] transition-[transform,filter] duration-700 group-hover:scale-[1.03] group-hover:grayscale-0"
+          />
+        ) : null}
+      </div>
+      <div className="flex flex-1 flex-col border-t border-white/10 pt-4">
+        <Meta article={article} />
+        <h3 className="heading-font mt-3 line-clamp-2 text-2xl font-bold uppercase leading-[0.95] text-white transition-colors group-hover:text-racing-yellow">
+          {article.title}
+        </h3>
+        <p className="mt-3 line-clamp-2 text-sm leading-relaxed text-carbon-300">{article.excerpt}</p>
+      </div>
+    </Link>
+  );
+}
+
+/**
+ * The lead story: the cover across the left, the words on the right, at a
+ * size that says this one comes first.
+ */
+export function FeaturedNews({ article }: { article: NewsCardArticle }) {
   return (
     <Link
       href={`/news/${article.slug}`}
-      className="group flex flex-col overflow-hidden rounded-xl border border-white/10 bg-carbon-800/50 transition-colors hover:border-racing-yellow/40"
+      className="group grid gap-6 border-y border-white/10 py-6 md:grid-cols-[1.3fr_1fr] md:items-center md:gap-10"
     >
-      <div className="relative aspect-[16/10] overflow-hidden">
-        <Image
-          src={article.image}
-          alt={article.title}
-          fill
-          sizes="(max-width: 768px) 100vw, 33vw"
-          className="object-cover transition-transform duration-500 group-hover:scale-105"
-        />
-        {article.category ? (
-          <span className="absolute left-3 top-3 rounded bg-racing-yellow px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-carbon-950">
-            {article.category}
-          </span>
+      <div className="relative aspect-[16/10] overflow-hidden bg-carbon-900">
+        {article.image ? (
+          <img
+            src={article.image}
+            alt=""
+            loading="lazy"
+            decoding="async"
+            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+          />
         ) : null}
+        <span className="absolute left-4 top-4 bg-racing-yellow px-2 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-carbon-950">
+          Latest
+        </span>
       </div>
-      <div className="flex flex-1 flex-col p-5">
-        <p className="text-xs uppercase tracking-widest text-carbon-400">
-          {formatDate(article.publishDate)}
-        </p>
-        <h3 className="heading-font mt-2 line-clamp-2 text-lg font-bold uppercase leading-tight text-white transition-colors group-hover:text-racing-yellow">
+      <div>
+        <Meta article={article} />
+        <h3 className="heading-font mt-4 text-3xl font-bold uppercase leading-[0.92] text-white transition-colors group-hover:text-racing-yellow md:text-5xl">
           {article.title}
         </h3>
-        <p className="mt-2 line-clamp-2 flex-1 text-sm text-carbon-300">
+        <p className="mt-4 line-clamp-3 max-w-md text-base leading-relaxed text-carbon-300">
           {article.excerpt}
         </p>
-        <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold uppercase tracking-wider text-racing-yellow">
-          Read more
-          <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+        <span className="mt-6 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-white">
+          Read the story
+          <ArrowUpRight className="size-4 text-racing-yellow transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
         </span>
       </div>
     </Link>

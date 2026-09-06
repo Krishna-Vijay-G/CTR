@@ -47,8 +47,8 @@ export default function SiteError({
         */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/images/brand/ctr-logo.webp"
-          alt="CTR Unified"
+          src="/images/logos/CTR_New_yellow.png"
+          alt="Chennai Turbo Riders"
           width={72}
           height={72}
           className="mx-auto mb-8 h-16 w-auto"

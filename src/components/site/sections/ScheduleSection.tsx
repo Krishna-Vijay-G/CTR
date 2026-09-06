@@ -1,82 +1,126 @@
-import Link from "next/link";
-import { MapPin, Flag, ArrowRight } from "lucide-react";
+import { MapPin } from "lucide-react";
+import { CountdownTimer } from "@/components/site/CountdownTimer";
 import { Reveal } from "@/components/site/Reveal";
 import { SectionHeading } from "@/components/site/SectionHeading";
-import { CountdownTimer } from "@/components/site/CountdownTimer";
-import { races } from "@/data/site-data";
-import { formatDateRange } from "@/lib/format";
+import { eventDateLabel, eventDateParts, eventIsPast, eventStart, nextEventIndex } from "@/lib/raceDates";
+import { currentPublishedSeason } from "@/lib/server/seasonsRepo";
+import { getRootSite } from "@/lib/server/sitesRepo";
+import { getTrack } from "@/lib/server/tracksRepo";
 
-export function ScheduleSection() {
-  const now = Date.now();
-  const upcoming =
-    races.calendar.find((r) => new Date(r.dateStart).getTime() >= now) ??
-    races.calendar[races.calendar.length - 1];
+/**
+ * The calendar on the home page.
+ *
+ * Reads the same season the /schedule page reads, so the two can never
+ * disagree about which round is next. Nothing published yet: the band goes
+ * rather than announcing a calendar that does not exist.
+ */
+export async function ScheduleSection() {
+  const site = await getRootSite();
+  const now = new Date();
+  const current = await currentPublishedSeason(site.id, now);
+  const events = current?.events ?? [];
+
+  if (!current || events.length === 0) return null;
+
+  const upcoming = events[nextEventIndex(events, now)];
+  const track = upcoming?.track_id ? await getTrack(upcoming.track_id) : null;
+  const startsAt = upcoming ? eventStart(upcoming) : null;
 
   return (
-    <section id="schedule" className="relative border-y border-white/5 bg-carbon-900/40 py-20 md:py-28">
+    <section id="schedule" className="relative border-t border-white/10 bg-carbon-900/40 py-20 md:py-28">
       <div className="section-container">
-        <div className="mb-12 flex flex-wrap items-end justify-between gap-4">
-          <SectionHeading label={races.seasonName} title="Race Calendar" />
-          <Link
-            href="/schedule"
-            className="group inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-racing-yellow"
-          >
-            Full schedule
-            <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
-          </Link>
-        </div>
+        <SectionHeading
+          index="04"
+          label={current.season.name}
+          title="Race Calendar"
+          action={{ href: "/schedule", label: "Full calendar" }}
+        />
 
-        <div className="grid gap-6 lg:grid-cols-[1.1fr_1fr]">
-          {/* Next race highlight */}
-          <Reveal className="relative overflow-hidden rounded-2xl border border-racing-yellow/30 bg-gradient-to-br from-carbon-800 to-carbon-900 p-6 md:p-8">
-            <div className="pointer-events-none absolute -right-10 -top-10 size-40 rounded-full bg-racing-yellow/10 blur-3xl" />
-            <span className="inline-block rounded bg-racing-yellow px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest text-carbon-950">
-              Next Race
-            </span>
-            <h3 className="heading-font mt-4 text-3xl font-bold uppercase text-white md:text-4xl">
-              {upcoming.name}
-            </h3>
-            <div className="mt-3 flex flex-wrap gap-4 text-sm text-carbon-300">
-              <span className="flex items-center gap-1.5">
-                <MapPin className="size-4 text-racing-yellow" />
-                {upcoming.flagEmoji} {upcoming.location}
-              </span>
-              <span className="flex items-center gap-1.5">
-                <Flag className="size-4 text-racing-yellow" />
-                {formatDateRange(upcoming.dateStart, upcoming.dateEnd)}
-              </span>
-            </div>
-            <div className="mt-6">
-              <CountdownTimer targetIso={upcoming.dateStart} />
-            </div>
-          </Reveal>
-
-          {/* Calendar list */}
-          <Reveal delay={0.1} className="divide-y divide-white/5 rounded-2xl border border-white/10 bg-carbon-800/40">
-            {races.calendar.map((r) => {
-              const isNext = r.round === upcoming.round;
-              return (
-                <div
-                  key={r.round}
-                  className={`flex items-center gap-4 px-5 py-3.5 ${
-                    isNext ? "bg-racing-yellow/5" : ""
-                  }`}
-                >
-                  <span className="heading-font w-8 text-lg font-bold text-racing-yellow">
-                    {String(r.round).padStart(2, "0")}
+        <div className="mt-12 grid gap-10 lg:grid-cols-[1fr_1.2fr] lg:gap-16">
+          {/* Next round */}
+          {upcoming ? (
+            <Reveal className="relative overflow-hidden bg-carbon-950">
+              {track?.photo_url ? (
+                <img
+                  src={track.photo_url}
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                  className="absolute inset-0 h-full w-full object-cover opacity-30 grayscale"
+                />
+              ) : null}
+              <div className="absolute inset-0 bg-gradient-to-t from-carbon-950 via-carbon-950/80 to-carbon-950/40" />
+              <div className="relative flex h-full flex-col justify-between gap-10 p-6 md:p-8">
+                <div>
+                  <span className="inline-block bg-racing-yellow px-2 py-1 text-[10px] font-bold uppercase tracking-[0.25em] text-carbon-950">
+                    Next race{upcoming.round ? ` · Round ${upcoming.round}` : ""}
                   </span>
-                  <div className="flex-1">
-                    <p className="text-sm font-semibold text-white">{r.name}</p>
-                    <p className="text-xs text-carbon-400">
-                      {r.flagEmoji} {r.location}
-                    </p>
-                  </div>
-                  <span className="text-xs font-medium text-carbon-300">
-                    {formatDateRange(r.dateStart, r.dateEnd)}
-                  </span>
+                  <h3 className="heading-font mt-5 text-4xl font-bold uppercase leading-[0.92] text-white md:text-5xl">
+                    {upcoming.title || track?.name || upcoming.venue}
+                  </h3>
+                  <p className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-carbon-200">
+                    {upcoming.city || upcoming.venue ? (
+                      <span className="inline-flex items-center gap-1.5">
+                        <MapPin className="size-4 text-racing-yellow" />
+                        {upcoming.city || upcoming.venue}
+                      </span>
+                    ) : null}
+                    <span>{eventDateLabel(upcoming)}</span>
+                  </p>
                 </div>
-              );
-            })}
+                {startsAt ? <CountdownTimer targetIso={startsAt.toISOString()} /> : null}
+              </div>
+            </Reveal>
+          ) : null}
+
+          {/* Rounds */}
+          <Reveal delay={0.1} as="div">
+            <ol className="divide-y divide-white/10 border-y border-white/10">
+              {events.map((event, i) => {
+                const isNext = event.id === upcoming?.id;
+                const past = eventIsPast(event, now);
+                const parts = eventDateParts(event);
+                return (
+                  <li
+                    key={event.id}
+                    className={`grid grid-cols-[3rem_1fr_auto] items-center gap-4 py-4 md:grid-cols-[4rem_1fr_auto] ${
+                      past ? "opacity-50" : ""
+                    }`}
+                  >
+                    <span
+                      className={`heading-font text-3xl font-bold tabular-nums leading-none ${
+                        isNext ? "text-racing-yellow" : "text-carbon-400"
+                      }`}
+                    >
+                      {event.round || String(i + 1).padStart(2, "0")}
+                    </span>
+                    <div className="min-w-0">
+                      <p className="heading-font truncate text-lg font-bold uppercase leading-tight text-white md:text-xl">
+                        {event.title || event.venue}
+                      </p>
+                      <p className="truncate text-xs text-carbon-400">
+                        {event.subtitle || event.city}
+                        {event.badge ? <span className="ml-2 text-racing-yellow">· {event.badge}</span> : null}
+                      </p>
+                    </div>
+                    <div className="text-right">
+                      {parts ? (
+                        <>
+                          <p className="heading-font text-lg font-bold tabular-nums leading-none text-white">
+                            {parts.days}
+                          </p>
+                          <p className="mt-1 text-[10px] uppercase tracking-[0.25em] text-carbon-400">
+                            {parts.month}
+                          </p>
+                        </>
+                      ) : (
+                        <p className="text-[10px] uppercase tracking-[0.25em] text-carbon-400">TBC</p>
+                      )}
+                    </div>
+                  </li>
+                );
+              })}
+            </ol>
           </Reveal>
         </div>
       </div>

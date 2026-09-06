@@ -1,16 +1,20 @@
 "use client";
 
-import { motion, type Variants } from "framer-motion";
+import { motion, useReducedMotion, type Variants } from "framer-motion";
 
 const variants: Variants = {
-  hidden: { opacity: 0, y: 32 },
+  hidden: { opacity: 0, y: 28 },
   show: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] },
+    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
   },
 };
 
+/**
+ * Fades a block up as it scrolls into view. With reduced motion on, it simply
+ * renders — no transform, no delay — so the page reads the same, just still.
+ */
 export function Reveal({
   children,
   className,
@@ -20,16 +24,23 @@ export function Reveal({
   children: React.ReactNode;
   className?: string;
   delay?: number;
-  as?: "div" | "section" | "li" | "span";
+  as?: "div" | "section" | "li" | "span" | "article";
 }) {
+  const reduced = useReducedMotion();
   const MotionTag = motion[as] as typeof motion.div;
+
+  if (reduced) {
+    const Tag = as;
+    return <Tag className={className}>{children}</Tag>;
+  }
+
   return (
     <MotionTag
       className={className}
       variants={variants}
       initial="hidden"
       whileInView="show"
-      viewport={{ once: true, margin: "-80px" }}
+      viewport={{ once: true, margin: "-60px" }}
       transition={{ delay }}
     >
       {children}

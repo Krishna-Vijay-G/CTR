@@ -2,69 +2,82 @@ import { Reveal } from "@/components/site/Reveal";
 import { SectionHeading } from "@/components/site/SectionHeading";
 import { carSpecs } from "@/data/site-data";
 
+/**
+ * The machine.
+ *
+ * One wide photograph with the two detail shots and the eight figures set as a
+ * bento beneath it: the specification read as a grid of hairlines, the numbers
+ * large, the labels small. The two headline figures — power and top speed —
+ * get double-width cells so the eye lands on them first.
+ */
 export function CarSpecsSection() {
+  const [primary, secondary, tertiary] = [carSpecs.image, carSpecs.image2, carSpecs.image3];
+  const lead = new Set(["Power", "Top Speed"]);
+
   return (
-    <section id="machine" className="relative py-20 md:py-28">
+    <section id="machine" className="relative border-t border-white/10 py-20 md:py-28">
       <div className="section-container">
-        <SectionHeading
-          align="center"
-          label={carSpecs.tagline}
-          title={`The ${carSpecs.name}`}
-        />
+        <SectionHeading index="03" label={carSpecs.tagline} title={`The ${carSpecs.name}`} />
 
-        <div className="mt-12 grid items-center gap-10 lg:grid-cols-2">
-          {/* The machine, photographed. One large frame with the two detail
-              shots beneath it — the same block of space the canvas held, and
-              the arrangement the three pictures in the data were shot for. */}
-          <Reveal className="relative">
-            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(247,214,25,0.1),transparent_65%)]" />
-
+        <Reveal className="mt-12 grid gap-3 md:grid-cols-3 md:gap-4">
+          <div className="relative aspect-[16/9] overflow-hidden bg-carbon-900 md:col-span-2 md:aspect-auto md:min-h-[420px]">
             <img
-              src={carSpecs.image}
+              src={primary}
               alt={carSpecs.name}
               loading="lazy"
               decoding="async"
-              className="h-[34vh] w-full rounded-2xl border border-white/10 bg-carbon-900/40 object-cover sm:h-[40vh]"
+              className="h-full w-full object-cover"
             />
-
-            <div className="mt-3 grid grid-cols-2 gap-3">
-              {[carSpecs.image2, carSpecs.image3].map((src, i) => (
+            <span className="heading-font absolute bottom-4 left-4 text-[11px] font-semibold uppercase tracking-[0.3em] text-white/80">
+              {carSpecs.year} · {carSpecs.name}
+            </span>
+          </div>
+          <div className="grid grid-cols-2 gap-3 md:grid-cols-1 md:gap-4">
+            {[secondary, tertiary].map((src, i) => (
+              <div key={src} className="relative aspect-[4/3] overflow-hidden bg-carbon-900">
                 <img
-                  key={src}
                   src={src}
                   alt={`${carSpecs.name} — detail ${i + 1}`}
                   loading="lazy"
                   decoding="async"
-                  className="h-[14vh] w-full rounded-xl border border-white/10 bg-carbon-900/40 object-cover sm:h-[16vh]"
+                  className="h-full w-full object-cover grayscale transition-[filter] duration-700 hover:grayscale-0"
                 />
-              ))}
-            </div>
+              </div>
+            ))}
+          </div>
+        </Reveal>
 
-            <p className="mt-3 text-center text-xs uppercase tracking-[0.3em] text-carbon-400">
-              {carSpecs.year} · {carSpecs.name}
+        <div className="mt-12 grid gap-10 lg:grid-cols-[1fr_1.4fr] lg:gap-16">
+          <Reveal>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-racing-yellow">
+              Specification
+            </p>
+            <p className="mt-4 text-base leading-relaxed text-carbon-300 md:text-lg">
+              {carSpecs.description}
             </p>
           </Reveal>
 
-          {/* Specs */}
-          <div>
-            <Reveal>
-              <p className="text-base leading-relaxed text-carbon-300">
-                {carSpecs.description}
-              </p>
-            </Reveal>
-            <Reveal delay={0.1} className="mt-8 grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-white/10 bg-white/10">
+          <Reveal delay={0.1}>
+            <dl className="grid grid-cols-2 gap-px border border-white/10 bg-white/10 sm:grid-cols-4">
               {carSpecs.specs.map((s) => (
-                <div key={s.label} className="bg-carbon-800 p-4">
-                  <p className="text-[11px] uppercase tracking-widest text-carbon-400">
+                <div
+                  key={s.label}
+                  className={`bg-carbon-950 p-5 ${lead.has(s.label) ? "sm:col-span-2" : ""}`}
+                >
+                  <dt className="text-[10px] font-semibold uppercase tracking-[0.25em] text-carbon-400">
                     {s.label}
-                  </p>
-                  <p className="heading-font mt-1 text-xl font-bold text-white">
+                  </dt>
+                  <dd
+                    className={`heading-font mt-2 font-bold leading-none text-white ${
+                      lead.has(s.label) ? "text-4xl text-racing-yellow md:text-5xl" : "text-2xl"
+                    }`}
+                  >
                     {s.value}
-                  </p>
+                  </dd>
                 </div>
               ))}
-            </Reveal>
-          </div>
+            </dl>
+          </Reveal>
         </div>
       </div>
     </section>

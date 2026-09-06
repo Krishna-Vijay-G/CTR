@@ -1,135 +1,125 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
-import { ChevronRight, ChevronDown } from "lucide-react";
-import { carSpecs, hero } from "@/data/site-data";
+import { motion, useReducedMotion } from "framer-motion";
+import { ArrowDown, ArrowUpRight } from "lucide-react";
+import { carSpecs, hero, site } from "@/data/site-data";
 
+const ease = [0.22, 1, 0.36, 1] as const;
+
+/**
+ * The opening of the home page.
+ *
+ * One photograph of the car, full bleed, under a wash dark enough to set type
+ * on. The team's name runs down the left edge at the largest size the screen
+ * allows, the last word outlined in yellow rather than filled, and the season's
+ * numbers sit on a hairline along the bottom. Nothing is in a card.
+ */
 export function Hero() {
+  const reduced = useReducedMotion();
+  const up = (delay: number) =>
+    reduced
+      ? {}
+      : {
+          initial: { opacity: 0, y: 24 },
+          animate: { opacity: 1, y: 0 },
+          transition: { delay, duration: 0.8, ease },
+        };
+
   return (
-    <section className="relative min-h-screen overflow-hidden pt-16 md:pt-20">
-      {/* Ambient video wash */}
-      <video
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="auto"
-        className="absolute inset-0 h-full w-full object-cover opacity-20"
-      >
-        <source src={hero.videoSrc} type="video/mp4" />
-      </video>
-
-      {/* Backgrounds */}
-      <div className="absolute inset-0 bg-carbon-950/70" />
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_70%_40%,rgba(247,214,25,0.14),transparent_60%)]" />
-      <div className="pointer-events-none absolute inset-0 bg-carbon-weave opacity-60" />
-      <div className="absolute inset-x-0 top-16 h-[2px] bg-gradient-to-r from-transparent via-racing-yellow to-transparent md:top-20" />
-
-      <div className="section-container relative z-10 grid min-h-[calc(100vh-5rem)] items-center gap-6 lg:grid-cols-2">
-        {/* Copy */}
-        <div className="order-2 lg:order-1">
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.2, duration: 0.6 }}
-            className="mb-5 flex items-center gap-3"
-          >
-            <span className="h-[2px] w-10 bg-racing-yellow" />
-            <span className="text-xs font-semibold uppercase tracking-[0.3em] text-racing-yellow">
-              {hero.description}
-            </span>
-          </motion.div>
-
-          <motion.h1
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.35, duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-            className="heading-font text-5xl font-bold uppercase leading-[0.95] tracking-tight text-white sm:text-6xl md:text-7xl xl:text-8xl"
-          >
-            Chennai
-            <br />
-            Turbo
-            <br />
-            <span className="text-racing-yellow">Riders</span>
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6, duration: 0.6 }}
-            className="mt-6 max-w-md text-lg font-medium uppercase tracking-widest text-carbon-300"
-          >
-            {hero.subtitle}
-          </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8, duration: 0.5 }}
-            className="mt-10 flex flex-wrap gap-4"
-          >
-            <Link
-              href="/drivers"
-              className="group inline-flex items-center gap-2 rounded bg-racing-yellow px-7 py-3.5 text-sm font-bold uppercase tracking-wider text-carbon-950 transition-transform hover:scale-[1.03]"
-            >
-              Meet the Drivers
-              <ChevronRight className="size-4 transition-transform group-hover:translate-x-1" />
-            </Link>
-            <Link
-              href="/schedule"
-              className="inline-flex items-center gap-2 rounded border border-white/20 px-7 py-3.5 text-sm font-bold uppercase tracking-wider text-white transition-colors hover:border-racing-yellow hover:text-racing-yellow"
-            >
-              2026 Calendar
-            </Link>
-          </motion.div>
-        </div>
-
-        {/* The car. A photograph, at the size the canvas used to take, so the
-            two-column balance of the hero is unchanged. */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.96 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.45, duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className="order-1 flex items-center justify-center lg:order-2"
+    <section className="relative flex min-h-[100svh] flex-col overflow-hidden bg-carbon-950">
+      {/* Backdrop */}
+      <div className="absolute inset-0">
+        <img
+          src={carSpecs.image}
+          alt=""
+          loading="eager"
+          fetchPriority="high"
+          decoding="async"
+          className="h-full w-full object-cover object-[65%_center]"
+        />
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          aria-hidden
+          className="absolute inset-0 h-full w-full object-cover opacity-25 mix-blend-screen"
         >
-          <img
-            src={carSpecs.image}
-            alt={`${carSpecs.name} — ${hero.title}`}
-            /* The LCP element: eager, high priority, and never lazy. */
-            loading="eager"
-            fetchPriority="high"
-            decoding="async"
-            className="h-[42vh] w-full object-contain drop-shadow-[0_25px_45px_rgba(0,0,0,0.55)] sm:h-[50vh] lg:h-[70vh]"
-          />
-        </motion.div>
+          <source src={hero.videoSrc} type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-gradient-to-r from-carbon-950 via-carbon-950/70 to-carbon-950/20" />
+        <div className="absolute inset-0 bg-gradient-to-t from-carbon-950 via-transparent to-carbon-950/60" />
+        <div className="absolute inset-0 bg-carbon-weave opacity-40" />
       </div>
 
-      {/* Stats strip */}
-      <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.1, duration: 0.6 }}
-        className="absolute inset-x-0 bottom-0 z-10 border-t border-white/10 bg-carbon-950/70 backdrop-blur-md"
-      >
-        <div className="section-container flex items-center justify-between gap-4 py-4">
-          <div className="grid flex-1 grid-cols-4 gap-2 md:flex md:gap-12">
-            {hero.stats.map((s) => (
-              <div key={s.label} className="flex flex-col md:flex-row md:items-baseline md:gap-2">
-                <span className="heading-font text-2xl font-bold text-white md:text-3xl">
-                  {s.value}
-                </span>
-                <span className="text-[10px] uppercase tracking-[0.2em] text-carbon-400">
-                  {s.label}
-                </span>
-              </div>
-            ))}
-          </div>
-          <div className="hidden items-center gap-2 text-carbon-400 lg:flex">
-            <span className="text-[10px] uppercase tracking-[0.3em]">Scroll</span>
-            <ChevronDown className="size-4 animate-bounce text-racing-yellow" />
-          </div>
+      {/* Copy */}
+      <div className="section-container relative z-10 flex flex-1 flex-col justify-end pb-10 pt-32 md:pb-14 md:pt-40">
+        <motion.div {...up(0.1)} className="mb-6 flex items-center gap-3">
+          <span className="h-px w-10 bg-racing-yellow" />
+          <span className="text-[11px] font-semibold uppercase tracking-[0.3em] text-racing-yellow">
+            {hero.description}
+          </span>
+        </motion.div>
+
+        <motion.h1
+          {...up(0.2)}
+          className="heading-font text-[clamp(3.5rem,13vw,11rem)] font-bold uppercase leading-[0.82] tracking-tight text-white"
+        >
+          Chennai
+          <br />
+          Turbo
+          <br />
+          <span className="text-stroke-yellow">Riders</span>
+        </motion.h1>
+
+        <div className="mt-10 grid gap-8 md:grid-cols-[1fr_auto] md:items-end">
+          <motion.div {...up(0.35)}>
+            <p className="heading-font max-w-md text-lg font-semibold uppercase tracking-[0.2em] text-carbon-200 md:text-xl">
+              {hero.subtitle}
+            </p>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <Link
+                href="/drivers"
+                className="group inline-flex items-center gap-2 bg-racing-yellow px-6 py-3.5 text-xs font-bold uppercase tracking-[0.2em] text-carbon-950 transition-colors hover:bg-white"
+              >
+                Meet the drivers
+                <ArrowUpRight className="size-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+              </Link>
+              <Link
+                href="/schedule"
+                className="inline-flex items-center gap-2 border border-white/25 px-6 py-3.5 text-xs font-bold uppercase tracking-[0.2em] text-white transition-colors hover:border-racing-yellow hover:text-racing-yellow"
+              >
+                Season {site.currentSeason} calendar
+              </Link>
+            </div>
+          </motion.div>
+
+          <motion.div
+            {...up(0.5)}
+            className="hidden items-center gap-3 text-[11px] uppercase tracking-[0.3em] text-carbon-300 md:flex"
+          >
+            Scroll
+            <ArrowDown className="size-4 animate-bounce text-racing-yellow" />
+          </motion.div>
         </div>
+      </div>
+
+      {/* Stats on the baseline */}
+      <motion.div {...up(0.6)} className="section-container relative z-10 pb-6">
+        <dl className="grid grid-cols-2 divide-x divide-white/10 border-t border-white/15 sm:grid-cols-4">
+          {hero.stats.map((s, i) => (
+            <div key={s.label} className={`py-5 ${i % 2 === 0 ? "pr-4" : "pl-4"} sm:px-5 sm:first:pl-0`}>
+              <dt className="text-[10px] font-semibold uppercase tracking-[0.3em] text-carbon-400">
+                {s.label}
+              </dt>
+              <dd className="heading-font mt-1 text-4xl font-bold leading-none text-white md:text-5xl">
+                {s.value}
+              </dd>
+            </div>
+          ))}
+        </dl>
       </motion.div>
     </section>
   );
